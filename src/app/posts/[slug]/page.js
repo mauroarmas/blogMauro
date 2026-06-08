@@ -5,6 +5,8 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import PrintButton from '@/components/PrintButton';
 
+export const dynamic = 'force-dynamic';
+
 export default async function PostPage({ params }) {
   const { slug } = await params;
   const decodedSlug = decodeURIComponent(slug);

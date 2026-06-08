@@ -122,6 +122,7 @@ Vuelve a la consola del contenedor **159** y ejecuta:
 cd /var/www/blog
 export PORT=80
 export NODE_ENV=production
+export DATABASE_URL="postgres://mauro:utn2026@172.16.90.162:5432/blogdb"
 node server.js
 ```
 *Si funciona sin errores, tu blog ya está público en `http://172.16.90.159`.*
