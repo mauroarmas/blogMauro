@@ -1,6 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
+  output: 'standalone',
+  compress: true,
+  // Optimización experimental extra para entornos de bajos recursos
+  experimental: {
+    serverMinification: true
+  }
 };
 
 export default nextConfig;
