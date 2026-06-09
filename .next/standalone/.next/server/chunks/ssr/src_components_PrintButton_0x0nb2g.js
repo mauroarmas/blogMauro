@@ -1,0 +1,3 @@
+module.exports=[85689,a=>{"use strict";var b=a.i(87924);a.s(["default",0,function(){return(0,b.jsxs)("button",{className:"btn-pdf",onClick:()=>window.print(),title:"Descargar como PDF",children:[(0,b.jsx)("svg",{className:"ico",width:"13",height:"13",viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:"2.2",strokeLinecap:"round",strokeLinejoin:"round",children:(0,b.jsx)("path",{d:"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"})}),"Descargar PDF"]})}])}];
+
+//# sourceMappingURL=src_components_PrintButton_0x0nb2g.js.map
