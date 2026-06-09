@@ -28,8 +28,8 @@ export default async function Home() {
             style={{ width: '100%', height: '192px', objectFit: 'cover', borderRadius: '6px', marginBottom: '20px', display: 'block' }} 
             priority
           />
-          <div><span className="k">Rol</span><span className="v">Desarrollador</span></div>
-          <div><span className="k">Estudia</span><span className="v">Ing. en Sistemas<br/>de Información</span></div>
+          <div><span className="k">Rol</span><span className="v">Estudiante</span></div>
+          <div><span className="k">Contenedores</span><span className="v">DB: 44581626DB (C162)<br/>App: 44581626A (C159)</span></div>
           <div><span className="k">Stack de Plataforma</span><span className="v">Next.js · PostgreSQL</span></div>
           <div><span className="k">Host</span><span className="v">Proxmox (NAP)</span></div>
           <div><span className="k">Posts</span><span className="v">{posts.length < 10 ? `0${posts.length}` : posts.length} publicados</span></div>
@@ -37,26 +37,21 @@ export default async function Home() {
 
         <div className="hero-main">
           <h1 className="name">Mauro <span className="last">Armas</span></h1>
-          <p className="role">Desarrollador y Estudiante de Ingeniería en UTN-FRT</p>
+          <p className="role">Estudiante de Ingeniería en Sistemas de Información en UTN-FRT</p>
 
           <p className="statement serif">
-            Un índice de cosas que <em>aprendí</em> en mi carrera y construyendo <em>SOFT</em>.
+            Trabajo Final Integrador: <br></br> <em>Virtualización: Consolidación de Servidores</em>
           </p>
           <p className="lead">
-            Escribo notas sobre sistemas con recursos limitados, rendimiento, y el oficio de hacer software que dura sin vender humo. Trabajo final integrador.
+            En esta página tipo blog publico notas sobre sistemas de información y SOFT.
           </p>
 
-          <div className="subscribe">
-            <input type="email" placeholder="tu@correo.com" aria-label="Correo" />
-            <button type="button">SUSCRIBIR</button>
-            <Link href="/rss.xml" className="rss" aria-label="RSS">
-              <svg className="ico" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round">
-                <path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16" />
-                <circle cx="5" cy="19" r="1.4" fill="currentColor" stroke="none" />
-              </svg>
-              rss
-            </Link>
-          </div>
+          <h3 className="ttl">
+            Ver el <em>Informe</em> de desarrollo e implementación del TPF:         
+          </h3>
+            <Link href="" download className="btn-download">
+              <span className="br">[</span> TPF <span className="br">]</span>
+            </Link> 
         </div>
       </header>
 
