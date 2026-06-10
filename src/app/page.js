@@ -49,7 +49,7 @@ export default async function Home() {
           <h3 className="ttl">
             Ver el <em>Informe</em> de desarrollo e implementación del TPF:         
           </h3>
-            <Link href="" download className="btn-download">
+            <Link href="/informe-tpf.pdf" target="_blank" className="btn-download">
               <span className="br">[</span> TPF <span className="br">]</span>
             </Link> 
         </div>
@@ -101,7 +101,7 @@ export default async function Home() {
         <span>© 2026 Mauro Armas</span>
         <span className="seg">
           <span>build:standalone</span>
-          <Link href="/reporte_despliegue.pdf" download>descargar pdf</Link>
+          <Link href="/informe-tpf.pdf" target="_blank">descargar pdf</Link>
           <Link href="/admin">admin</Link>
         </span>
       </footer>
