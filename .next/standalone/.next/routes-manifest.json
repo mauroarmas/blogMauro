@@ -3,8 +3,17 @@
   "pages404": true,
   "appType": "app",
   "caseSensitive": false,
-  "basePath": "",
+  "basePath": "/44581626",
   "redirects": [
+    {
+      "source": "/44581626/",
+      "destination": "/44581626",
+      "basePath": false,
+      "internal": true,
+      "priority": true,
+      "statusCode": 308,
+      "regex": "^/44581626/$"
+    },
     {
       "source": "/:path+/",
       "destination": "/:path+",

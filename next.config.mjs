@@ -2,7 +2,8 @@
 const nextConfig = {
   output: 'standalone',
   compress: true,
-  // Optimización experimental extra para entornos de bajos recursos
+  basePath: '/44581626',
+  assetPrefix: '/44581626',
   experimental: {
     serverMinification: true
   }
