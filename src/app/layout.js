@@ -1,28 +1,6 @@
-import { Newsreader, Hanken_Grotesk, JetBrains_Mono } from 'next/font/google';
+import fs from 'fs';
+import path from 'path';
 import Nav from '@/components/Nav';
-import './globals.css';
-
-const newsreader = Newsreader({
-  subsets: ['latin'],
-  axes: ['opsz'],
-  style: ['normal', 'italic'],
-  variable: '--font-serif',
-  display: 'swap',
-});
-
-const hanken = Hanken_Grotesk({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-sans',
-  display: 'swap',
-});
-
-const jetbrains = JetBrains_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
-  variable: '--font-mono',
-  display: 'swap',
-});
 
 export const metadata = {
   title: 'Mauro Armas | Blog Personal',
@@ -30,8 +8,24 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const cssPath = path.join(process.cwd(), 'src', 'app', 'globals.css');
+  let cssContent = '';
+  try {
+    cssContent = fs.readFileSync(cssPath, 'utf8');
+  } catch (e) {
+    console.error('Error loading globals.css inline:', e);
+  }
+
   return (
-    <html lang="es" className={`${newsreader.variable} ${hanken.variable} ${jetbrains.variable}`}>
+    <html lang="es">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+        <style dangerouslySetInnerHTML={{ __html: cssContent }} />
+      </head>
       <body>
         <Nav />
         {children}
