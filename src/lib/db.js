@@ -8,7 +8,7 @@ if (process.env.DATABASE_URL) {
     connectionString: process.env.DATABASE_URL,
     max: 3, // Límite estricto para 128MB RAM
     idleTimeoutMillis: 30000,
-    connectionTimeoutMillis: 2000,
+    connectionTimeoutMillis: 8000, // 8s para tolerar contenedor DB "dormido"
   });
 } else {
   // MODO DESARROLLO (LOCAL) -> Usa SQLite

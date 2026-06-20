@@ -1,32 +1,39 @@
 import { query } from '@/lib/db';
 import Link from 'next/link';
-import Image from 'next/image';
 
 export const dynamic = 'force-dynamic';
 
-export default async function Home() {
-  let posts = [];
-  try {
-    const res = await query(
-      "SELECT * FROM posts WHERE status = $1 ORDER BY COALESCE(published_at, created_at) DESC",
-      ['published']
-    );
-    posts = res.rows;
-  } catch (error) {
-    console.error('Failed to fetch posts:', error);
+const BASE = '/44581626';
+
+async function getPosts(retries = 3, delayMs = 1500) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      const res = await query(
+        "SELECT * FROM posts WHERE status = $1 ORDER BY COALESCE(published_at, created_at) DESC",
+        ['published']
+      );
+      return res.rows;
+    } catch (error) {
+      console.error(`Failed to fetch posts (attempt ${i + 1}/${retries}):`, error.message);
+      if (i < retries - 1) {
+        await new Promise(r => setTimeout(r, delayMs));
+      }
+    }
   }
+  return [];
+}
+
+export default async function Home() {
+  const posts = await getPosts();
 
   return (
     <div className="wrap">
       <header className="hero">
         <aside className="ledger">
-          <Image 
-            src="/mauro.jpeg" 
+          <img 
+            src={`${BASE}/mauro.jpeg`}
             alt="Mauro Armas" 
-            width={190} 
-            height={192}
             style={{ width: '100%', height: '192px', objectFit: 'cover', borderRadius: '6px', marginBottom: '20px', display: 'block' }} 
-            priority
           />
           <div><span className="k">Rol</span><span className="v">Estudiante</span></div>
           <div><span className="k">Contenedores</span><span className="v">DB: 44581626DB (C162)<br/>App: 44581626A (C159)</span></div>
@@ -50,9 +57,9 @@ export default async function Home() {
             Ver el <em>Informe</em> de desarrollo e implementación del TPF:         
           </h3>
 
-            <a href="/informe-tpf.pdf" target="_blank" rel="noopener noreferrer" className="btn-download">
+            <a href={`${BASE}/informe-tpf.pdf`} target="_blank" rel="noopener noreferrer" className="btn-download">
               <span className="br">[</span> TPF <span className="br">]</span>
-              </a>
+            </a>
         </div>
       </header>
 
@@ -103,7 +110,7 @@ export default async function Home() {
         <span className="seg">
           <span>build:standalone</span>
 
-          <a href="/informe-tpf.pdf" target="_blank" rel="noopener noreferrer" className="btn-download">descargar pdf</a>
+          <a href={`${BASE}/informe-tpf.pdf`} target="_blank" rel="noopener noreferrer" className="btn-download">descargar pdf</a>
 
           <Link href="/admin">admin</Link>
         </span>
