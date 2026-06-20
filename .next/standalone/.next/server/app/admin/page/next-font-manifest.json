@@ -1,13 +1,6 @@
 {
   "pages": {},
-  "app": {
-    "[project]/src/app/admin/page": [
-      "static/media/2b7d3311b69a4dca-s.p.1elj1f4z6aq4a.woff2",
-      "static/media/d38f3bca7db33566-s.p.0op912u62qdhl.woff2",
-      "static/media/c47649aa31f9e140-s.p.3lxpqujs87tck.woff2",
-      "static/media/051742360c26797e-s.p.1bkzbscqrt8rl.woff2"
-    ]
-  },
-  "appUsingSizeAdjust": true,
+  "app": {},
+  "appUsingSizeAdjust": false,
   "pagesUsingSizeAdjust": false
 }
