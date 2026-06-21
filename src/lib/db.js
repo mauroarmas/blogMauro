@@ -4,8 +4,14 @@ let sqliteDb;
 if (process.env.DATABASE_URL) {
   // MODO PRODUCCIÓN (PROXMOX) -> Usa PostgreSQL
   const { Pool } = require('pg');
+  
+  // Forzar IPv4 para evitar el timeout de 10s de Node.js intentando conectar a ::1 (IPv6)
+  const connectionString = process.env.DATABASE_URL 
+    ? process.env.DATABASE_URL.replace('localhost', '127.0.0.1')
+    : process.env.DATABASE_URL;
+
   pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
+    connectionString: connectionString,
     max: 3, // Límite estricto para 128MB RAM
     idleTimeoutMillis: 30000,
     connectionTimeoutMillis: 8000, // 8s para tolerar contenedor DB "dormido"
