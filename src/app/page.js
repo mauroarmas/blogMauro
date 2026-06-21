@@ -72,6 +72,15 @@ export default async function Home() {
             <a href={`${BASE}/informe-tpf.pdf`} target="_blank" rel="noopener noreferrer" className="btn-download">
               <span className="br">[</span> TPF <span className="br">]</span>
             </a>
+
+          <h3 className="ttl">
+            Ver el <em>Repositorio</em> de GitHub de la aplicación del Blog:         
+          </h3>
+
+            <a href={`https://github.com/mauroarmas/blogMauro`} target="_blank" rel="noopener noreferrer" className="btn-download">
+              <span className="br">[</span> Repositorio <span className="br">]</span>
+            </a>
+
         </div>
       </header>
 
