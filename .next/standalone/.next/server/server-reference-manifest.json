@@ -1,5 +1,30 @@
 {
-  "node": {},
+  "node": {
+    "4082c36928021927727dbe6e93f8ab33a96557cacc": {
+      "workers": {
+        "app/admin/page": {
+          "moduleId": 89505,
+          "async": false,
+          "exportedName": "$$RSC_SERVER_ACTION_1",
+          "filename": "src/app/admin/page.js"
+        }
+      },
+      "filename": "src/app/admin/page.js",
+      "exportedName": "$$RSC_SERVER_ACTION_1"
+    },
+    "40b673a527337bb428a429818b959289f6f5871142": {
+      "workers": {
+        "app/admin/page": {
+          "moduleId": 89505,
+          "async": false,
+          "exportedName": "$$RSC_SERVER_ACTION_0",
+          "filename": "src/app/admin/page.js"
+        }
+      },
+      "filename": "src/app/admin/page.js",
+      "exportedName": "$$RSC_SERVER_ACTION_0"
+    }
+  },
   "edge": {},
   "encryptionKey": "O7JeLhuYmf+D6mbUzk5wWlzIqJrpkf5dRiqQTrG+R/4="
 }

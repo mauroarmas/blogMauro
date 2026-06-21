@@ -1,95 +1,86 @@
-'use client';
-
-import { useState, useEffect } from 'react';
+import { query } from '@/lib/db';
 import Link from 'next/link';
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
-export default function AdminPage() {
-  const [posts, setPosts] = useState([]);
-  const [editing, setEditing] = useState(null);
-  const [formData, setFormData] = useState({
-    title: '', tag: '', date: '', excerpt: '', content: '', status: 'published'
-  });
+export const dynamic = 'force-dynamic';
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+export default async function AdminPage(props) {
+  const searchParams = await props.searchParams;
 
-  const fetchPosts = async () => {
-    const res = await fetch('/api/posts');
-    const data = await res.json();
-    setPosts(Array.isArray(data) ? data : []);
-  };
+  let posts = [];
+  try {
+    const res = await query("SELECT * FROM posts ORDER BY COALESCE(published_at, created_at) DESC");
+    posts = res.rows || [];
+  } catch (error) {
+    console.error('Failed to fetch posts:', error);
+  }
 
-  const handleEdit = (post) => {
-    setEditing(post.id);
-    const dateStr = post.published_at 
-      ? new Date(post.published_at).toISOString().split('T')[0]
-      : (post.created_at ? new Date(post.created_at).toISOString().split('T')[0] : '');
-      
-    setFormData({
-      title: post.title,
-      tag: post.tag || '',
-      date: dateStr,
-      excerpt: post.excerpt || '',
-      content: post.content || '',
-      status: post.status || 'draft'
-    });
-    
-    // Scroll to editor
-    document.getElementById('editor-panel')?.scrollIntoView({ block: 'start', behavior: 'smooth' });
-  };
+  const editId = searchParams?.edit;
+  let editingPost = null;
+  if (editId) {
+    editingPost = posts.find(p => p.id.toString() === editId);
+  }
 
-  const handleNew = () => {
-    setEditing(null);
-    setFormData({ title: '', tag: '', date: '', excerpt: '', content: '', status: 'published' });
-  };
+  async function savePost(formData) {
+    'use server';
+    const id = formData.get('id');
+    const title = formData.get('title');
+    const tag = formData.get('tag');
+    const date = formData.get('date');
+    const excerpt = formData.get('excerpt');
+    const content = formData.get('content');
+    const status = formData.get('status');
 
-  const handleSave = async (e) => {
-    e.preventDefault();
-    const method = editing ? 'PUT' : 'POST';
-    const url = editing ? `/api/posts/${editing}` : '/api/posts';
-    
-    // Auto generate slug from title
-    const slug = formData.title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-    
-    // Calculate read time
-    const words = formData.content.trim().split(/\s+/).length;
+    const slug = title.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    const words = content.trim().split(/\s+/).length;
     const readTime = Math.max(1, Math.round(words / 200));
-    
-    const payload = {
-      ...formData,
-      slug,
-      read_time: readTime,
-      published_at: formData.date ? new Date(formData.date).toISOString() : new Date().toISOString()
-    };
-    
-    await fetch(url, {
-      method,
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    });
-    fetchPosts();
-    handleNew();
-  };
+    const published_at = date ? new Date(date).toISOString() : new Date().toISOString();
 
-  const handleDelete = async (id, title) => {
-    if(confirm(`¿Eliminar "${title}"?\nEsta acción no se puede deshacer.`)) {
-      await fetch(`/api/posts/${id}`, { method: 'DELETE' });
-      fetchPosts();
+    if (id) {
+      await query(
+        "UPDATE posts SET title=$1, tag=$2, excerpt=$3, content=$4, status=$5, slug=$6, read_time=$7, published_at=$8 WHERE id=$9",
+        [title, tag, excerpt, content, status, slug, readTime, published_at, id]
+      );
+    } else {
+      await query(
+        "INSERT INTO posts (title, tag, excerpt, content, status, slug, read_time, published_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
+        [title, tag, excerpt, content, status, slug, readTime, published_at]
+      );
     }
-  };
+    revalidatePath('/admin');
+    redirect('/admin');
+  }
+
+  async function deletePost(formData) {
+    'use server';
+    const id = formData.get('id');
+    await query("DELETE FROM posts WHERE id=$1", [id]);
+    revalidatePath('/admin');
+    redirect('/admin');
+  }
+
+  const defaultTitle = editingPost?.title || '';
+  const defaultTag = editingPost?.tag || '';
+  let defaultDate = '';
+  if (editingPost) {
+    const d = editingPost.published_at || editingPost.created_at;
+    if (d) defaultDate = new Date(d).toISOString().split('T')[0];
+  }
+  const defaultExcerpt = editingPost?.excerpt || '';
+  const defaultContent = editingPost?.content || '';
+  const defaultStatus = editingPost?.status || 'published';
 
   return (
     <div className="wrap">
       <div className="admin-shell">
-        {/* Lista de publicaciones */}
         <section className="admin-list">
           <div className="admin-head">
             <h1>Publicaciones</h1>
-            <button className="btn-new" onClick={handleNew}>
+            <Link href="/admin" className="btn-new" style={{ textDecoration: 'none' }}>
               <svg className="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round"><path d="M12 5v14M5 12h14" /></svg>
               Nuevo post
-            </button>
+            </Link>
           </div>
 
           <table className="admin-table">
@@ -131,12 +122,15 @@ export default function AdminPage() {
                     </td>
                     <td>
                       <span className="row-actions">
-                        <button className="btn-row edit" title="Editar" onClick={() => handleEdit(post)}>
+                        <Link href={`/admin?edit=${post.id}#editor-panel`} className="btn-row edit" title="Editar" style={{display: 'inline-flex', alignItems: 'center', justifyContent: 'center'}}>
                           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z" /></svg>
-                        </button>
-                        <button className="btn-row del" title="Eliminar" onClick={() => handleDelete(post.id, post.title)}>
-                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" /></svg>
-                        </button>
+                        </Link>
+                        <form action={deletePost} style={{display: 'inline'}}>
+                          <input type="hidden" name="id" value={post.id} />
+                          <button type="submit" className="btn-row del" title="Eliminar">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" /></svg>
+                          </button>
+                        </form>
                       </span>
                     </td>
                   </tr>
@@ -146,23 +140,24 @@ export default function AdminPage() {
           </table>
         </section>
 
-        {/* Editor de post */}
         <aside className="editor-panel" id="editor-panel">
           <h2>
             <span className="ep-indicator"></span>
-            <span>{editing ? 'Editando post' : 'Nuevo post'}</span>
+            <span>{editingPost ? 'Editando post' : 'Nuevo post'}</span>
           </h2>
 
-          <form onSubmit={handleSave}>
+          <form action={savePost}>
+            {editingPost && <input type="hidden" name="id" value={editingPost.id} />}
+            
             <div className="form-row">
               <label htmlFor="f-title">Título</label>
-              <input type="text" id="f-title" required placeholder="El título del artículo…" value={formData.title} onChange={e=>setFormData({...formData, title: e.target.value})} />
+              <input type="text" id="f-title" name="title" required placeholder="El título del artículo…" defaultValue={defaultTitle} />
             </div>
 
             <div className="form-grid">
               <div className="form-row">
                 <label htmlFor="f-tag">Categoría</label>
-                <select id="f-tag" value={formData.tag} onChange={e=>setFormData({...formData, tag: e.target.value})}>
+                <select id="f-tag" name="tag" defaultValue={defaultTag}>
                   <option value="">— Elige —</option>
                   <option value="Infra">Infra</option>
                   <option value="Next.js">Next.js</option>
@@ -174,31 +169,31 @@ export default function AdminPage() {
               </div>
               <div className="form-row">
                 <label htmlFor="f-date">Fecha</label>
-                <input type="date" id="f-date" value={formData.date} onChange={e=>setFormData({...formData, date: e.target.value})} />
+                <input type="date" id="f-date" name="date" defaultValue={defaultDate} />
               </div>
             </div>
 
             <div className="form-row">
               <label htmlFor="f-excerpt">Extracto</label>
-              <textarea id="f-excerpt" placeholder="Una o dos frases que resuman el artículo…" value={formData.excerpt} onChange={e=>setFormData({...formData, excerpt: e.target.value})}></textarea>
+              <textarea id="f-excerpt" name="excerpt" placeholder="Una o dos frases que resuman el artículo…" defaultValue={defaultExcerpt}></textarea>
             </div>
 
             <div className="form-row">
               <label htmlFor="f-content">Contenido</label>
-              <textarea id="f-content" className="big" placeholder="Markdown, HTML o el formato que uses en tu stack…" value={formData.content} onChange={e=>setFormData({...formData, content: e.target.value})}></textarea>
+              <textarea id="f-content" name="content" className="big" placeholder="Markdown, HTML o el formato que uses en tu stack…" defaultValue={defaultContent}></textarea>
             </div>
 
             <div className="form-row">
               <label>Estado</label>
               <div className="status-toggle">
                 <div className="st-opt">
-                  <input type="radio" name="status" id="s-pub" value="published" checked={formData.status === 'published'} onChange={() => setFormData({...formData, status: 'published'})} />
+                  <input type="radio" name="status" id="s-pub" value="published" defaultChecked={defaultStatus === 'published'} />
                   <label htmlFor="s-pub">
                     <span className="badge-dot" style={{background: 'oklch(0.82 0.075 80)'}}></span>Publicar
                   </label>
                 </div>
                 <div className="st-opt">
-                  <input type="radio" name="status" id="s-draft" value="draft" checked={formData.status === 'draft'} onChange={() => setFormData({...formData, status: 'draft'})} />
+                  <input type="radio" name="status" id="s-draft" value="draft" defaultChecked={defaultStatus === 'draft'} />
                   <label htmlFor="s-draft">
                     <span className="badge-dot" style={{background: 'oklch(0.62 0.010 262)'}}></span>Borrador
                   </label>
@@ -207,14 +202,8 @@ export default function AdminPage() {
             </div>
 
             <div className="form-actions">
-              <button type="submit" className="btn-publish">{editing ? 'Guardar cambios' : 'Publicar'}</button>
-              <button type="button" className="btn-draft" onClick={() => {
-                setFormData({...formData, status: 'draft'});
-                // We don't trigger submit directly here, they can click Publicar/Guardar to trigger normal flow.
-                // Or we can manually trigger the save:
-                setTimeout(() => document.querySelector('form').requestSubmit(), 0);
-              }}>Guardar borrador</button>
-              <button type="button" className="btn-cancel" onClick={handleNew}>Cancelar</button>
+              <button type="submit" className="btn-publish">Guardar post</button>
+              <Link href="/admin" className="btn-cancel" style={{textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center'}}>Cancelar</Link>
             </div>
           </form>
         </aside>
