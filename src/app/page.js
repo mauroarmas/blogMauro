@@ -1,5 +1,7 @@
 import { query } from '@/lib/db';
 import Link from 'next/link';
+import fs from 'fs';
+import path from 'path';
 
 export const dynamic = 'force-dynamic';
 
@@ -26,12 +28,22 @@ async function getPosts(retries = 3, delayMs = 1500) {
 export default async function Home() {
   const posts = await getPosts();
 
+  let imageBase64 = '';
+  try {
+    const imagePath = path.join(process.cwd(), 'public', 'mauro.jpeg');
+    const imageBuffer = fs.readFileSync(imagePath);
+    imageBase64 = `data:image/jpeg;base64,${imageBuffer.toString('base64')}`;
+  } catch (e) {
+    console.error('Error loading image inline:', e);
+    imageBase64 = `${BASE}/mauro.jpeg`; // fallback
+  }
+
   return (
     <div className="wrap">
       <header className="hero">
         <aside className="ledger">
           <img 
-            src={`${BASE}/mauro.jpeg`}
+            src={imageBase64}
             alt="Mauro Armas" 
             style={{ width: '100%', height: '192px', objectFit: 'cover', borderRadius: '6px', marginBottom: '20px', display: 'block' }} 
           />
