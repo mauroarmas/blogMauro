@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
+const BASE = '/44581626';
 
 export default async function AdminPage(props) {
   const searchParams = await props.searchParams;
@@ -49,7 +50,7 @@ export default async function AdminPage(props) {
       );
     }
     revalidatePath('/admin');
-    redirect('/admin');
+    redirect(`${BASE}/admin`);
   }
 
   async function deletePost(formData) {
@@ -57,7 +58,7 @@ export default async function AdminPage(props) {
     const id = formData.get('id');
     await query("DELETE FROM posts WHERE id=$1", [id]);
     revalidatePath('/admin');
-    redirect('/admin');
+    redirect(`${BASE}/admin`);
   }
 
   const defaultTitle = editingPost?.title || '';
