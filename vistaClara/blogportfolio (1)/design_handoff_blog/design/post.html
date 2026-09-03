@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cómo corro este blog en un contenedor de 128 MB — Mauro Armas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="wrap">
+
+  <nav class="nav">
+    <div class="brand"><span class="br">[</span>mauroarmas.dev<span class="br">]</span></div>
+    <div class="nav-links">
+      <a href="index.html">~/escritos</a>
+      <a href="#">~/rss.xml</a>
+    </div>
+    <div class="nav-right">
+      <div class="status"><span class="led"></span>online · 128 MB</div>
+      <a href="admin.html" class="btn-admin" title="Gestor de publicaciones">
+        <svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z" /></svg>
+        admin
+      </a>
+    </div>
+  </nav>
+
+  <article class="article">
+    <div class="art-topbar">
+      <a class="back" href="index.html">
+        <svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M14 6l-6 6 6 6" /></svg>
+        Volver al índice
+      </a>
+      <button class="btn-pdf" onclick="window.print()" title="Descargar como PDF">
+        <svg class="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" /></svg>
+        Descargar PDF
+      </button>
+    </div>
+
+    <header class="art-head">
+      <div class="art-meta">
+        <span class="tag mono">Infra</span>
+        <span class="m">28 May 2026</span>
+        <span class="dot"></span>
+        <span class="m"><svg class="ico" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" stroke-linecap="round" /></svg>6 min de lectura</span>
+        <span class="dot"></span>
+        <span class="m mono">#01</span>
+      </div>
+      <h1 class="art-title serif">Cómo corro este blog en un contenedor de 128 MB</h1>
+      <p class="art-deck">Un presupuesto de memoria estricto cambia cada decisión: el runtime, la base de datos y hasta cómo se hace el build. Estas son las restricciones que me impuse y lo que aprendí respetándolas.</p>
+      <div class="art-author">
+        <span class="av">MA</span>
+        <span>Por <b>Mauro Armas</b> · Desarrollador y Estudiante de Ingeniería</span>
+      </div>
+    </header>
+
+    <div class="prose">
+      <p>Tenía una regla simple antes de escribir una sola línea: el sitio entero —servidor, base de datos y assets— tiene que vivir cómodo en <strong>128 MB de RAM</strong> y <strong>8 GB de disco</strong>. No por masoquismo, sino porque las restricciones honestas producen mejores decisiones. Cuando la memoria es cara, dejas de arrastrar dependencias “por si acaso”.</p>
+
+      <h2>El presupuesto de memoria</h2>
+      <p>Lo primero fue hacer las cuentas. Un proceso de Node.js en reposo ya pide entre 40 y 60 MB. Eso deja poco margen, así que la meta fue clara: <em>un solo proceso, sin orquestadores, sin sidecars</em>. El build de Next.js en modo <code>standalone</code> copia únicamente lo que el servidor necesita en runtime y descarta el resto.</p>
+
+      <div class="code">
+        <div class="code-bar">
+          <span class="dots"><i></i><i></i><i></i></span>
+          <span class="file">next.config.js</span>
+          <span class="lang">javascript</span>
+        </div>
+        <pre><code><span class="tok-com">// Empaqueta solo el server runtime — nada de node_modules entero</span>
+<span class="tok-kw">module</span><span class="tok-pun">.</span>exports <span class="tok-pun">=</span> <span class="tok-pun">{</span>
+  output<span class="tok-pun">:</span> <span class="tok-str">'standalone'</span><span class="tok-pun">,</span>
+  compress<span class="tok-pun">:</span> <span class="tok-kw">true</span><span class="tok-pun">,</span>
+  experimental<span class="tok-pun">:</span> <span class="tok-pun">{</span> serverMinification<span class="tok-pun">:</span> <span class="tok-kw">true</span> <span class="tok-pun">}</span><span class="tok-pun">,</span>
+<span class="tok-pun">}</span></code></pre>
+      </div>
+
+      <p>Con eso, la imagen final pasó de cientos de megas a algo que arranca sin sudar. El truco no es exótico: es <strong>no enviar lo que no se ejecuta</strong>.</p>
+
+      <h2>Por qué SQLite y no Postgres</h2>
+      <p>Postgres es excelente, pero levantarlo significa un segundo proceso que pelea por la misma RAM. Para un blog con un CRUD de posts —lecturas frecuentes, escrituras raras— SQLite es la herramienta correcta, no el premio de consolación.</p>
+
+      <ul>
+        <li>Vive <strong>dentro</strong> del proceso: cero memoria extra por un servidor de base de datos.</li>
+        <li>Con <code>WAL</code> activado, las lecturas no bloquean a las escrituras.</li>
+        <li>El backup es copiar un archivo. Cabe en un cron de tres líneas.</li>
+      </ul>
+
+      <div class="code">
+        <div class="code-bar">
+          <span class="dots"><i></i><i></i><i></i></span>
+          <span class="file">db.ts</span>
+          <span class="lang">typescript</span>
+        </div>
+        <pre><code><span class="tok-kw">import</span> Database <span class="tok-kw">from</span> <span class="tok-str">'better-sqlite3'</span>
+
+<span class="tok-kw">export const</span> db <span class="tok-pun">=</span> <span class="tok-kw">new</span> <span class="tok-fn">Database</span><span class="tok-pun">(</span><span class="tok-str">'data/blog.db'</span><span class="tok-pun">)</span>
+db<span class="tok-pun">.</span><span class="tok-fn">pragma</span><span class="tok-pun">(</span><span class="tok-str">'journal_mode = WAL'</span><span class="tok-pun">)</span>   <span class="tok-com">// lecturas y escrituras conviven</span>
+db<span class="tok-pun">.</span><span class="tok-fn">pragma</span><span class="tok-pun">(</span><span class="tok-str">'synchronous = NORMAL'</span><span class="tok-pun">)</span> <span class="tok-com">// durable sin pagar de más</span></code></pre>
+      </div>
+
+      <div class="callout">
+        <span class="mk">nota</span>
+        <span>Una sola conexión, reutilizada en todo el proceso. Abrir y cerrar conexiones por request es justo el tipo de derroche que 128 MB no perdona.</span>
+      </div>
+
+      <h2>El resultado</h2>
+      <p>El contenedor arranca en menos de un segundo y se queda holgado por debajo del límite, incluso sirviendo tráfico. No hay magia: hay <strong>restricciones tomadas en serio</strong>. Y resulta que casi todo lo que creía necesitar, no lo era.</p>
+
+      <blockquote>Lo barato de operar suele ser, también, lo simple de entender.</blockquote>
+
+      <p>En el próximo escrito desarmo el CRUD: cuatro endpoints, validación en el borde y por qué decidí no meter ningún framework de más.</p>
+    </div>
+  </article>
+
+  <div class="art-end">
+    <a class="next-card" href="post.html">
+      <div>
+        <div class="lbl">Siguiente artículo</div>
+        <div class="nt serif">Un CRUD que no necesita un framework</div>
+      </div>
+      <span class="arr">→</span>
+    </a>
+  </div>
+
+  <div class="art-sub">
+    <h4 class="serif">¿Te sirvió? Recibe el próximo en tu correo.</h4>
+    <p>Sin spam. Un email solo cuando publico algo nuevo. Cancela cuando quieras.</p>
+    <div class="subscribe">
+      <input type="email" placeholder="tu@correo.com" aria-label="Correo" />
+      <button type="button">SUSCRIBIR</button>
+      <a href="#" class="rss" aria-label="RSS">
+        <svg class="ico" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16" /><circle cx="5" cy="19" r="1.4" fill="currentColor" stroke="none" /></svg>
+        rss
+      </a>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <span>© 2026 Mauro Armas</span>
+    <span class="seg">
+      <a href="index.html">índice</a>
+      <a href="#">rss.xml</a>
+      <a href="#">newsletter</a>
+    </span>
+  </footer>
+
+</div>
+</body>
+</html>

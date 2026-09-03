@@ -3,17 +3,8 @@
   "pages404": true,
   "appType": "app",
   "caseSensitive": false,
-  "basePath": "/44581626",
+  "basePath": "",
   "redirects": [
-    {
-      "source": "/44581626/",
-      "destination": "/44581626",
-      "basePath": false,
-      "internal": true,
-      "priority": true,
-      "statusCode": 308,
-      "regex": "^/44581626/$"
-    },
     {
       "source": "/:path+/",
       "destination": "/:path+",
@@ -32,29 +23,48 @@
   },
   "dynamicRoutes": [
     {
-      "page": "/api/posts/[id]",
-      "regex": "^/api/posts/([^/]+?)(?:/)?$",
+      "page": "/api/content/[id]",
+      "regex": "^/api/content/([^/]+?)(?:/)?$",
       "routeKeys": {
         "nxtPid": "nxtPid"
       },
-      "namedRegex": "^/api/posts/(?<nxtPid>[^/]+?)(?:/)?$"
+      "namedRegex": "^/api/content/(?<nxtPid>[^/]+?)(?:/)?$"
     },
     {
-      "page": "/posts/[slug]",
-      "regex": "^/posts/([^/]+?)(?:/)?$",
+      "page": "/[lang]",
+      "regex": "^/([^/]+?)(?:/)?$",
       "routeKeys": {
+        "nxtPlang": "nxtPlang"
+      },
+      "namedRegex": "^/(?<nxtPlang>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/[lang]/admin",
+      "regex": "^/([^/]+?)/admin(?:/)?$",
+      "routeKeys": {
+        "nxtPlang": "nxtPlang"
+      },
+      "namedRegex": "^/(?<nxtPlang>[^/]+?)/admin(?:/)?$"
+    },
+    {
+      "page": "/[lang]/admin/login",
+      "regex": "^/([^/]+?)/admin/login(?:/)?$",
+      "routeKeys": {
+        "nxtPlang": "nxtPlang"
+      },
+      "namedRegex": "^/(?<nxtPlang>[^/]+?)/admin/login(?:/)?$"
+    },
+    {
+      "page": "/[lang]/proyectos/[slug]",
+      "regex": "^/([^/]+?)/proyectos/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPlang": "nxtPlang",
         "nxtPslug": "nxtPslug"
       },
-      "namedRegex": "^/posts/(?<nxtPslug>[^/]+?)(?:/)?$"
+      "namedRegex": "^/(?<nxtPlang>[^/]+?)/proyectos/(?<nxtPslug>[^/]+?)(?:/)?$"
     }
   ],
   "staticRoutes": [
-    {
-      "page": "/",
-      "regex": "^/(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/(?:/)?$"
-    },
     {
       "page": "/_global-error",
       "regex": "^/_global\\-error(?:/)?$",
@@ -68,16 +78,22 @@
       "namedRegex": "^/_not\\-found(?:/)?$"
     },
     {
-      "page": "/admin",
-      "regex": "^/admin(?:/)?$",
+      "page": "/api/auth/login",
+      "regex": "^/api/auth/login(?:/)?$",
       "routeKeys": {},
-      "namedRegex": "^/admin(?:/)?$"
+      "namedRegex": "^/api/auth/login(?:/)?$"
     },
     {
-      "page": "/api/posts",
-      "regex": "^/api/posts(?:/)?$",
+      "page": "/api/auth/logout",
+      "regex": "^/api/auth/logout(?:/)?$",
       "routeKeys": {},
-      "namedRegex": "^/api/posts(?:/)?$"
+      "namedRegex": "^/api/auth/logout(?:/)?$"
+    },
+    {
+      "page": "/api/content",
+      "regex": "^/api/content(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/content(?:/)?$"
     }
   ],
   "dataRoutes": [],

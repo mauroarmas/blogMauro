@@ -1,34 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portafolio — Mauro Armas
 
-## Getting Started
+Portafolio profesional bilingüe (ES/EN) orientado a empleabilidad, con perfil dual
+**Desarrollo de Software** e **Infraestructura/Redes**. Construido con Next.js 16 (App
+Router), reemplazando el blog académico original de la materia de Virtualización.
 
-First, run the development server:
+Ver la especificación completa, el modelo de datos y las decisiones técnicas en
+[`specs/001-portafolio-profesional/`](specs/001-portafolio-profesional/).
+
+## Empezar
 
 ```bash
+npm install
+cp .env.example .env.local   # ver variables abajo
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abrir [http://localhost:3000](http://localhost:3000) — redirige a `/es` o `/en` según el
+idioma del navegador.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Sin `DATABASE_URL` en `.env.local`, el proyecto usa SQLite local
+(`local_blog.db`, creado automáticamente). Con `DATABASE_URL`, usa PostgreSQL.
 
-## Learn More
+### Variables de entorno
 
-To learn more about Next.js, take a look at the following resources:
+| Variable | Uso |
+|---|---|
+| `DATABASE_URL` | Opcional. Con valor → Postgres; sin valor → SQLite local. |
+| `ADMIN_PASSWORD_HASH` | Hash (scrypt) de la contraseña del panel `/admin`. Generar con: `node -e "console.log(require('crypto').scryptSync(process.argv[1], 'portfolio-salt', 64).toString('hex'))" "tu-contraseña"` |
+| `ADMIN_SESSION_SECRET` | Secreto para firmar la cookie de sesión del admin. Cualquier cadena larga y aleatoria. |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Cargar los casos de estudio iniciales (solo desarrollo local)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+node scripts/seed-content.mjs
+```
 
-## Deploy on Vercel
+Carga TrimIA y la Nube Privada en la base local. El cuerpo tiene marcadores `[TODO]` en
+las secciones de justificación técnica — están pendientes de que el dueño las complete
+con las decisiones reales (ver `specs/001-portafolio-profesional/tasks.md`, T028).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Estructura
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```text
+src/
+├── app/[lang]/            # Rutas públicas (es/en) + admin
+├── content/                # Proyectos, stack, formación, perfil — datos versionados
+├── components/             # Nav, ProjectCard, ProjectFilter, CaseStudyImage, etc.
+├── lib/                    # db.js (adaptador Postgres/SQLite), content.js, auth.js
+└── proxy.js                 # Detección de locale + reescritura de /admin
+```
+
+## Administración de contenido
+
+`/admin` (redirige a `/es/admin`) permite crear, editar, publicar y despublicar casos de
+estudio sin redeploy. Proyectos, stack y formación se editan en `src/content/` y sí
+requieren un commit + deploy (decisión documentada en
+`specs/001-portafolio-profesional/research.md`, §4).
+
+## Despliegue
+
+El destino de hosting ya no está atado a Proxmox/UTN (ver constitución del proyecto,
+`.specify/memory/constitution.md`). Cualquier host Node.js estándar sirve con:
+
+```bash
+npm run build
+npm start
+```
+
+## Aprender más sobre Next.js
+
+- [Documentación de Next.js](https://nextjs.org/docs)
+- [Next.js Learn](https://nextjs.org/learn)

@@ -1,0 +1,69 @@
+{
+  "nav": {
+    "sobreMi": "Sobre mí",
+    "formacion": "Formación",
+    "stack": "Stack",
+    "proyectos": "Proyectos",
+    "contacto": "Contacto",
+    "cv": "CV",
+    "cambiarTema": "Cambiar tema"
+  },
+  "hero": {
+    "verProyectos": "Ver proyectos"
+  },
+  "ledger": {
+    "ubicacion": "Ubicación",
+    "formacion": "Formación",
+    "redes": "Redes"
+  },
+  "sections": {
+    "stackTitle": "Stack",
+    "stackNote": "por capa",
+    "proyectosTitle": "Proyectos",
+    "proyectosNote": "ordenados por impacto",
+    "formacionTitle": "Formación",
+    "sobreMiTitle": "Sobre mí",
+    "contactoTitle": "Contacto"
+  },
+  "filters": {
+    "todos": "Todos",
+    "desarrollo": "Desarrollo",
+    "infraestructura": "Infraestructura",
+    "countOne": "1 proyecto",
+    "countMany": "{n} proyectos",
+    "empty": "No hay proyectos publicados en esta área todavía."
+  },
+  "project": {
+    "rol": "Rol",
+    "individual": "Trabajo individual",
+    "equipo": "Equipo de {n}",
+    "equipoSinTamano": "Trabajo en equipo",
+    "enCurso": "en curso",
+    "repositorio": "Repositorio",
+    "informe": "Informe",
+    "demo": "Demo",
+    "casoDeEstudio": "Caso de estudio"
+  },
+  "caseStudy": {
+    "volver": "Volver a proyectos",
+    "fallbackNoticeEs": "Este contenido está disponible en español.",
+    "fallbackNoticeEn": "Este contenido está disponible en inglés.",
+    "fallbackCtaEs": "Leer en español",
+    "fallbackCtaEn": "Leer en inglés",
+    "minLectura": "{n} min de lectura",
+    "nota": "nota",
+    "proyectos": "proyectos",
+    "contacto": "contacto"
+  },
+  "contact": {
+    "copiar": "copiar",
+    "copiado": "copiado"
+  },
+  "admin": {
+    "loginTitle": "Acceso",
+    "passwordLabel": "Contraseña",
+    "loginButton": "Ingresar",
+    "loginError": "Contraseña incorrecta.",
+    "logout": "Salir"
+  }
+}
