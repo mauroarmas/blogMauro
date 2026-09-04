@@ -103,7 +103,7 @@ de `posts`; el archivo `local_blog.db` de desarrollo se recrea.
 ```js
 { name: 'NestJS', layer: 'backend', areas: ['desarrollo'] }
 ```
-`layer` ∈ {`backend`, `frontend`, `datos`, `infra_cloud`, `ia`} — RF-004. Sin campo de
+`layer` ∈ {`backend`, `frontend`, `datos`, `redes`, `cloud`, `ia`} — RF-004. Sin campo de
 nivel de dominio, por RF-005.
 
 ## 4. `src/content/formacion.js`
@@ -117,8 +117,9 @@ nivel de dominio, por RF-005.
 
 Un objeto por locale: nombre, posicionamiento de una línea, ubicación, modalidad,
 descripción breve (máx. 4 líneas — RF-006), correo, enlaces a perfiles públicos, y la ruta
-al único CV que el sitio distribuye (`/cv/cv-mauro-armas-desarrollo.pdf` — RF-022; el CV de
-infraestructura/redes existe como documento del dueño pero no se sirve desde el sitio).
+al único CV que el sitio distribuye (`/cv/CV-Armas_Maurov2.pdf` — RF-022), más el nombre
+con el que se descarga (`CV-Mauro-Armas.pdf`). Ese CV cubre los tres ejes del perfil
+—desarrollo, redes y cloud—, así que ya no hay un segundo CV separado de infraestructura.
 
 ## 6. Diagrama de relaciones (lógicas, no FK de base de datos)
 

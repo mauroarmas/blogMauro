@@ -5,11 +5,16 @@ import remarkGfm from 'remark-gfm';
 import Nav from '@/components/Nav';
 import CodeBlock from '@/components/CodeBlock';
 import CaseStudyImage from '@/components/CaseStudyImage';
-import { getProyectoBySlug } from '@/content/proyectos';
+import GalleryCarousel from '@/components/GalleryCarousel';
+import { getProyectoBySlug, proyectos } from '@/content/proyectos';
 import { getContentBySlug } from '@/lib/content';
 import { getDictionary, SUPPORTED_LOCALES } from '../../dictionaries';
 
-export const dynamic = 'force-dynamic';
+// Necesario para output: 'export' — pre-renderiza todos los slugs conocidos en cada locale.
+export async function generateStaticParams() {
+  const slugs = proyectos.filter((p) => p.hasCaseStudy).map((p) => p.slug);
+  return SUPPORTED_LOCALES.flatMap((lang) => slugs.map((slug) => ({ lang, slug })));
+}
 
 export async function generateMetadata({ params }) {
   const { lang, slug } = await params;
@@ -22,11 +27,9 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function CaseStudyPage({ params, searchParams }) {
+export default async function CaseStudyPage({ params }) {
   const { lang, slug } = await params;
-  const { area } = await searchParams;
   const dict = await getDictionary(lang);
-  const search = area ? `?area=${area}` : '';
   const project = getProyectoBySlug(slug);
 
   // RF-017: un proyecto sin caso de estudio no debe tener una página de detalle.
@@ -34,7 +37,8 @@ export default async function CaseStudyPage({ params, searchParams }) {
     notFound();
   }
 
-  const result = await getContentBySlug(slug, { locale: lang, type: 'caso_estudio' });
+  // getContentBySlug es síncrona en el build estático — no necesita await.
+  const result = getContentBySlug(slug, { locale: lang, type: 'caso_estudio' });
   if (!result.found) {
     notFound();
   }
@@ -48,71 +52,84 @@ export default async function CaseStudyPage({ params, searchParams }) {
     : null;
 
   return (
-    <div className="wrap">
-      <Nav lang={lang} dict={dict} basePath={`/proyectos/${slug}`} search={search} />
+    <div className="wrap wrap-wide">
+      <Nav lang={lang} dict={dict} basePath={`/proyectos/${slug}`} search="" />
 
-      <article className="article">
-        <div className="art-topbar">
-          <Link className="back" href={`/${lang}#proyectos`}>
-            <svg className="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
-              <path d="M14 6l-6 6 6 6" />
-            </svg>
-            {dict.caseStudy.volver}
-          </Link>
-        </div>
+      <article className="article article-wide">
+        <div className="art-hero">
+          <aside className="art-gallery">
+          <GalleryCarousel images={content.images} />
+        </aside>
 
-        {isFallback && (
-          <div className="callout fallback-notice">
-            <span className="mk">{dict.caseStudy.nota}</span>
-            <span>
-              {availableLocale === 'es' ? dict.caseStudy.fallbackNoticeEs : dict.caseStudy.fallbackNoticeEn}
-              {' '}
-              <a href={`/${availableLocale}/proyectos/${slug}`}>
-                {availableLocale === 'es' ? dict.caseStudy.fallbackCtaEs : dict.caseStudy.fallbackCtaEn}
-              </a>
-            </span>
+        <div className="art-header">
+          <div className="art-topbar">
+            <Link className="back" href={`/${lang}#proyectos`}>
+              <svg className="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+                <path d="M14 6l-6 6 6 6" />
+              </svg>
+              {dict.caseStudy.volver}
+            </Link>
           </div>
-        )}
 
-        <header className="art-head">
-          <div className="art-meta">
-            <span className="tag mono">{i18n.context}</span>
-            {date && <><span className="m">{date}</span><span className="dot"></span></>}
-            {content.read_time && (
-              <span className="m">
-                <svg className="ico" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
-                  <circle cx="12" cy="12" r="9" />
-                  <path d="M12 7v5l3 2" strokeLinecap="round" />
-                </svg>
-                {dict.caseStudy.minLectura.replace('{n}', content.read_time)}
+          {isFallback && (
+            <div className="callout fallback-notice">
+              <span className="mk">{dict.caseStudy.nota}</span>
+              <span>
+                {availableLocale === 'es' ? dict.caseStudy.fallbackNoticeEs : dict.caseStudy.fallbackNoticeEn}
+                {' '}
+                <a href={`/${availableLocale}/proyectos/${slug}`}>
+                  {availableLocale === 'es' ? dict.caseStudy.fallbackCtaEs : dict.caseStudy.fallbackCtaEn}
+                </a>
               </span>
-            )}
+            </div>
+          )}
+
+          <header className="art-head">
+            <div className="art-meta">
+              <span className="tag mono">{i18n.context}</span>
+              {date && <><span className="m">{date}</span><span className="dot"></span></>}
+              {content.read_time && (
+                <span className="m">
+                  <svg className="ico" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2">
+                    <circle cx="12" cy="12" r="9" />
+                    <path d="M12 7v5l3 2" strokeLinecap="round" />
+                  </svg>
+                  {dict.caseStudy.minLectura.replace('{n}', content.read_time)}
+                </span>
+              )}
+            </div>
+            <h1 className="art-title serif">{content.title}</h1>
+            {content.excerpt && <p className="art-deck">{content.excerpt}</p>}
+          </header>
+
           </div>
-          <h1 className="art-title serif">{content.title}</h1>
-          {content.excerpt && <p className="art-deck">{content.excerpt}</p>}
-        </header>
-
-        <div className="prose">
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            components={{
-              code(props) {
-                const { children, className, ...rest } = props;
-                const match = /language-(\w+)/.exec(className || '');
-                if (match) {
-                  return <CodeBlock code={String(children).replace(/\n$/, '')} lang={match[1]} />;
-                }
-                return <code className={className} {...rest}>{children}</code>;
-              },
-            }}
-          >
-            {content.body || ''}
-          </ReactMarkdown>
-
-          {content.images?.map((img) => (
-            <CaseStudyImage key={img.url} url={img.url} alt={img.alt} />
-          ))}
         </div>
+
+        <div className="prose prose-wide">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                // La tabla va envuelta para que scrollee sola en pantallas angostas
+                // en vez de desbordar el ancho de la página.
+                table(props) {
+                  const { node, ...rest } = props;
+                  return <div className="table-wrap"><table {...rest} /></div>;
+                },
+                code(props) {
+                  // `node` es el nodo del AST que inyecta react-markdown: si se propaga con
+                  // el resto de las props termina en el DOM como node="[object Object]".
+                  const { children, className, node, ...rest } = props;
+                  const match = /language-(\w+)/.exec(className || '');
+                  if (match) {
+                    return <CodeBlock code={String(children).replace(/\n$/, '')} lang={match[1]} />;
+                  }
+                  return <code className={className} {...rest}>{children}</code>;
+                },
+              }}
+            >
+              {content.body || ''}
+            </ReactMarkdown>
+          </div>
       </article>
 
       <footer className="foot">

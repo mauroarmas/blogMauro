@@ -57,10 +57,10 @@ contenido real) y de un enlace de retorno a proyectos.
 
 ## 4. Filtro por área y CV único (Historia 3 / RF-019 a RF-022)
 
-En el navegador, con el filtro "Infraestructura" activo, el botón de descarga de CV en la
+En el navegador, con el filtro "Redes y Cloud" activo, el botón de descarga de CV en la
 nav debe seguir apuntando al único CV que el sitio distribuye (RF-022):
 ```bash
-curl -s "http://localhost:3000/es?area=infraestructura" | grep -o 'cv-mauro-armas-desarrollo.pdf'
+curl -s "http://localhost:3000/es?area=infraestructura" | grep -o 'CV-Armas_Maurov2.pdf'
 curl -s "http://localhost:3000/es?area=infraestructura" | grep -c 'cv-mauro-armas-infraestructura.pdf'   # debe dar 0
 ```
 

@@ -1,6 +1,9 @@
 // Datos estructurados de Proyecto (data-model.md §2). Editar este archivo y desplegar
 // es la vía prevista para sumar o actualizar un proyecto (research.md §4).
 //
+// El contenido sigue al CV (public/cv): mismos proyectos, mismas cifras, mismo stack —
+// un reclutador que compare los dos documentos no debería encontrar diferencias.
+//
 // NOTA: las URLs de "repositorio" apuntan al perfil público de GitHub del dueño porque
 // no se dispone todavía del slug exacto del repo de cada proyecto. Reemplazar por la URL
 // directa de cada repositorio (https://github.com/mauroarmas/<repo>) en cuanto se confirme
@@ -21,19 +24,19 @@ export const proyectos = [
       { type: 'informe', url: null, available: false },
       { type: 'demo', url: null, available: false },
     ],
-    stack: ['Gemini API', 'NestJS', 'LangChain', 'RAG', 'BullMQ (Redis)'],
+    stack: ['NestJS · TypeScript', 'LangGraph', 'ChromaDB · RAG', 'Gemini', 'PostgreSQL · Prisma', 'BullMQ · Redis'],
     i18n: {
       es: {
-        name: 'TrimIA — Asistente multi-agente de IA',
+        name: 'TrimIA — Un asistente de WhatsApp que sabe cuándo callarse',
         context: 'Credimisión S.R.L. · Tesis de grado, UTN-FRT',
         problem:
-          'La atención comercial por WhatsApp dependía de personas leyendo, clasificando y derivando cada consulta a mano.',
+          'Casi toda la operación pasa por WhatsApp y casi todo el conocimiento para contestar vive en la cabeza de alguien: cada consulta de un cliente dispara dos o tres consultas internas.',
       },
       en: {
-        name: 'TrimIA — Multi-agent AI assistant',
+        name: 'TrimIA — A WhatsApp assistant that knows when to stay quiet',
         context: 'Credimisión S.R.L. · Degree thesis, UTN-FRT',
         problem:
-          'Commercial support over WhatsApp relied on people reading, classifying and routing every inquiry by hand.',
+          'Almost the whole operation runs on WhatsApp and almost all the knowledge needed to answer lives in someone\'s head: every customer question triggers two or three internal ones.',
       },
     },
   },
@@ -51,19 +54,19 @@ export const proyectos = [
       { type: 'informe', url: null, available: false },
       { type: 'demo', url: null, available: false },
     ],
-    stack: ['FastAPI', 'React', 'PostgreSQL', 'Proxmox VE API', 'Docker', 'Linux'],
+    stack: ['Python · FastAPI', 'React · Vite', 'PostgreSQL', 'API de Proxmox VE', 'Docker', 'Linux'],
     i18n: {
       es: {
-        name: 'Gestión y orquestación de nube privada',
+        name: 'NAP — Orquestación de nube privada sobre Proxmox VE',
         context: 'UTN-FRT · Práctica supervisada',
         problem:
-          'Las cátedras necesitaban cómputo y almacenamiento propios sin tocar el clúster ni depender de que alguien de sistemas lo hiciera por ellas.',
+          'Ocho cátedras necesitaban cómputo y almacenamiento propios sobre un clúster de cinco nodos, sin tocar el hipervisor ni depender de que alguien de TIC lo aprovisionara a mano.',
       },
       en: {
-        name: 'Private cloud management and orchestration',
+        name: 'NAP — Private cloud orchestration on Proxmox VE',
         context: 'UTN-FRT · Supervised practicum',
         problem:
-          'Academic departments needed their own compute and storage without touching the cluster or depending on the systems team to provision it for them.',
+          'Eight academic departments needed their own compute and storage on a five-node cluster, without touching the hypervisor or waiting for IT to provision it by hand.',
       },
     },
   },
@@ -72,54 +75,83 @@ export const proyectos = [
     areas: ['desarrollo'],
     priority: 3,
     status: 'finalizado',
-    period: { start: '2025-09', end: '2025-12' },
-    role: { mode: 'individual', teamSize: null },
-    hasCaseStudy: false,
+    period: { start: '2025-10', end: '2025-12' },
+    role: { mode: 'equipo', teamSize: 3 },
+    hasCaseStudy: true,
     thumbnail: null,
     verification: [
       { type: 'repositorio', url: 'https://github.com/mauroarmas', available: true },
     ],
-    stack: ['NestJS', 'ReactJS', 'MySQL'],
+    stack: ['NestJS · TypeScript', 'React · Vite', 'MySQL 8', 'Docker', 'Cucumber BDD'],
     i18n: {
       es: {
-        name: 'Gestión de colas de pacientes para guardia médica',
-        context: 'UTN-FRT · Prácticas profesionalizantes',
+        name: 'Guardia Médica — Sistema de triaje para urgencias',
+        context: 'UTN-FRT · Ingeniería de Software',
         problem:
-          'El triaje y el registro de ingresos se llevaban a mano, en el momento en que menos tiempo hay para hacerlo.',
+          'En una guardia, el que llega primero no es el que se atiende primero: sostener ese orden a mano depende de que alguien lo recalcule mentalmente cada vez que entra un paciente.',
       },
       en: {
-        name: 'Patient queue management for medical emergency rooms',
-        context: 'UTN-FRT · Professional practicum',
+        name: 'Guardia Médica — ER triage system',
+        context: 'UTN-FRT · Software Engineering',
         problem:
-          'Triage and intake records were kept by hand, precisely when there is the least time to do it.',
+          'In an ER, first in is not first seen: keeping that order by hand depends on someone recalculating it mentally every time a new patient walks in.',
       },
     },
   },
   {
-    slug: 'red-social-trabajos',
+    slug: 'portal-oficios-concepcion',
     areas: ['desarrollo'],
     priority: 4,
     status: 'finalizado',
     period: { start: '2023-11', end: '2024-03' },
-    role: { mode: 'equipo', teamSize: null },
-    hasCaseStudy: false,
+    role: { mode: 'equipo', teamSize: 4 },
+    hasCaseStudy: true,
     thumbnail: null,
     verification: [
       { type: 'repositorio', url: 'https://github.com/mauroarmas', available: true },
     ],
-    stack: ['ExpressJS', 'ReactJS', 'MySQL'],
+    stack: ['React · Vite', 'Express', 'MongoDB · Mongoose', 'Cloudinary', 'JWT'],
     i18n: {
       es: {
-        name: 'Red social de trabajos',
+        name: 'Portal de Oficios Concepción',
         context: 'Municipalidad de Concepción · Rolling Code School',
         problem:
-          'Los oficios informales de Concepción no tenían un lugar donde ofrecerse ni donde encontrarse.',
+          'Conseguir un gasista matriculado o un electricista de confianza en Concepción pasaba por el boca en boca, sin forma de distinguir a un trabajador verificado de un número de teléfono suelto.',
       },
       en: {
-        name: 'Informal jobs social network',
+        name: 'Portal de Oficios Concepción',
         context: 'Municipality of Concepción · Rolling Code School',
         problem:
-          "Concepción's informal trades had no place to be offered or found.",
+          'Finding a licensed gas fitter or a trustworthy electrician in Concepción went by word of mouth, with no way to tell a vetted worker from a loose phone number.',
+      },
+    },
+  },
+  {
+    slug: 'clasificacion-aves-cnn',
+    areas: ['desarrollo'],
+    priority: 5,
+    status: 'finalizado',
+    period: { start: '2026-05', end: '2026-06' },
+    role: { mode: 'individual', teamSize: null },
+    hasCaseStudy: true,
+    thumbnail: null,
+    verification: [
+      { type: 'repositorio', url: 'https://github.com/mauroarmas', available: true },
+      { type: 'informe', url: '/assets/IA-project/tp3.pdf', available: true },
+    ],
+    stack: ['Python', 'TensorFlow · Keras', 'CNN', 'Transfer Learning'],
+    i18n: {
+      es: {
+        name: 'Clasificación de especies de aves con CNN',
+        context: 'Cátedra de Inteligencia Artificial, UTN-FRT · Trabajo práctico',
+        problem:
+          'Medir cuánto aporta realmente el Transfer Learning: tres arquitecturas (Custom, VGG16, ResNet50) sobre el mismo dataset de 7.500 imágenes, auditadas con curvas ROC y matriz de confusión.',
+      },
+      en: {
+        name: 'Bird species classification with CNNs',
+        context: 'Artificial Intelligence course, UTN-FRT · Coursework',
+        problem:
+          'Measuring what transfer learning actually buys you: three architectures (Custom, VGG16, ResNet50) over the same 7,500-image dataset, audited with ROC curves and a confusion matrix.',
       },
     },
   },

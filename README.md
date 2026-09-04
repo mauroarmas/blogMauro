@@ -1,7 +1,7 @@
 # Portafolio — Mauro Armas
 
-Portafolio profesional bilingüe (ES/EN) orientado a empleabilidad, con perfil dual
-**Desarrollo de Software** e **Infraestructura/Redes**. Construido con Next.js 16 (App
+Portafolio profesional bilingüe (ES/EN) orientado a empleabilidad, sobre los tres ejes
+del CV: **desarrollo de software**, **redes** y **cloud**. Construido con Next.js 16 (App
 Router), reemplazando el blog académico original de la materia de Virtualización.
 
 Ver la especificación completa, el modelo de datos y las decisiones técnicas en

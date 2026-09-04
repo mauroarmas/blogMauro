@@ -1,14 +1,14 @@
+import { Suspense } from 'react';
 import Image from 'next/image';
 import Nav from '@/components/Nav';
 import ProjectCard from '@/components/ProjectCard';
 import ProjectFilter from '@/components/ProjectFilter';
 import CopyButton from '@/components/CopyButton';
-import { normalizeArea } from '@/lib/areas';
-import { getPerfil, getCvPath } from '@/content/perfil';
-import { stack, STACK_LAYERS } from '@/content/stack';
+import { getPerfil, getCvPath, getCvFileName } from '@/content/perfil';
+import { stack, STACK_LAYERS, featuredStack } from '@/content/stack';
 import { formacion } from '@/content/formacion';
 import { proyectos } from '@/content/proyectos';
-import { hasPublishedCaseStudy } from '@/lib/content';
+import { hasPublishedCaseStudy, getContentBySlug } from '@/lib/content';
 import { getDictionary } from './dictionaries';
 
 function IconPin() {
@@ -237,18 +237,21 @@ const TECH_ICON = {
   'PostgreSQL': IconDb,
   'MySQL': IconDb,
   'Redis': IconBolt,
-  'NoSQL': IconBraces,
-  'Proxmox VE': IconLayers,
+  'ChromaDB (vectorial)': IconBraces,
+  'Redes TCP/IP': IconNetwork,
+  'Cisco Packet Tracer': IconNodes,
   'Linux (admin)': IconTerminal,
+  'nginx · systemd': IconServer,
+  'PLC · SCADA (nociones)': IconChip,
+  'Proxmox VE · LXC': IconLayers,
   'Docker': IconCube,
   'AWS': IconCloud,
-  'Redes TCP/IP · MikroTik': IconNetwork,
-  'GitHub Actions': IconLoop,
-  'LangChain': IconLink,
-  'RAG · LLM': IconChip,
-  'Gemini API': IconPlug,
-  'TensorFlow': IconChip,
+  'CI/CD · GitHub Actions': IconLoop,
   'n8n': IconNodes,
+  'LangGraph · LangChain': IconLink,
+  'RAG · LLM': IconBook,
+  'Gemini API': IconPlug,
+  'TensorFlow · Keras': IconChip,
 };
 
 export async function generateMetadata({ params }) {
@@ -261,26 +264,38 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function Home({ params, searchParams }) {
+export default async function Home({ params }) {
   const { lang } = await params;
-  const { area } = await searchParams;
   const dict = await getDictionary(lang);
   const perfil = getPerfil(lang);
   const proyectosOrdenados = [...proyectos].sort((a, b) => a.priority - b.priority);
-  const search = area ? `?area=${area}` : '';
 
   // RF-017: el link "Caso de estudio" solo debe existir si de verdad hay contenido
-  // publicado detrás — no alcanza con que el proyecto lo tenga marcado como candidato.
-  const caseStudyFlags = await Promise.all(
-    proyectosOrdenados.map((p) => (p.hasCaseStudy ? hasPublishedCaseStudy(p.slug) : false))
+  // publicado detrás. hasPublishedCaseStudy es síncrona (lee de archivos estáticos).
+  const caseStudyFlags = proyectosOrdenados.map((p) =>
+    p.hasCaseStudy ? hasPublishedCaseStudy(p.slug) : false
   );
+
+  const proyectosConThumbnail = proyectosOrdenados.map((p, i) => {
+    let thumb = p.thumbnail;
+    if (caseStudyFlags[i] && !thumb) {
+      const result = getContentBySlug(p.slug, { locale: lang, type: 'caso_estudio' });
+      if (result.found && result.content.images && result.content.images.length > 0) {
+        const firstImg = result.content.images.find(img => !img.url.includes('loom.com'));
+        if (firstImg) {
+          thumb = firstImg.url;
+        }
+      }
+    }
+    return { ...p, thumbnail: thumb };
+  });
 
   const formacionPrincipal = formacion[0];
   const fpText = formacionPrincipal.i18n[lang] || formacionPrincipal.i18n.es;
 
   return (
     <div className="wrap">
-      <Nav lang={lang} dict={dict} basePath="" search={search} />
+      <Nav lang={lang} dict={dict} basePath="" search="" />
 
       <header className="p-hero">
         <aside className="ledger">
@@ -312,7 +327,7 @@ export default async function Home({ params, searchParams }) {
           <p className="p-lead">{perfil.lead}</p>
 
           <ul className="chips">
-            {stack.slice(0, 10).map((s) => {
+            {featuredStack.map((s) => {
               const ChipIcon = TECH_ICON[s.name];
               return (
                 <li key={s.name}>
@@ -351,13 +366,6 @@ export default async function Home({ params, searchParams }) {
             const TypeIcon = FORMACION_ICON[f.type];
             return (
               <div className="edu-row" key={t.title}>
-                {f.certificate ? (
-                  <a className="edu-cert" href={f.certificate} target="_blank" rel="noopener noreferrer" aria-label={t.title}>
-                    <Image src={f.certificate} alt="" width={44} height={44} />
-                  </a>
-                ) : (
-                  <span className="edu-cert-empty" aria-hidden="true"></span>
-                )}
                 <div className="edu-main">
                   {TypeIcon && <TypeIcon />}
                   <h3 className="et">{t.title}</h3>
@@ -407,23 +415,21 @@ export default async function Home({ params, searchParams }) {
           <span className="c mono">{dict.sections.proyectosNote}</span>
         </div>
 
-        <ProjectFilter projects={proyectosOrdenados} initialArea={area} dict={dict}>
-          {proyectosOrdenados.map((project, i) => {
-            const normalizedArea = normalizeArea(area);
-            const hidden = normalizedArea !== 'todos' && !project.areas.includes(normalizedArea);
-            return (
+        <Suspense>
+          <ProjectFilter projects={proyectosConThumbnail} initialArea={undefined} dict={dict}>
+            {proyectosConThumbnail.map((project, i) => (
               <ProjectCard
                 key={project.slug}
                 project={project}
                 lang={lang}
                 index={i}
                 hasCaseStudyContent={caseStudyFlags[i]}
-                hidden={hidden}
+                hidden={false}
                 dict={dict}
               />
-            );
-          })}
-        </ProjectFilter>
+            ))}
+          </ProjectFilter>
+        </Suspense>
       </section>
 
       <section id="contacto">
@@ -443,7 +449,7 @@ export default async function Home({ params, searchParams }) {
           <div className="links-list">
             <a href={perfil.linkedin} target="_blank" rel="noopener noreferrer"><span>LinkedIn</span><span className="lh">in/mauro-armas</span></a>
             <a href={perfil.github} target="_blank" rel="noopener noreferrer"><span>GitHub</span><span className="lh">mauroarmas</span></a>
-            <a href={getCvPath()} download><span>CV — {dict.nav.cv}</span><span className="lh">PDF</span></a>
+            <a href={getCvPath()} download={getCvFileName()}><span>{dict.nav.cv}</span><span className="lh">PDF</span></a>
           </div>
         </div>
       </section>

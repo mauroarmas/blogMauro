@@ -28,7 +28,7 @@
   "filters": {
     "todos": "Todos",
     "desarrollo": "Desarrollo",
-    "infraestructura": "Infraestructura",
+    "infraestructura": "Redes y Cloud",
     "countOne": "1 proyecto",
     "countMany": "{n} proyectos",
     "empty": "No hay proyectos publicados en esta área todavía."
