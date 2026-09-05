@@ -4,3 +4,36 @@
 
 [build.environment]
   NODE_VERSION = "20"
+
+# Redirección de la raíz al idioma predeterminado
+[[redirects]]
+  from = "/"
+  to = "/es"
+  status = 302
+  force = true
+
+# Headers globales de seguridad
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Caché inmutable para assets versionados de Next.js
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Caché optimizada para imágenes y assets estáticos
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, stale-while-revalidate=604800"
+
+[[headers]]
+  for = "/cv/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+

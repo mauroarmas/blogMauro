@@ -12,13 +12,13 @@
 export const proyectos = [
   {
     slug: 'trimia',
-    areas: ['desarrollo'],
+    areas: ['ia', 'desarrollo'],
     priority: 1,
     status: 'en_curso',
     period: { start: '2026-04', end: null },
     role: { mode: 'individual', teamSize: null },
     hasCaseStudy: true,
-    thumbnail: null, // ruta en /public cuando el dueño cargue una captura real
+    thumbnail: '/assets/trimIA/trimia-1.png',
     verification: [
       { type: 'repositorio', url: 'https://github.com/mauroarmas', available: true },
       { type: 'informe', url: null, available: false },
@@ -27,13 +27,13 @@ export const proyectos = [
     stack: ['NestJS · TypeScript', 'LangGraph', 'ChromaDB · RAG', 'Gemini', 'PostgreSQL · Prisma', 'BullMQ · Redis'],
     i18n: {
       es: {
-        name: 'TrimIA — Un asistente de WhatsApp que sabe cuándo callarse',
+        name: 'TrimIA — Sistema multiagente de IA para atención al cliente y capacitación interna',
         context: 'Credimisión S.R.L. · Tesis de grado, UTN-FRT',
         problem:
           'Casi toda la operación pasa por WhatsApp y casi todo el conocimiento para contestar vive en la cabeza de alguien: cada consulta de un cliente dispara dos o tres consultas internas.',
       },
       en: {
-        name: 'TrimIA — A WhatsApp assistant that knows when to stay quiet',
+        name: 'TrimIA — Multi-agent AI system for customer service and internal training',
         context: 'Credimisión S.R.L. · Degree thesis, UTN-FRT',
         problem:
           'Almost the whole operation runs on WhatsApp and almost all the knowledge needed to answer lives in someone\'s head: every customer question triggers two or three internal ones.',
@@ -48,7 +48,7 @@ export const proyectos = [
     period: { start: '2026-05', end: null },
     role: { mode: 'equipo', teamSize: 3 },
     hasCaseStudy: true,
-    thumbnail: null, // ruta en /public cuando el dueño cargue una captura real
+    thumbnail: '/assets/NAP/NAP-1.png',
     verification: [
       { type: 'repositorio', url: 'https://github.com/mauroarmas', available: true },
       { type: 'informe', url: null, available: false },
@@ -78,7 +78,7 @@ export const proyectos = [
     period: { start: '2025-10', end: '2025-12' },
     role: { mode: 'equipo', teamSize: 3 },
     hasCaseStudy: true,
-    thumbnail: null,
+    thumbnail: '/assets/guardia/guardia-2.png',
     verification: [
       { type: 'repositorio', url: 'https://github.com/mauroarmas', available: true },
     ],
@@ -106,7 +106,7 @@ export const proyectos = [
     period: { start: '2023-11', end: '2024-03' },
     role: { mode: 'equipo', teamSize: 4 },
     hasCaseStudy: true,
-    thumbnail: null,
+    thumbnail: '/assets/portalOficios/portal-1.png',
     verification: [
       { type: 'repositorio', url: 'https://github.com/mauroarmas', available: true },
     ],
@@ -128,13 +128,13 @@ export const proyectos = [
   },
   {
     slug: 'clasificacion-aves-cnn',
-    areas: ['desarrollo'],
+    areas: ['ia', 'desarrollo'],
     priority: 5,
     status: 'finalizado',
     period: { start: '2026-05', end: '2026-06' },
     role: { mode: 'individual', teamSize: null },
     hasCaseStudy: true,
-    thumbnail: null,
+    thumbnail: '/assets/IA-project/curvas-aprendizaje.png',
     verification: [
       { type: 'repositorio', url: 'https://github.com/mauroarmas', available: true },
       { type: 'informe', url: '/assets/IA-project/tp3.pdf', available: true },

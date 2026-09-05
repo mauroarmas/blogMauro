@@ -29,6 +29,7 @@
     "todos": "All",
     "desarrollo": "Development",
     "infraestructura": "Networking & Cloud",
+    "ia": "Artificial Intelligence",
     "countOne": "1 project",
     "countMany": "{n} projects",
     "empty": "No projects published in this area yet."

@@ -442,6 +442,10 @@ a:hover { color: var(--accent); }
 .layer .lnote { font-size: 10.5px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--accent); opacity: .75; margin: 0 0 16px; }
 .layer ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 9px; }
 .layer li { font-size: 12.5px; color: var(--mut); display: flex; align-items: center; gap: 9px; }
+.layer li svg { flex: 0 0 auto; color: var(--accent); opacity: .72; }
+.layer li:hover svg { opacity: 1; }
+.layer.layer-wide { grid-column: 1 / -1; }
+.layer.layer-wide ul { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px 24px; }
 .ti { width: 14px; height: 14px; flex: 0 0 auto; color: var(--accent); opacity: .72; }
 .layer li:hover .ti { opacity: 1; }
 

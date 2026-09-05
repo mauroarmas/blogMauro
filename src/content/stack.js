@@ -20,8 +20,9 @@ export const stack = [
   // Datos — Ambas áreas
   { name: 'PostgreSQL', layer: 'datos', areas: ['desarrollo', 'infraestructura'], featured: true },
   { name: 'MySQL', layer: 'datos', areas: ['desarrollo'] },
+  { name: 'MongoDB', layer: 'datos', areas: ['desarrollo'] },
   { name: 'Redis', layer: 'datos', areas: ['desarrollo'] },
-  { name: 'ChromaDB (vectorial)', layer: 'datos', areas: ['desarrollo'] },
+  { name: 'ChromaDB (vectorial)', layer: 'datos', areas: ['desarrollo', 'ia'] },
 
   // Redes & Sistemas — Infraestructura
   { name: 'Redes TCP/IP', layer: 'redes', areas: ['infraestructura'], featured: true },
@@ -38,11 +39,22 @@ export const stack = [
   { name: 'CI/CD · GitHub Actions', layer: 'cloud', areas: ['infraestructura', 'desarrollo'] },
   { name: 'n8n', layer: 'cloud', areas: ['desarrollo'] },
 
-  // IA — Desarrollo
-  { name: 'LangGraph · LangChain', layer: 'ia', areas: ['desarrollo'] },
-  { name: 'RAG · LLM', layer: 'ia', areas: ['desarrollo'] },
-  { name: 'Gemini API', layer: 'ia', areas: ['desarrollo'] },
-  { name: 'TensorFlow · Keras', layer: 'ia', areas: ['desarrollo'] },
+  // IA — Inteligencia Artificial
+  { name: 'LangGraph · LangChain', layer: 'ia', areas: ['desarrollo', 'ia'] },
+  { name: 'RAG · LLM', layer: 'ia', areas: ['desarrollo', 'ia'] },
+  { name: 'Gemini API', layer: 'ia', areas: ['desarrollo', 'ia'] },
+  { name: 'TensorFlow · Keras', layer: 'ia', areas: ['desarrollo', 'ia'] },
+  { name: 'Spec-Driven Development (SDD)', layer: 'ia', areas: ['desarrollo', 'ia'] },
+
+  // Arquitectura & Método — Gestión y buenas prácticas
+  { name: 'TOGAF ADM', layer: 'metodo', areas: ['desarrollo', 'infraestructura'] },
+  { name: 'Gestión del conocimiento (modelo SECI)', layer: 'metodo', areas: ['desarrollo', 'ia'] },
+  { name: 'Gestión de proyectos (PMBok)', layer: 'metodo', areas: ['desarrollo'] },
+  { name: 'Scrum · Jira', layer: 'metodo', areas: ['desarrollo'] },
+  { name: 'Mejora continua (Kaizen)', layer: 'metodo', areas: ['desarrollo'] },
+  { name: 'Testing automatizado', layer: 'metodo', areas: ['desarrollo'] },
+  { name: 'Git · GitHub', layer: 'metodo', areas: ['desarrollo', 'infraestructura'] },
+  { name: 'ERP / SAP (nociones)', layer: 'metodo', areas: ['desarrollo'] },
 ];
 
 export const STACK_LAYERS = [
@@ -52,6 +64,7 @@ export const STACK_LAYERS = [
   { key: 'redes', es: 'Redes & Sistemas', en: 'Networking & Systems' },
   { key: 'cloud', es: 'Cloud & DevOps', en: 'Cloud & DevOps' },
   { key: 'ia', es: 'IA', en: 'AI' },
+  { key: 'metodo', es: 'Arquitectura & Método', en: 'Architecture & Method' },
 ];
 
 // Chips del Hero (RF-003): selección curada, no un slice del array.

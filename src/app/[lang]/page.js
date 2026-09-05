@@ -9,7 +9,7 @@ import { stack, STACK_LAYERS, featuredStack } from '@/content/stack';
 import { formacion } from '@/content/formacion';
 import { proyectos } from '@/content/proyectos';
 import { hasPublishedCaseStudy, getContentBySlug } from '@/lib/content';
-import { getDictionary } from './dictionaries';
+import { getDictionary, SUPPORTED_LOCALES } from './dictionaries';
 
 function IconPin() {
   return (
@@ -218,6 +218,15 @@ function IconBook() {
   );
 }
 
+function IconCheckSquare() {
+  return (
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+      <polyline points="9 11 12 14 22 4" />
+      <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+    </svg>
+  );
+}
+
 const FORMACION_ICON = {
   carrera: IconCap,
   bootcamp: IconBolt,
@@ -236,6 +245,7 @@ const TECH_ICON = {
   'HTML5 · CSS3': IconCode,
   'PostgreSQL': IconDb,
   'MySQL': IconDb,
+  'MongoDB': IconDb,
   'Redis': IconBolt,
   'ChromaDB (vectorial)': IconBraces,
   'Redes TCP/IP': IconNetwork,
@@ -252,7 +262,20 @@ const TECH_ICON = {
   'RAG · LLM': IconBook,
   'Gemini API': IconPlug,
   'TensorFlow · Keras': IconChip,
+  'Spec-Driven Development (SDD)': IconCode,
+  'TOGAF ADM': IconLayers,
+  'Gestión del conocimiento (modelo SECI)': IconBook,
+  'Gestión de proyectos (PMBok)': IconCheckSquare,
+  'Scrum · Jira': IconLoop,
+  'Mejora continua (Kaizen)': IconBolt,
+  'Testing automatizado': IconTerminal,
+  'Git · GitHub': IconGh,
+  'ERP / SAP (nociones)': IconCube,
 };
+
+export function generateStaticParams() {
+  return SUPPORTED_LOCALES.map((lang) => ({ lang }));
+}
 
 export async function generateMetadata({ params }) {
   const { lang } = await params;
@@ -389,7 +412,7 @@ export default async function Home({ params }) {
             const items = stack.filter((s) => s.layer === layer.key);
             if (items.length === 0) return null;
             return (
-              <div className="layer" key={layer.key}>
+              <div className={`layer ${layer.key === 'metodo' ? 'layer-wide' : ''}`} key={layer.key}>
                 <h3>{layer[lang] || layer.es}</h3>
                 <ul>
                   {items.map((s) => {
