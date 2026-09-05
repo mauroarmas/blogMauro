@@ -14,9 +14,7 @@
 /coverage
 
 # next.js
-/.next/*
-!/.next/standalone/
-!/.next/static/
+/.next/
 /out/
 
 # production
@@ -42,7 +40,3 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# SQLite local — estado de desarrollo, no va al repo
-local_blog.db
-local_blog.db-wal
-local_blog.db-shm
