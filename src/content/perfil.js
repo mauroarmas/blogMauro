@@ -9,12 +9,12 @@ const CV_FILE_NAME = 'CV-Mauro-Armas.pdf';
 const perfil = {
   es: {
     name: 'Mauro Armas',
-    role: 'Desarrollador Full-Stack · Redes y Cloud',
+    role: 'Desarrollador Full-Stack · Redes, Cloud e IA',
     location: 'Tucumán, Argentina',
     mode: 'Remoto o híbrido',
     thesis: 'Diseño, desarrollo e infraestructura de sistemas de información.',
-    lead:'',
-        about:
+    lead: 'Enfoque en arquitectura de software, metodologías ágiles y automatización de procesos de negocio con IA generativa.',
+    about:
       'Estudiante de 5.º año de Ingeniería en Sistemas con experiencia práctica en infraestructura (virtualización, servidores, redes y despliegue) y desarrollo full-stack, incluyendo sistemas con IA generativa que automatizan procesos de negocio. Actualmente formandome en redes, desarrollo de software y sistemas de control (PLC, SCADA). Trabajo con metodologías ágiles como Scrum, con enfoque en la entrega de software de calidad y la mejora continua del equipo y sistema. Me destaco por mi alta capacidad de aprendizaje autodidacta, resiliencia en contextos exigentes, liderazgo y adaptabilidad en entornos colaborativos y nuevas tecnologías.',
     email: 'mauro.armas14@gmail.com',
     github: 'https://github.com/mauroarmas',
@@ -24,11 +24,11 @@ const perfil = {
   },
   en: {
     name: 'Mauro Armas',
-    role: 'Full-Stack Developer · Networking & Cloud',
+    role: 'Full-Stack Developer · Networking, Cloud & AI',
     location: 'Tucumán, Argentina',
     mode: 'Remote or hybrid',
-    thesis: 'The software I design runs on infrastructure I maintain myself.',
-    lead: ' ',
+    thesis: 'Design, development, and infrastructure of information systems.',
+    lead: 'Focused on software architecture, agile methodologies, and business process automation with generative AI.',
     about:
       "A fifth-year Systems Engineering student with hands-on experience in infrastructure (virtualization, servers, networks, and deployment) and full-stack development, including systems with generative AI that automate business processes. Currently training in networking, software development, and control systems (PLC, SCADA). I work with agile methodologies such as Scrum, with a focus on delivering high-quality software and continuously improving the team and the system. I excel in my ability to be a self-directed learner, my resilience in demanding situations, my leadership, and my adaptability in collaborative environments and with new technologies.",
     email: 'mauro.armas14@gmail.com',

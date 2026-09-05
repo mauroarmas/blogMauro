@@ -31,9 +31,13 @@ export function generateStaticParams() {
 }
 
 export const metadata = {
-  title: 'Mauro Armas — Desarrollador Full-Stack · Redes y Cloud',
+  title: 'Mauro Armas — Desarrollador Full-Stack · Redes, Cloud e IA',
   description:
-    'Mauro Armas. Desarrollo full-stack (NestJS, FastAPI, React/Next.js, PostgreSQL), redes TCP/IP e infraestructura cloud (Proxmox VE, Linux, Docker, AWS). Tucumán, Argentina · Remoto.',
+    'Mauro Armas. Desarrollo full-stack (NestJS, FastAPI, React/Next.js, PostgreSQL), IA generativa (LangGraph, RAG, LLMs), redes TCP/IP e infraestructura cloud (Proxmox VE, Linux, Docker, AWS). Tucumán, Argentina · Remoto.',
+  icons: {
+    icon: '/icon.png',
+    apple: '/icon.png',
+  },
 };
 
 export default async function RootLayout({ children, params }) {
@@ -46,6 +50,10 @@ export default async function RootLayout({ children, params }) {
       className={`${newsreader.variable} ${hanken.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
+      <head>
+        <link rel="icon" href="/icon.png" sizes="any" />
+        <link rel="apple-touch-icon" href="/icon.png" />
+      </head>
       <body>
         {children}
         <Script id="theme-init" strategy="beforeInteractive">
