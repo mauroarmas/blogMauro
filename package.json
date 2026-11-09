@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "cv:dev": "node generador/server.mjs",
+    "cv:pdf": "node generador/cli.mjs",
+    "cv:install": "playwright install chromium",
+    "cv:test": "node --test generador/test/*.test.mjs"
   },
   "dependencies": {
     "next": "16.2.7",
@@ -17,9 +21,13 @@
     "shiki": "^4.2.0"
   },
   "devDependencies": {
+    "@fontsource-variable/hanken-grotesk": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@fontsource-variable/newsreader": "^5.3.0",
     "@tailwindcss/postcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "16.2.7",
+    "playwright": "^1.65.0",
     "tailwindcss": "^4"
   }
 }

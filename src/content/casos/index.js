@@ -6,14 +6,12 @@ import trimia from './trimia.js';
 import nubePrivada from './nube-privada.js';
 import portalOficiosConcepcion from './portal-oficios-concepcion.js';
 import guardiaMedica from './guardia-medica.js';
-import clasificacionAvesCnn from './clasificacion-aves-cnn.js';
 
 const casos = [
   trimia,
   nubePrivada,
   portalOficiosConcepcion,
   guardiaMedica,
-  clasificacionAvesCnn,
 ];
 
 // Misma firma que lib/content.js getContentBySlug — los callers no cambian.

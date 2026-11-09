@@ -46,6 +46,10 @@
     "casoDeEstudio": "Caso de estudio"
   },
   "caseStudy": {
+    "documents": "Documentación del proyecto",
+    "documentsNote": "Artículo, presentación e informe técnico. Los PDF se abren en una nueva pestaña.",
+    "openPdf": "Ver documento",
+    "pages": "{n} páginas",
     "volver": "Volver a proyectos",
     "fallbackNoticeEs": "Este contenido está disponible en español.",
     "fallbackNoticeEn": "Este contenido está disponible en inglés.",

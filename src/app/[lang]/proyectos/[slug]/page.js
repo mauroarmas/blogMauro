@@ -1,10 +1,10 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import Nav from '@/components/Nav';
 import CodeBlock from '@/components/CodeBlock';
-import CaseStudyImage from '@/components/CaseStudyImage';
 import GalleryCarousel from '@/components/GalleryCarousel';
 import { getProyectoBySlug, proyectos } from '@/content/proyectos';
 import { getContentBySlug } from '@/lib/content';
@@ -85,6 +85,7 @@ export default async function CaseStudyPage({ params }) {
           )}
 
           <header className="art-head">
+            {i18n.recognition && <p className="project-recognition">{i18n.recognition}</p>}
             <div className="art-meta">
               <span className="tag mono">{i18n.context}</span>
               {date && <><span className="m">{date}</span><span className="dot"></span></>}
@@ -100,10 +101,44 @@ export default async function CaseStudyPage({ params }) {
             </div>
             <h1 className="art-title serif">{content.title}</h1>
             {content.excerpt && <p className="art-deck">{content.excerpt}</p>}
+            {i18n.deliveryStatus && <p className="project-delivery">{i18n.deliveryStatus}</p>}
           </header>
 
           </div>
         </div>
+
+        {content.highlights?.length > 0 && (
+          <dl className="case-highlights">
+            {content.highlights.map((highlight) => (
+              <div key={highlight.label}>
+                <dt>{highlight.label}</dt>
+                <dd>{highlight.value}</dd>
+              </div>
+            ))}
+          </dl>
+        )}
+
+        {content.documents?.length > 0 && (
+          <section className="case-documents" aria-labelledby="case-documents-title">
+            <h2 id="case-documents-title">{dict.caseStudy.documents}</h2>
+            <p className="case-documents-note">{dict.caseStudy.documentsNote}</p>
+            <div className="case-document-grid">
+              {content.documents.map((document) => (
+                <a className="case-document" key={document.url} href={document.url} target="_blank" rel="noopener noreferrer">
+                  <div className="case-document-preview">
+                    <Image src={document.preview} alt="" width={document.previewWidth} height={document.previewHeight} />
+                  </div>
+                  <div className="case-document-info">
+                    <span className="case-document-meta">PDF · {dict.caseStudy.pages.replace('{n}', document.pages)}</span>
+                    <h3>{document.title}</h3>
+                    <p>{document.description}</p>
+                    <span className="case-document-cta">{dict.caseStudy.openPdf} <span aria-hidden="true">↗</span></span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </section>
+        )}
 
         <div className="prose prose-wide">
             <ReactMarkdown

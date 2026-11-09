@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="cv-token" content="__TOKEN__"><title>CV Studio · Mauro Armas</title><link rel="stylesheet" href="/assets/studio.css"><script src="/assets/studio.js" defer></script></head>
+<body>
+<aside class="controls">
+  <header><div class="brand">MA<span> / CV STUDIO</span></div><p class="local"><span></span> Solo en tu equipo</p></header>
+  <div class="intro"><p class="eyebrow">DEL PORTAFOLIO AL PAPEL</p><h1>Tu recorrido,<br>en papel.</h1><p>El mismo contenido. Una presentación lista para compartir.</p></div>
+  <form id="options">
+    <div class="field"><label for="locale">Idioma del documento</label><select id="locale" name="locale"><option value="es">Español</option><option value="en">English</option></select></div>
+    <fieldset><legend>Proyectos incluidos <span id="selection-count"></span></legend><div id="projects" class="projects"><p>Cargando proyectos…</p></div></fieldset>
+    <label class="photo-option"><input id="photo" type="checkbox" checked><span>Incluir fotografía</span></label>
+    <div class="field"><label for="portfolio-url">Enlace del portafolio <span>opcional</span></label><input id="portfolio-url" name="portfolioUrl" type="url" placeholder="https://tu-portafolio.com" aria-describedby="url-hint"><p class="hint" id="url-hint">Agrega enlaces a los casos de estudio y documentos alojados en tu web.</p></div>
+    <button class="refresh" type="button" id="refresh">↻ Actualizar desde el portafolio</button>
+    <div class="actions"><button class="download" id="download" type="submit" disabled>Descargar PDF <span>↗</span></button><p>Formato A4 · Texto seleccionable · Enlaces activos</p></div>
+  </form>
+  <footer class="source-note">Una sola fuente de contenido.<br>Los cambios de tu perfil, proyectos, formación y competencias se leen al actualizar o descargar.</footer>
+</aside>
+<main class="workspace"><div class="preview-bar"><div><span class="preview-dot"></span> VISTA PREVIA <span id="page-count"></span></div><p id="status" role="status" aria-live="polite">Preparando documento…</p></div><div id="error" role="alert" hidden></div><iframe id="preview" title="Vista previa del currículum" src="about:blank"></iframe></main>
+</body></html>

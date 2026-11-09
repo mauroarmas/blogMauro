@@ -29,8 +29,6 @@ export const stack = [
   { name: 'Cisco Packet Tracer', layer: 'redes', areas: ['infraestructura'] },
   { name: 'Linux (admin)', layer: 'redes', areas: ['infraestructura'], featured: true },
   { name: 'nginx · systemd', layer: 'redes', areas: ['infraestructura'] },
-  // Declarado como nociones también en el CV: formación en curso, no experiencia de proyecto.
-  { name: 'PLC · SCADA (nociones)', layer: 'redes', areas: ['infraestructura'] },
 
   // Cloud & DevOps — Infraestructura
   { name: 'Proxmox VE · LXC', layer: 'cloud', areas: ['infraestructura'], featured: true },
@@ -42,19 +40,14 @@ export const stack = [
   // IA — Inteligencia Artificial
   { name: 'LangGraph · LangChain', layer: 'ia', areas: ['desarrollo', 'ia'] },
   { name: 'RAG · LLM', layer: 'ia', areas: ['desarrollo', 'ia'] },
-  { name: 'Gemini API', layer: 'ia', areas: ['desarrollo', 'ia'] },
-  { name: 'TensorFlow · Keras', layer: 'ia', areas: ['desarrollo', 'ia'] },
   { name: 'Spec-Driven Development (SDD)', layer: 'ia', areas: ['desarrollo', 'ia'] },
 
-  // Arquitectura & Método — Gestión y buenas prácticas
-  { name: 'TOGAF ADM', layer: 'metodo', areas: ['desarrollo', 'infraestructura'] },
-  { name: 'Gestión del conocimiento (modelo SECI)', layer: 'metodo', areas: ['desarrollo', 'ia'] },
+  // Gestión & Calidad (QA) — Gestión de proyectos, agilidad y testing
   { name: 'Gestión de proyectos (PMBok)', layer: 'metodo', areas: ['desarrollo'] },
-  { name: 'Scrum · Jira', layer: 'metodo', areas: ['desarrollo'] },
-  { name: 'Mejora continua (Kaizen)', layer: 'metodo', areas: ['desarrollo'] },
-  { name: 'Testing automatizado', layer: 'metodo', areas: ['desarrollo'] },
-  { name: 'Git · GitHub', layer: 'metodo', areas: ['desarrollo', 'infraestructura'] },
-  { name: 'ERP / SAP (nociones)', layer: 'metodo', areas: ['desarrollo'] },
+  { name: 'Scrum', layer: 'metodo', areas: ['desarrollo'] },
+  { name: 'Jira', layer: 'metodo', areas: ['desarrollo'] },
+  { name: 'Postman', layer: 'metodo', areas: ['desarrollo'] },
+  { name: 'Cypress', layer: 'metodo', areas: ['desarrollo'] },
 ];
 
 export const STACK_LAYERS = [
@@ -64,7 +57,7 @@ export const STACK_LAYERS = [
   { key: 'redes', es: 'Redes & Sistemas', en: 'Networking & Systems' },
   { key: 'cloud', es: 'Cloud & DevOps', en: 'Cloud & DevOps' },
   { key: 'ia', es: 'IA', en: 'AI' },
-  { key: 'metodo', es: 'Arquitectura & Método', en: 'Architecture & Method' },
+  { key: 'metodo', es: 'Gestión & Calidad (QA)', en: 'Management & QA' },
 ];
 
 // Chips del Hero (RF-003): selección curada, no un slice del array.

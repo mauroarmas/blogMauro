@@ -6,16 +6,24 @@
 const CV_PATH = '/cv/CV-Armas_Maurov2.pdf';
 const CV_FILE_NAME = 'CV-Mauro-Armas.pdf';
 
+// Identidad compartida por la web y el CV; la foto siempre usa el mismo original.
+const identidad = {
+  fullName: 'Mauro Nahuel Armas',
+  photo: '/mauro.png',
+  phone: '+54 3865 505362',
+};
+
 const perfil = {
   es: {
     name: 'Mauro Armas',
     role: 'Desarrollador Full-Stack · Redes, Cloud e IA',
     location: 'Tucumán, Argentina',
     mode: 'Remoto o híbrido',
+    languages: ['Español · nativo', 'Inglés · intermedio'],
     thesis: 'Diseño, desarrollo e infraestructura de sistemas de información.',
-    lead: 'Enfoque en arquitectura de software, metodologías ágiles y automatización de procesos de negocio con IA generativa.',
+    lead: 'Enfoque en arquitectura de software, infraestructura cloud, metodologías ágiles y automatización de procesos de negocio con IA generativa.',
     about:
-      'Estudiante de 5.º año de Ingeniería en Sistemas con experiencia práctica en infraestructura (virtualización, servidores, redes y despliegue) y desarrollo full-stack, incluyendo sistemas con IA generativa que automatizan procesos de negocio. Actualmente formandome en redes, desarrollo de software y sistemas de control (PLC, SCADA). Trabajo con metodologías ágiles como Scrum, con enfoque en la entrega de software de calidad y la mejora continua del equipo y sistema. Me destaco por mi alta capacidad de aprendizaje autodidacta, resiliencia en contextos exigentes, liderazgo y adaptabilidad en entornos colaborativos y nuevas tecnologías.',
+      'Estudiante de 5.º año de Ingeniería en Sistemas de Información con experiencia práctica en desarrollo full-stack, infraestructura cloud y redes (virtualización, contenedores, servidores Linux y despliegue seguro), así como en sistemas multiagente con IA generativa que automatizan procesos de negocio. Aplico gestión de proyectos (PMBok, Scrum y Jira) y aseguramiento de calidad mediante pruebas automatizadas (Cypress, Postman) orientadas a entregar software robusto y mantenible. Me destaco por mi liderazgo técnico, capacidad de aprendizaje autodidacta, resiliencia en contextos exigentes y rápida adaptación en equipos colaborativos.',
     email: 'mauro.armas14@gmail.com',
     github: 'https://github.com/mauroarmas',
     linkedin: 'https://www.linkedin.com/in/mauro-armas/',
@@ -27,10 +35,11 @@ const perfil = {
     role: 'Full-Stack Developer · Networking, Cloud & AI',
     location: 'Tucumán, Argentina',
     mode: 'Remote or hybrid',
+    languages: ['Spanish · native', 'English · intermediate'],
     thesis: 'Design, development, and infrastructure of information systems.',
-    lead: 'Focused on software architecture, agile methodologies, and business process automation with generative AI.',
+    lead: 'Focused on software architecture, cloud infrastructure, agile methodologies, and business process automation with generative AI.',
     about:
-      "A fifth-year Systems Engineering student with hands-on experience in infrastructure (virtualization, servers, networks, and deployment) and full-stack development, including systems with generative AI that automate business processes. Currently training in networking, software development, and control systems (PLC, SCADA). I work with agile methodologies such as Scrum, with a focus on delivering high-quality software and continuously improving the team and the system. I excel in my ability to be a self-directed learner, my resilience in demanding situations, my leadership, and my adaptability in collaborative environments and with new technologies.",
+      'Fifth-year Information Systems Engineering student with hands-on experience in full-stack development, cloud infrastructure, and networking (virtualization, containers, Linux servers, and secure deployment), as well as multi-agent generative AI systems that automate business processes. I apply project management practices (PMBok, Scrum, and Jira) and quality assurance through automated testing (Cypress, Postman) to deliver robust, maintainable software. Known for technical leadership, self-directed learning, resilience in demanding environments, and fast adaptation within collaborative teams.',
     email: 'mauro.armas14@gmail.com',
     github: 'https://github.com/mauroarmas',
     linkedin: 'https://www.linkedin.com/in/mauro-armas/',
@@ -40,7 +49,7 @@ const perfil = {
 };
 
 export function getPerfil(locale) {
-  return perfil[locale] || perfil.es;
+  return { ...identidad, ...(perfil[locale] || perfil.es) };
 }
 
 export function getCvPath() {

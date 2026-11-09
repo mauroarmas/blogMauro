@@ -50,8 +50,10 @@ export default function ProjectCard({ project, lang, index, hasCaseStudyContent,
             i18n.name
           )}
         </h3>
+        {i18n.recognition && <p className="project-recognition">{i18n.recognition}</p>}
         <p className="pctx">{i18n.context}</p>
         <p className="pprob">{i18n.problem}</p>
+        {i18n.deliveryStatus && <p className="project-delivery">{i18n.deliveryStatus}</p>}
         <ul className="ptech">
           {project.stack.map((tech) => (
             <li key={tech}>{tech}</li>

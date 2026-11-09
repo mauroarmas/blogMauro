@@ -1,73 +1,51 @@
 # Portafolio — Mauro Armas
 
-Portafolio profesional bilingüe (ES/EN) orientado a empleabilidad, sobre los tres ejes
-del CV: **desarrollo de software**, **redes** y **cloud**. Construido con Next.js 16 (App
-Router), reemplazando el blog académico original de la materia de Virtualización.
+Portafolio profesional bilingüe (ES/EN) sobre desarrollo de software, redes, cloud e IA. Next.js 16 con App Router y exportación estática.
 
-Ver la especificación completa, el modelo de datos y las decisiones técnicas en
-[`specs/001-portafolio-profesional/`](specs/001-portafolio-profesional/).
-
-## Empezar
+## Desarrollo
 
 ```bash
 npm install
-cp .env.example .env.local   # ver variables abajo
 npm run dev
 ```
 
-Abrir [http://localhost:3000](http://localhost:3000) — redirige a `/es` o `/en` según el
-idioma del navegador.
+Abrir la dirección que indique Next.js (normalmente http://localhost:3000/es). El contenido se mantiene en archivos versionados; esta versión no requiere base de datos ni un panel de administración público.
 
-Sin `DATABASE_URL` en `.env.local`, el proyecto usa SQLite local
-(`local_blog.db`, creado automáticamente). Con `DATABASE_URL`, usa PostgreSQL.
-
-### Variables de entorno
-
-| Variable | Uso |
-|---|---|
-| `DATABASE_URL` | Opcional. Con valor → Postgres; sin valor → SQLite local. |
-| `ADMIN_PASSWORD_HASH` | Hash (scrypt) de la contraseña del panel `/admin`. Generar con: `node -e "console.log(require('crypto').scryptSync(process.argv[1], 'portfolio-salt', 64).toString('hex'))" "tu-contraseña"` |
-| `ADMIN_SESSION_SECRET` | Secreto para firmar la cookie de sesión del admin. Cualquier cadena larga y aleatoria. |
-
-### Cargar los casos de estudio iniciales (solo desarrollo local)
-
-```bash
-node scripts/seed-content.mjs
-```
-
-Carga TrimIA y la Nube Privada en la base local. El cuerpo tiene marcadores `[TODO]` en
-las secciones de justificación técnica — están pendientes de que el dueño las complete
-con las decisiones reales (ver `specs/001-portafolio-profesional/tasks.md`, T028).
-
-## Estructura
+## Contenido y estructura
 
 ```text
-src/
-├── app/[lang]/            # Rutas públicas (es/en) + admin
-├── content/                # Proyectos, stack, formación, perfil — datos versionados
-├── components/             # Nav, ProjectCard, ProjectFilter, CaseStudyImage, etc.
-├── lib/                    # db.js (adaptador Postgres/SQLite), content.js, auth.js
-└── proxy.js                 # Detección de locale + reescritura de /admin
+src/app/[lang]/     Páginas públicas en español e inglés
+src/content/        Perfil, proyectos, formación y competencias
+src/content/casos/  Casos de estudio y su índice
+src/styles/         Paleta compartida por la web y el CV
+src/components/     Componentes del portafolio
+public/             Fotos, capturas, documentos y CV público
+generador/         Panel privado de CV (servidor local independiente)
 ```
 
-## Administración de contenido
+Editar los datos en `src/content/`. Para sumar un caso, agregar su archivo y registrarlo en `src/content/casos/index.js`. Los cambios públicos requieren volver a compilar y desplegar.
 
-`/admin` (redirige a `/es/admin`) permite crear, editar, publicar y despublicar casos de
-estudio sin redeploy. Proyectos, stack y formación se editan en `src/content/` y sí
-requieren un commit + deploy (decisión documentada en
-`specs/001-portafolio-profesional/research.md`, §4).
-
-## Despliegue
-
-El destino de hosting ya no está atado a Proxmox/UTN (ver constitución del proyecto,
-`.specify/memory/constitution.md`). Cualquier host Node.js estándar sirve con:
+## Generador privado de CV
 
 ```bash
-npm run build
-npm start
+npm run cv:install
+npm run cv:dev
 ```
 
-## Aprender más sobre Next.js
+Abrir **http://127.0.0.1:4317** para elegir proyectos, previsualizar y descargar un PDF con la estética del portafolio. Cada actualización y exportación relee el contenido de la web. También se puede generar por terminal con `npm run cv:pdf`.
 
-- [Documentación de Next.js](https://nextjs.org/docs)
-- [Next.js Learn](https://nextjs.org/learn)
+El módulo no se incluye en las rutas públicas. Los archivos generados se guardan fuera de `public/`, y el CV público se conserva hasta reemplazarlo deliberadamente. Instrucciones y fuentes compartidas en [generador/README.md](generador/README.md).
+
+## Verificación y despliegue
+
+```bash
+npm run lint
+npm run cv:test
+npm run build -- --webpack
+```
+
+El build genera `out/`, listo para un hosting de archivos estáticos. Publicar únicamente esa carpeta. `next start` no corresponde al modo `output: 'export'` configurado. Se usa Webpack en el comando anterior porque en este entorno Turbopack presenta un problema con la resolución de `next/font/google`.
+
+La especificación y las decisiones originales están en [specs/001-portafolio-profesional/](specs/001-portafolio-profesional/); algunas describen una arquitectura anterior a la exportación estática.
+
+El diseño de la ampliación de CV Studio está en [el plan](specs/002-cv-job-studio/plan.md). La [constitución 2.0.0](.specify/memory/constitution.md) permite SQLite y Node/HTML/CSS para este módulo local de un propietario; esta autorización no implica que la ampliación ya esté implementada.

@@ -20,6 +20,10 @@
 # production
 /build
 
+# Resultados privados del generador local (nunca forman parte del sitio público)
+/output/
+/tmp/
+
 # misc
 .DS_Store
 *.pem

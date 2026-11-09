@@ -1,0 +1,28 @@
+/* Paleta compartida por el portafolio y el generador local de CV. */
+:root {
+  --bg:     oklch(0.148 0.006 262);
+  --panel:  oklch(0.178 0.007 262);
+  --panel2: oklch(0.205 0.008 262);
+  --fg:     oklch(0.93 0.005 262);
+  --fg-2:   oklch(0.80 0.008 262);
+  --mut:    oklch(0.62 0.010 262);
+  --faint:  oklch(0.50 0.010 262);
+  --line:   oklch(1 0 0 / 0.08);
+  --line-2: oklch(1 0 0 / 0.045);
+  --accent: oklch(0.82 0.075 80);     /* sand / gold */
+  --accent-deep: oklch(0.70 0.085 70);
+  --accent-soft: oklch(0.82 0.075 80 / 0.10);
+  --accent-ink: oklch(0.48 0.090 78);  /* dorado oscuro para texto legible sobre fondo claro */
+  --ok:     oklch(0.80 0.13 158);
+
+  /* code tokens */
+  --t-com: oklch(0.50 0.010 262);
+  --t-kw:  oklch(0.82 0.075 80);
+  --t-str: oklch(0.78 0.075 150);
+  --t-num: oklch(0.80 0.090 45);
+  --t-fn:  oklch(0.83 0.045 235);
+  --t-pun: oklch(0.62 0.010 262);
+
+  --maxw: 1080px;
+  /* --sans / --serif / --mono los define next/font/google vía className en <html> (src/app/[lang]/layout.js) */
+}

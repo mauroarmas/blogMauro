@@ -183,15 +183,6 @@ function IconLoop() {
   );
 }
 
-function IconChip() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round">
-      <rect x="6.5" y="6.5" width="11" height="11" rx="1.8" />
-      <path d="M10 2.8v3.7M14 2.8v3.7M10 17.5v3.7M14 17.5v3.7M2.8 10h3.7M2.8 14h3.7M17.5 10h3.7M17.5 14h3.7" />
-    </svg>
-  );
-}
-
 function IconPlug() {
   return (
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
@@ -252,7 +243,6 @@ const TECH_ICON = {
   'Cisco Packet Tracer': IconNodes,
   'Linux (admin)': IconTerminal,
   'nginx · systemd': IconServer,
-  'PLC · SCADA (nociones)': IconChip,
   'Proxmox VE · LXC': IconLayers,
   'Docker': IconCube,
   'AWS': IconCloud,
@@ -260,17 +250,12 @@ const TECH_ICON = {
   'n8n': IconNodes,
   'LangGraph · LangChain': IconLink,
   'RAG · LLM': IconBook,
-  'Gemini API': IconPlug,
-  'TensorFlow · Keras': IconChip,
   'Spec-Driven Development (SDD)': IconCode,
-  'TOGAF ADM': IconLayers,
-  'Gestión del conocimiento (modelo SECI)': IconBook,
   'Gestión de proyectos (PMBok)': IconCheckSquare,
-  'Scrum · Jira': IconLoop,
-  'Mejora continua (Kaizen)': IconBolt,
-  'Testing automatizado': IconTerminal,
-  'Git · GitHub': IconGh,
-  'ERP / SAP (nociones)': IconCube,
+  'Scrum': IconLoop,
+  'Jira': IconLayers,
+  'Postman': IconPlug,
+  'Cypress': IconTerminal,
 };
 
 export function generateStaticParams() {
@@ -322,7 +307,7 @@ export default async function Home({ params }) {
 
       <header className="p-hero">
         <aside className="ledger">
-          <Image className="avatar" src="/profilePhoto.jpg" alt={perfil.name} width={190} height={230} />
+          <Image className="avatar" src={perfil.photo} alt={perfil.name} width={190} height={230} />
           <div>
             <span className="k"><IconPin />{dict.ledger.ubicacion}</span>
             <span className="v">{perfil.location}</span>

@@ -46,6 +46,10 @@
     "casoDeEstudio": "Case study"
   },
   "caseStudy": {
+    "documents": "Project documentation",
+    "documentsNote": "Paper, presentation and technical report. PDFs open in a new tab.",
+    "openPdf": "View document",
+    "pages": "{n} pages",
     "volver": "Back to projects",
     "fallbackNoticeEs": "This content is available in Spanish.",
     "fallbackNoticeEn": "This content is available in English.",
