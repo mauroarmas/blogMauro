@@ -18,7 +18,7 @@ Elegí idioma, proyectos y fotografía. La URL opcional de tu portafolio agrega 
 
 **Actualizar desde el portafolio** relee los archivos y añade proyectos nuevos a la selección. **Descargar PDF** también relee el contenido antes de exportar, incluso si editaste un archivo después de abrir la vista previa. El navegador guarda el resultado en su carpeta de descargas.
 
-No hace falta reiniciar el módulo al editar el contenido. Los cambios en su propio código de servidor sí requieren reiniciarlo. La selección y las opciones duran mientras la pestaña esté abierta; no se guardan versiones paralelas de la biografía.
+No hace falta reiniciar el módulo al editar el contenido. Los cambios en su propio código de servidor sí requieren reiniciarlo. La selección del CV general dura mientras la pestaña esté abierta. Cada PDF generado se guarda también como versión privada; el editor permite conservar variantes de la biografía.
 
 ## Una sola fuente de contenido
 
@@ -35,7 +35,7 @@ Al actualizar una ficha o sumar un proyecto en `proyectos.js`, el generador lo i
 
 La plantilla no recorta los textos ni reduce la letra para forzar una sola página: mide el contenido con las fuentes reales y agrega páginas según sea necesario. Mantiene los proyectos juntos siempre que entren en una página; divide bloques excepcionalmente largos por párrafos o palabras. Si un elemento no se puede paginar, muestra un error en vez de exportarlo cortado.
 
-Los módulos de `src/content/` consumidos son exports de datos puros, sin imports relativos. Se cargan por contenido para evitar datos obsoletos por el caché de Node.
+Las fuentes autorizadas se capturan y versionan para cada operación. Se admiten imports relativos dentro del contenido autorizado; una versión histórica conserva sus propios datos y referencias.
 
 ## Generar desde la terminal
 
@@ -70,4 +70,26 @@ Las pruebas cubren actualización de archivos sin reinicio, proyectos nuevos, tr
 
 `assets/cv.css` define la composición impresa; `assets/paginate.js`, la distribución de contenido; `assets/studio.*`, el panel local. Las fuentes están instaladas localmente vía Fontsource.
 
-El diseño de la ampliación de CV Studio está en [el plan](../specs/002-cv-job-studio/plan.md). La [constitución 2.0.0](../.specify/memory/constitution.md) permite SQLite y Node/HTML/CSS para este módulo local de un propietario; esta autorización no implica que la ampliación ya esté implementada.
+El diseño de la ampliación de CV Studio está en [el plan](../specs/002-cv-job-studio/plan.md). La [constitución 2.0.0](../.specify/memory/constitution.md) permite SQLite y Node/HTML/CSS para este módulo local de un propietario; la ampliación se ejecuta únicamente en el módulo local.
+
+
+## Ofertas, evidencia y seguimiento
+
+En «Ofertas» pegá el texto o adjuntá un TXT/PDF; una URL de LinkedIn o Computrabajo se guarda como referencia sin visitar el portal. «Fuentes» permite inspeccionar revisiones y registrar información privada confirmada como hecho, aprendizaje, interés o preferencia. «Preferencias» conserva las condiciones laborales y los valores desconocidos. El dashboard registra candidaturas y envíos que declarás manualmente. No hay conexión a cuentas ni postulaciones automáticas en esta etapa.
+
+Para análisis y adaptación asistidos configurá `GEMINI_API_KEY` en el entorno local antes de iniciar el servidor. En «Configuración» elegí un modelo disponible, aceptá las categorías compartidas y configurá la modalidad y límites; validar y habilitar son acciones explícitas. La suscripción ChatGPT Plus no es una clave de Gemini ni configura esta integración. La calidad y latencia con un proveedor real requieren una evaluación separada.
+
+El editor distingue fuentes localizadas de afirmaciones confirmadas. Editar una afirmación exige volver a vincular evidencia y revisarla. Si agregás evidencia privada, actualizá las fuentes del borrador; para un CV adaptado primero volvé a analizar su oferta. Una versión puede guardarse como pendiente y solo se marca revisada tras resolver sus afirmaciones y enlaces.
+
+Los datos privados y copias de trabajo quedan en `.cv-studio/`, ignorado por Git y fuera de `out/`. En «Copias» podés crear y descargar un respaldo SQLite e inspeccionarlo antes de confirmar una restauración. La restauración reemplaza el conjunto local y bloquea la IA hasta conciliar el consumo; conservá tu copia fuera de ese directorio. La recuperación offline está disponible con `cv:studio recover`, tras inspeccionar los identificadores y detener el servidor.
+
+Comandos locales adicionales:
+
+```bash
+npm run cv:studio -- doctor
+npm run cv:studio -- sources refresh --wait --json
+npm run cv:studio -- offer add --text-file /ruta/oferta.txt --wait --json
+npm run cv:studio -- backup export --output /ruta/copia.sqlite --wait --json
+```
+
+Sin servidor activo, las operaciones de CLI requieren `--wait` para que una instancia temporal permanezca activa hasta finalizar. Con servidor activo pueden consultarse mediante `operation status ID`. Nunca publiques `.cv-studio/`, copias, ofertas ni claves.

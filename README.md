@@ -11,6 +11,26 @@ npm run dev
 
 Abrir la dirección que indique Next.js (normalmente http://localhost:3000/es). El contenido se mantiene en archivos versionados; esta versión no requiere base de datos ni un panel de administración público.
 
+## Inicio con Docker Compose
+
+Para iniciar y apagar el entorno completo (Portafolio web + CV Studio) en contenedores sin instalar dependencias globales:
+
+```bash
+# Iniciar todos los servicios en segundo plano
+npm run docker:up     # o: docker compose up -d
+
+# Ver registros en tiempo real
+npm run docker:logs   # o: docker compose logs -f
+
+# Apagar todos los servicios
+npm run docker:down   # o: docker compose down
+```
+
+* **Web (Next.js):** [http://localhost:3001/es](http://localhost:3001/es) (o puerto 3000 si está libre).
+* **CV Studio:** [http://127.0.0.1:4317](http://127.0.0.1:4317).
+* Los cambios en `src/` o `generador/` se reflejan en caliente gracias a los volúmenes montados. Los PDFs exportados se guardan directamente en `output/pdf/`.
+
+
 ## Contenido y estructura
 
 ```text
@@ -32,7 +52,7 @@ npm run cv:install
 npm run cv:dev
 ```
 
-Abrir **http://127.0.0.1:4317** para elegir proyectos, previsualizar y descargar un PDF con la estética del portafolio. Cada actualización y exportación relee el contenido de la web. También se puede generar por terminal con `npm run cv:pdf`.
+Abrir **http://127.0.0.1:4317** para generar un PDF, guardar versiones, registrar ofertas y candidaturas manuales, revisar fuentes y configurar preferencias. La adaptación asistida requiere configurar y habilitar Gemini explícitamente. También se puede generar por terminal con `npm run cv:pdf`.
 
 El módulo no se incluye en las rutas públicas. Los archivos generados se guardan fuera de `public/`, y el CV público se conserva hasta reemplazarlo deliberadamente. Instrucciones y fuentes compartidas en [generador/README.md](generador/README.md).
 
@@ -48,4 +68,4 @@ El build genera `out/`, listo para un hosting de archivos estáticos. Publicar �
 
 La especificación y las decisiones originales están en [specs/001-portafolio-profesional/](specs/001-portafolio-profesional/); algunas describen una arquitectura anterior a la exportación estática.
 
-El diseño de la ampliación de CV Studio está en [el plan](specs/002-cv-job-studio/plan.md). La [constitución 2.0.0](.specify/memory/constitution.md) permite SQLite y Node/HTML/CSS para este módulo local de un propietario; esta autorización no implica que la ampliación ya esté implementada.
+El diseño de la ampliación de CV Studio está en [el plan](specs/002-cv-job-studio/plan.md). La [constitución 2.0.0](.specify/memory/constitution.md) permite SQLite y Node/HTML/CSS para este módulo local de un propietario; el módulo es privado y local. La conexión a portales y las postulaciones quedan para una etapa posterior.

@@ -1,12 +1,12 @@
 # Quickstart — validación de CV Studio
 
-**Estado:** guía de aceptación para la implementación futura. El generador actual funciona, pero los nuevos comandos, pantallas y pruebas descritos aquí todavía no están implementados. Esta planificación no ejecuta llamadas a IA, conecta cuentas ni presenta candidaturas.
+**Estado:** guía de aceptación para el módulo local implementado. Las pruebas reales de Gemini requieren configuración y ejecución explícitas; la segunda etapa de conexión a portales y postulaciones no está implementada.
 
 [Plan](plan.md) · [HTTP](contracts/studio-http.md) · [UI/CLI](contracts/studio-ui-cli.md) · [Evidencia](contracts/ai-and-evidence.md) · [Almacenamiento](contracts/storage.md)
 
 ## 1. Preparar el entorno
 
-Desde la raíz del repositorio, después de implementar y fijar las dependencias:
+Desde la raíz del repositorio:
 
 ```bash
 node --version
@@ -19,7 +19,7 @@ npm run cv:studio -- doctor
 
 Resultado esperado: Node 24.16.x, Chromium disponible, Poppler mantenido por la distribución y esquema compatible. `doctor` no llama al proveedor; la ausencia de clave solo deshabilita asistencia remota. Si falta Poppler, instalar el paquete `poppler-utils` de la distribución. La base se crea en `.cv-studio/`, fuera del sitio público.
 
-`cv:studio` se agregará durante implementación. `cv:dev`, `cv:pdf`, `cv:install` y `cv:test` ya existen, pero las pruebas actuales no validan todavía esta ampliación.
+`cv:studio`, `cv:dev`, `cv:pdf`, `cv:install` y `cv:test` están disponibles; consultá el registro de validación para conocer la cobertura y los pendientes.
 
 ## 2. Validación automatizada sin consumo remoto
 
@@ -74,7 +74,7 @@ Para SC-001, ejecutar el conjunto acordado de diez ofertas con configuración v�
 
 ## 5. Comprobar la CLI compartida
 
-Comandos futuros, después de implementar `cv:studio`:
+Comandos disponibles en `cv:studio`:
 
 ```bash
 npm run cv:studio -- sources refresh --wait --json

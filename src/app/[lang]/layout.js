@@ -31,9 +31,9 @@ export function generateStaticParams() {
 }
 
 export const metadata = {
-  title: 'Mauro Armas — Desarrollador Full-Stack · Redes, Cloud e IA',
+  title: 'Mauro Armas — Desarrollo Full-Stack · Infraestructura · Automatizaciones e IA',
   description:
-    'Mauro Armas. Desarrollo full-stack (NestJS, FastAPI, React/Next.js, PostgreSQL), IA generativa (LangGraph, RAG, LLMs), redes TCP/IP e infraestructura cloud (Proxmox VE, Linux, Docker, AWS). Tucumán, Argentina · Remoto.',
+    'Mauro Armas. Desarrollo full-stack (NestJS, FastAPI, React/Next.js, PostgreSQL), IA generativa (LangGraph, RAG, LLMs), redes TCP/IP e infraestructura cloud (Proxmox VE, Linux, Docker, AWS). Tucumán, Argentina.',
   icons: {
     icon: '/icon.png',
     apple: '/icon.png',

@@ -1,0 +1,5 @@
+Oferta de prueba 3
+Puesto: Pasantía en sistemas
+Empresa: Ejemplo 3
+Modalidad: Tucumán presencial
+Requisitos: redes TCP/IP.

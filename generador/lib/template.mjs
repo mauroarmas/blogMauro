@@ -79,7 +79,7 @@ export async function renderCv(model) {
   const contacts = [
     ['mail', link(`mailto:${profile.email}`, profile.email)],
     ...(profile.phone ? [['phone', link(`tel:${profile.phone.replace(/[^+\d]/g, '')}`, profile.phone)]] : []),
-    ['pin', text(profile.location)], ['frontend', text(profile.mode)],
+    ['pin', text(profile.location)],
     ['linkedin', link(profile.linkedin, profile.linkedin.replace(/^https?:\/\//, '').replace(/\/$/, ''))],
     ['github', link(profile.github, profile.github.replace(/^https?:\/\//, ''))],
     ...(options.portfolioUrl ? [['link', link(options.portfolioUrl, options.portfolioUrl.replace(/^https?:\/\//, ''))]] : []),
@@ -93,13 +93,13 @@ export async function renderCv(model) {
   </template>
   <template id="side-source">
     ${model.photo ? `<div class="cv-block portrait-block" data-label="Foto"><img class="portrait" src="${model.photo}" alt="${text(profile.name)}" width="300" height="300"></div>` : ''}
-    <section class="cv-block contact-block" data-label="${copy.contact}"><h2 class="side-label">${copy.contact}</h2>${contacts.map(([symbol, content]) => `<p class="contact-row">${icon(symbol)}<span>${content}</span></p>`).join('')}</section>
+    <section class="cv-block contact-block" data-label="${copy.contact}"><h2 class="side-label">${copy.contact}</h2>${contacts.map(([symbol, content]) => `<p class="contact-row${symbol === 'link' ? ' portfolio-link' : ''}">${icon(symbol)}<span>${content}</span></p>`).join('')}</section>
     ${education.map((item, i) => educationBlock(item, i, copy.education, 'cap')).join('')}
     ${model.skills.map((group, i) => `<section class="cv-block skill-group" data-label="${text(group.label)}">${i === 0 ? `<h2 class="side-label">${copy.skills}</h2>` : ''}<h3 class="with-icon">${icon(group.key)}<span>${text(group.label)}</span></h3><p>${printText(group.items.join(' · '))}</p></section>`).join('')}
     ${courses.map((item, i) => educationBlock(item, i, copy.courses, 'book')).join('')}
     ${profile.languages?.length ? `<section class="cv-block" data-label="${copy.languages}"><h2 class="side-label with-icon">${icon('globe')}<span>${copy.languages}</span></h2>${profile.languages.map(item => `<p>${text(item)}</p>`).join('')}</section>` : ''}
   </template>
-  <template id="first-header"><header class="cv-header"><p class="eyebrow">${text(profile.location)} <span>· ${text(profile.mode)}</span></p><h1>${text(profile.fullName || profile.name)}</h1><p class="cv-role">${text(profile.role)}</p><p class="cv-lead">${text(profile.lead)}</p></header></template>
+  <template id="first-header"><header class="cv-header"><p class="eyebrow">${text(profile.location)}</p><h1>${text(profile.fullName || profile.name)}</h1><p class="cv-role">${text(profile.role)}</p><p class="cv-lead">${text(profile.lead)}</p></header></template>
   <div id="pages" class="pages"></div><p id="layout-error" role="alert" hidden></p>
   <script id="cv-metadata" type="application/json">${metadata}</script><script>${pagination}</script></body></html>`;
 }

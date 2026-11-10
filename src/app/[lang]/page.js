@@ -237,6 +237,9 @@ const TECH_ICON = {
   'PostgreSQL': IconDb,
   'MySQL': IconDb,
   'MongoDB': IconDb,
+  'Bases de datos relacionales (MySQL, PostgreSQL)': IconDb,
+  'Bases de datos relacionales (Mysql, PostgreSQL)': IconDb,
+  'Bases de datos no relacionales (MongoDB)': IconDb,
   'Redis': IconBolt,
   'ChromaDB (vectorial)': IconBraces,
   'Redes TCP/IP': IconNetwork,
@@ -256,6 +259,7 @@ const TECH_ICON = {
   'Jira': IconLayers,
   'Postman': IconPlug,
   'Cypress': IconTerminal,
+  'Cypress y Postman': IconTerminal,
 };
 
 export function generateStaticParams() {
@@ -308,13 +312,13 @@ export default async function Home({ params }) {
       <header className="p-hero">
         <aside className="ledger">
           <Image className="avatar" src={perfil.photo} alt={perfil.name} width={190} height={230} />
-          <div>
-            <span className="k"><IconPin />{dict.ledger.ubicacion}</span>
-            <span className="v">{perfil.location}</span>
-          </div>
-          <div>
+          <div className="ledger-edu">
             <span className="k"><IconCap />{dict.ledger.formacion}</span>
-            <span className="v">{fpText.title}<br />{fpText.institution} · {fpText.statusLabel}</span>
+            <div className="ledger-edu-content">
+              <span className="ledger-edu-title">{fpText.title}</span>
+              <span className="ledger-edu-sub">{fpText.institution}</span>
+              {fpText.statusLabel && <span className="ledger-edu-status">{fpText.statusLabel}</span>}
+            </div>
           </div>
           <div>
             <span className="k"><IconLink />{dict.ledger.redes}</span>
@@ -329,7 +333,7 @@ export default async function Home({ params }) {
         <div>
           <h1 className="p-name">{perfil.name.split(' ')[0]} <span className="last">{perfil.name.split(' ').slice(1).join(' ')}</span></h1>
           <p className="p-role">{perfil.role}</p>
-          <p className="p-where">{perfil.location} · {perfil.mode}</p>
+          <p className="p-where">{perfil.location}{perfil.mode ? ` · ${perfil.mode}` : ''}</p>
 
           <p className="thesis">{perfil.thesis}</p>
           <p className="p-lead">{perfil.lead}</p>
@@ -344,6 +348,9 @@ export default async function Home({ params }) {
                 </li>
               );
             })}
+            <li className="chip-more">
+              <a href="#stack" className="btn-more">{dict.hero.verMasStack || 'más...'}</a>
+            </li>
           </ul>
 
           <div className="cta">

@@ -4,8 +4,8 @@
 // El CV (public/cv) fue la referencia inicial. Las fichas web se actualizan con las
 // fuentes de cada proyecto; el PDF descargable conserva su propia edición.
 //
-// NOTA: las URLs de "repositorio" apuntan al perfil público de GitHub del dueño porque
-// no se dispone todavía del slug exacto del repo de cada proyecto. Reemplazar por la URL
+// NOTA: algunas URLs de "repositorio" apuntan al perfil público de GitHub del dueño porque
+// no se dispone todavía del slug exacto de esos repositorios. Reemplazar por la URL
 // directa de cada repositorio (https://github.com/mauroarmas/<repo>) en cuanto se confirme
 // — no se fabrica una ruta específica sin verificarla (Principio II de la constitución).
 
@@ -59,7 +59,7 @@ export const proyectos = [
       es: {
         name: 'NAP — Nube Académica Práctica para la UTN-FRT',
         context: 'UTN-FRT · Práctica supervisada',
-        recognition: 'Trabajo aceptado en CONAIISI 2026',
+        recognition: 'Aprobado en CONAIISI 2026',
         deliveryStatus: 'Validado en laboratorio · despliegue institucional pendiente',
         problem:
           'Diseñé y desarrollé una plataforma de nube privada que transforma un clúster Proxmox VE en servicios IaaS, PaaS y SaaS bajo demanda para las cátedras universitarias. Automatiza el ciclo completo de solicitud, aprobación, reserva de recursos, aprovisionamiento aislado (LXC/OCI) y acceso seguro, respaldado por más de 900 pruebas automatizadas.',
@@ -127,6 +127,34 @@ export const proyectos = [
         context: 'Municipality of Concepción · Rolling Code School',
         problem:
           'Built the municipal web platform connecting residents with verified skilled tradespeople. Implemented the administrative moderation and onboarding workflow, JWT authentication, professional profile management in Express and React, document storage in Cloudinary, and a community review rating system.',
+      },
+    },
+  },
+  {
+    slug: 'gestion-multi-gimnasio',
+    areas: ['desarrollo'],
+    priority: 5,
+    status: 'en_curso',
+    period: { start: '2026-11', end: null },
+    role: { mode: 'individual', teamSize: null },
+    hasCaseStudy: false,
+    thumbnail: null,
+    verification: [
+      { type: 'repositorio', url: 'https://github.com/mauroarmas/polyGim', available: true },
+    ],
+    stack: ['Java 21 · Spring Boot 3', 'Spring Security', 'JPA · Hibernate', 'PostgreSQL · Flyway', 'Thymeleaf · HTMX', 'JUnit 5 · Testcontainers', 'Docker · GitHub Actions'],
+    i18n: {
+      es: {
+        name: 'Plataforma multi-gimnasio — Gestión de membresías, pagos y reservas',
+        context: 'Proyecto personal · Basado en las necesidades de un gimnasio real',
+        problem:
+          'Diseñé y desarrollé una plataforma web a partir de las necesidades de un gimnasio real, transformando una aplicación de escritorio en un producto adaptable a distintos negocios. Centraliza clientes, membresías, cobros parciales, vencimientos y reservas con cupo. Cada gimnasio cuenta con datos aislados, permisos por rol, reglas configurables e identidad visual propia.',
+      },
+      en: {
+        name: 'Multi-gym platform — Membership, payment, and class booking management',
+        context: 'Personal project · Based on the needs of a real gym',
+        problem:
+          'Designed and built a web platform based on the needs of a real gym, transforming a desktop application into a product adaptable to different businesses. Centralizes clients, memberships, partial payments, expiration dates, and capacity-limited class bookings. Each gym has isolated data, role-based permissions, configurable business rules, and its own visual identity.',
       },
     },
   },

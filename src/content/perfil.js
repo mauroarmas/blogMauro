@@ -16,12 +16,12 @@ const identidad = {
 const perfil = {
   es: {
     name: 'Mauro Armas',
-    role: 'Desarrollador Full-Stack · Redes, Cloud e IA',
+    role: 'Desarrollo Full-Stack · Infraestructura · Automatizaciones e IA',
     location: 'Tucumán, Argentina',
-    mode: 'Remoto o híbrido',
+    mode: '',
     languages: ['Español · nativo', 'Inglés · intermedio'],
     thesis: 'Diseño, desarrollo e infraestructura de sistemas de información.',
-    lead: 'Enfoque en arquitectura de software, infraestructura cloud, metodologías ágiles y automatización de procesos de negocio con IA generativa.',
+    lead: 'Enfoque en desarrollo y arquitectura de software, infraestructura y automatización de procesos de negocio.',
     about:
       'Estudiante de 5.º año de Ingeniería en Sistemas de Información con experiencia práctica en desarrollo full-stack, infraestructura cloud y redes (virtualización, contenedores, servidores Linux y despliegue seguro), así como en sistemas multiagente con IA generativa que automatizan procesos de negocio. Aplico gestión de proyectos (PMBok, Scrum y Jira) y aseguramiento de calidad mediante pruebas automatizadas (Cypress, Postman) orientadas a entregar software robusto y mantenible. Me destaco por mi liderazgo técnico, capacidad de aprendizaje autodidacta, resiliencia en contextos exigentes y rápida adaptación en equipos colaborativos.',
     email: 'mauro.armas14@gmail.com',
@@ -32,12 +32,12 @@ const perfil = {
   },
   en: {
     name: 'Mauro Armas',
-    role: 'Full-Stack Developer · Networking, Cloud & AI',
+    role: 'Full-Stack Development · Infrastructure · Automations & AI',
     location: 'Tucumán, Argentina',
-    mode: 'Remote or hybrid',
+    mode: '',
     languages: ['Spanish · native', 'English · intermediate'],
     thesis: 'Design, development, and infrastructure of information systems.',
-    lead: 'Focused on software architecture, cloud infrastructure, agile methodologies, and business process automation with generative AI.',
+    lead: 'Focus on software development and architecture, infrastructure, and business process automation.',
     about:
       'Fifth-year Information Systems Engineering student with hands-on experience in full-stack development, cloud infrastructure, and networking (virtualization, containers, Linux servers, and secure deployment), as well as multi-agent generative AI systems that automate business processes. I apply project management practices (PMBok, Scrum, and Jira) and quality assurance through automated testing (Cypress, Postman) to deliver robust, maintainable software. Known for technical leadership, self-directed learning, resilience in demanding environments, and fast adaptation within collaborative teams.',
     email: 'mauro.armas14@gmail.com',

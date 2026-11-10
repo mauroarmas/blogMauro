@@ -1,0 +1,51 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: portafolio-web
+    restart: unless-stopped
+    command: npm run dev
+    ports:
+      - "${PORTAFOLIO_PORT:-3001}:3000"
+    environment:
+      - NODE_ENV=development
+      - HOSTNAME=0.0.0.0
+      - PORT=3000
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    networks:
+      - portafolio-net
+
+  cv-studio:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: portafolio-cv-studio
+    restart: unless-stopped
+    command: npm run cv:dev
+    ports:
+      - "${CV_PORT:-4317}:4317"
+    environment:
+      - NODE_ENV=development
+      - CV_HOST=0.0.0.0
+      - CV_PORT=4317
+      - CV_ALLOWED_HOSTS=localhost:${CV_PORT:-4317},127.0.0.1:${CV_PORT:-4317}
+      - CHROMIUM_FLAGS=--no-sandbox --disable-setuid-sandbox --disable-dev-shm-usage
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - ./output:/app/output
+      - cv-studio-data:/root/.cv-studio
+    networks:
+      - portafolio-net
+
+volumes:
+  cv-studio-data:
+    driver: local
+
+networks:
+  portafolio-net:
+    driver: bridge

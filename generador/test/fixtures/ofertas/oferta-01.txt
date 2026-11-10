@@ -1,0 +1,5 @@
+Oferta de prueba 1
+Puesto: Desarrollador junior
+Empresa: Ejemplo 1
+Modalidad: remoto
+Requisitos: React y Node.js.

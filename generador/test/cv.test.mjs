@@ -98,7 +98,8 @@ test('A4 conserva todo el contenido en español, inglés y con textos largos', a
 });
 
 test('Servidor local: rutas acotadas, origen y token obligatorios para exportar', async () => {
-  const app = await startServer({ port: 0 });
+  const dataDirectory = await mkdtemp(join(tmpdir(), 'cv-server-test-'));
+  const app = await startServer({ port: 0, dataDirectory });
   try {
     assert.equal(app.server.address().address, '127.0.0.1');
     const response = await fetch(app.url);
@@ -119,11 +120,12 @@ test('Servidor local: rutas acotadas, origen y token obligatorios para exportar'
     assert.equal(pdf.status, 200);
     assert.equal(pdf.headers.get('content-type'), 'application/pdf');
     assert.equal(Buffer.from(await pdf.arrayBuffer()).subarray(0, 4).toString(), '%PDF');
-  } finally { await app.close(); }
+  } finally { await app.close(); await rm(dataDirectory, { recursive: true, force: true }); }
 });
 
 test('Panel: vista previa, opciones y descarga funcionan en conjunto', async () => {
-  const app = await startServer({ port: 0 });
+  const dataDirectory = await mkdtemp(join(tmpdir(), 'cv-panel-test-'));
+  const app = await startServer({ port: 0, dataDirectory });
   const browser = await chromium.launch();
   try {
     const page = await browser.newPage({ viewport: { width: 1440, height: 1100 } });
@@ -133,7 +135,7 @@ test('Panel: vista previa, opciones y descarga funcionan en conjunto', async () 
     const first = page.locator('#projects input').first();
     await first.uncheck();
     await page.locator('#download:not([disabled])').waitFor();
-    assert.match(await page.locator('#selection-count').textContent(), /3 \/ 4/);
+    assert.match(await page.locator('#selection-count').textContent(), /4 \/ 5/);
     const slug = await first.inputValue();
     await page.selectOption('#locale', 'en');
     await page.locator('#download:not([disabled])').waitFor();
@@ -143,5 +145,5 @@ test('Panel: vista previa, opciones y descarga funcionan en conjunto', async () 
     const [file] = await Promise.all([page.waitForEvent('download'), page.click('#download')]);
     assert.equal(file.suggestedFilename(), 'CV-Mauro-Armas-en.pdf');
     assert.equal(await file.failure(), null);
-  } finally { await browser.close(); await app.close(); }
+  } finally { await browser.close(); await app.close(); await rm(dataDirectory, { recursive: true, force: true }); }
 });

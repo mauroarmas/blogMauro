@@ -10,15 +10,22 @@
     "cv:dev": "node generador/server.mjs",
     "cv:pdf": "node generador/cli.mjs",
     "cv:install": "playwright install chromium",
-    "cv:test": "node --test generador/test/*.test.mjs"
+    "cv:test": "node --test generador/test/*.test.mjs",
+    "cv:studio": "node generador/studio-cli.mjs",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f",
+    "docker:build": "docker compose build"
   },
   "dependencies": {
+    "@google/genai": "3.0.0",
     "next": "16.2.7",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.1",
-    "shiki": "^4.2.0"
+    "shiki": "^4.2.0",
+    "zod": "4.6.7"
   },
   "devDependencies": {
     "@fontsource-variable/hanken-grotesk": "^5.3.0",

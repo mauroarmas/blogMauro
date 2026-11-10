@@ -1,0 +1,5 @@
+Oferta de prueba 10
+Puesto: Redes junior
+Empresa: Ejemplo 10
+Modalidad: Tucumán presencial
+Requisitos: Cisco y TCP/IP.

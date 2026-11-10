@@ -1,0 +1,5 @@
+Oferta de prueba 6
+Puesto: Software trainee
+Empresa: Ejemplo 6
+Modalidad: remoto
+Requisitos: bases de datos y Git.

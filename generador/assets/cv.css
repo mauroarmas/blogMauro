@@ -44,11 +44,13 @@ a { color: inherit; text-decoration-thickness: .6px; text-underline-offset: 2px;
 .project-status { font-size: 7.5pt; line-height: 1.4; color: var(--ink-muted); margin: 2mm 0 0; }
 .project-links { font-size: 7.5pt; margin: 2mm 0 0; }
 .portrait-block { margin-bottom: 7mm; }
-.portrait { display: block; width: 34mm; height: 34mm; border-radius: 50%; object-fit: cover; object-position: center 35%; border: .5mm solid var(--accent); }
+.portrait { display: block; width: 34mm; height: 34mm; margin: 0 auto; border-radius: 50%; object-fit: cover; object-position: center 35%; border: .5mm solid var(--accent); }
 .side-label { font-family: var(--mono); font-weight: 500; color: var(--accent); font-size: 7.5pt; line-height: 1.5; text-transform: uppercase; letter-spacing: .06em; margin: 0 0 3mm; padding-bottom: 1.5mm; border-bottom: .2mm solid var(--line); }
 .cv-side p { font-size: 8pt; line-height: 1.48; margin: 1mm 0; overflow-wrap: anywhere; }
 .cv-side h3 { font-size: 8.7pt; font-weight: 600; line-height: 1.35; margin: 0 0 1.5mm; }
 .contact-block p { margin-bottom: 2.2mm; }
+.contact-row:has(> span:empty), .eyebrow > span { display: none; }
+.portfolio-link a, .contact-row a:not([href^="mailto:"]):not([href^="tel:"]):not([href*="linkedin.com"]):not([href*="github.com"]) { color: var(--accent); font-weight: 500; }
 .side-entry { margin-bottom: 4mm; }
 .side-entry .side-detail { color: var(--mut); font-size: 7.5pt; }
 .skill-group { margin-bottom: 4mm; }

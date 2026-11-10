@@ -18,36 +18,34 @@ export const stack = [
   { name: 'HTML5 · CSS3', layer: 'frontend', areas: ['desarrollo'] },
 
   // Datos — Ambas áreas
-  { name: 'PostgreSQL', layer: 'datos', areas: ['desarrollo', 'infraestructura'], featured: true },
-  { name: 'MySQL', layer: 'datos', areas: ['desarrollo'] },
-  { name: 'MongoDB', layer: 'datos', areas: ['desarrollo'] },
+  { name: 'Bases de datos relacionales (MySQL, PostgreSQL)', layer: 'datos', areas: ['desarrollo', 'infraestructura'], featured: true },
+  { name: 'Bases de datos no relacionales (MongoDB)', layer: 'datos', areas: ['desarrollo'] },
   { name: 'Redis', layer: 'datos', areas: ['desarrollo'] },
   { name: 'ChromaDB (vectorial)', layer: 'datos', areas: ['desarrollo', 'ia'] },
 
   // Redes & Sistemas — Infraestructura
-  { name: 'Redes TCP/IP', layer: 'redes', areas: ['infraestructura'], featured: true },
+  { name: 'Redes TCP/IP', layer: 'redes', areas: ['infraestructura'] },
   { name: 'Cisco Packet Tracer', layer: 'redes', areas: ['infraestructura'] },
-  { name: 'Linux (admin)', layer: 'redes', areas: ['infraestructura'], featured: true },
+  { name: 'Linux (admin)', layer: 'redes', areas: ['infraestructura'] },
   { name: 'nginx · systemd', layer: 'redes', areas: ['infraestructura'] },
 
   // Cloud & DevOps — Infraestructura
-  { name: 'Proxmox VE · LXC', layer: 'cloud', areas: ['infraestructura'], featured: true },
-  { name: 'Docker', layer: 'cloud', areas: ['infraestructura', 'desarrollo'], featured: true },
-  { name: 'AWS', layer: 'cloud', areas: ['infraestructura'], featured: true },
+  { name: 'Proxmox VE · LXC', layer: 'cloud', areas: ['infraestructura'] },
+  { name: 'Docker', layer: 'cloud', areas: ['infraestructura', 'desarrollo'] },
+  { name: 'AWS', layer: 'cloud', areas: ['infraestructura'] },
   { name: 'CI/CD · GitHub Actions', layer: 'cloud', areas: ['infraestructura', 'desarrollo'] },
-  { name: 'n8n', layer: 'cloud', areas: ['desarrollo'] },
 
-  // IA — Inteligencia Artificial
+  // IA y automatización
   { name: 'LangGraph · LangChain', layer: 'ia', areas: ['desarrollo', 'ia'] },
   { name: 'RAG · LLM', layer: 'ia', areas: ['desarrollo', 'ia'] },
   { name: 'Spec-Driven Development (SDD)', layer: 'ia', areas: ['desarrollo', 'ia'] },
+  { name: 'n8n', layer: 'ia', areas: ['desarrollo', 'ia'] },
 
   // Gestión & Calidad (QA) — Gestión de proyectos, agilidad y testing
   { name: 'Gestión de proyectos (PMBok)', layer: 'metodo', areas: ['desarrollo'] },
   { name: 'Scrum', layer: 'metodo', areas: ['desarrollo'] },
   { name: 'Jira', layer: 'metodo', areas: ['desarrollo'] },
-  { name: 'Postman', layer: 'metodo', areas: ['desarrollo'] },
-  { name: 'Cypress', layer: 'metodo', areas: ['desarrollo'] },
+  { name: 'Cypress y Postman', layer: 'metodo', areas: ['desarrollo'] },
 ];
 
 export const STACK_LAYERS = [
@@ -56,7 +54,7 @@ export const STACK_LAYERS = [
   { key: 'datos', es: 'Datos', en: 'Data' },
   { key: 'redes', es: 'Redes & Sistemas', en: 'Networking & Systems' },
   { key: 'cloud', es: 'Cloud & DevOps', en: 'Cloud & DevOps' },
-  { key: 'ia', es: 'IA', en: 'AI' },
+  { key: 'ia', es: 'IA y automatización', en: 'AI & Automation' },
   { key: 'metodo', es: 'Gestión & Calidad (QA)', en: 'Management & QA' },
 ];
 

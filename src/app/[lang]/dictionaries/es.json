@@ -9,7 +9,8 @@
     "cambiarTema": "Cambiar tema"
   },
   "hero": {
-    "verProyectos": "Ver proyectos"
+    "verProyectos": "Ver proyectos",
+    "verMasStack": "más..."
   },
   "ledger": {
     "ubicacion": "Ubicación",

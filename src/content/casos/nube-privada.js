@@ -6,7 +6,7 @@ const caso = {
   slug: "nube-privada",
   project_slug: "nube-privada",
   title: "NAP — Una nube académica, desde el portal hasta la infraestructura",
-  excerpt: "Trabajo aceptado en CONAIISI 2026. Diseñé y desarrollé la capa de software que convierte un clúster Proxmox en servicios académicos: Linux, bases de datos y aplicaciones web, con aprobación, capacidad controlada y acceso seguro.",
+  excerpt: "Aprobado en CONAIISI 2026. Diseñé y desarrollé la capa de software que convierte un clúster Proxmox en servicios académicos: Linux, bases de datos y aplicaciones web, con aprobación, capacidad controlada y acceso seguro.",
   read_time: 7,
   published_at: "2026-11-08T12:00:00-03:00",
   images: [
@@ -31,7 +31,7 @@ const caso = {
 ],
   documents: [
   {
-    "title": "Artículo aceptado en CONAIISI 2026",
+    "title": "Aprobado en CONAIISI 2026",
     "description": "El trabajo del equipo: problema institucional, arquitectura de la nube y enfoque de aprendizaje activo.",
     "url": "/assets/NAP/Nube%20Acad%C3%A9mica%20Pr%C3%A1ctica%20%28NAP%29%20-%20Prototipo%20de%20Nube%20Privada%20para%20el%20Aprendizaje%20Activo%20en%20la%20UTN-FRT.pdf",
     "preview": "/assets/NAP/nap-articulo-portada.webp",

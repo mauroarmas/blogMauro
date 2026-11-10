@@ -3,6 +3,7 @@
 <body>
 <aside class="controls">
   <header><div class="brand">MA<span> / CV STUDIO</span></div><p class="local"><span></span> Solo en tu equipo</p></header>
+  <nav class="studio-nav" aria-label="Secciones de CV Studio"><button type="button" data-view="dashboard">Inicio</button><button type="button" data-view="general" aria-current="page">CV general</button><button type="button" data-view="offers">Ofertas</button><button type="button" data-view="editor">Editor de CV</button><button type="button" data-view="applications">Seguimiento</button><button type="button" data-view="versions">Versiones</button><button type="button" data-view="backups">Copias</button><button type="button" data-view="sources">Fuentes</button><button type="button" data-view="preferences">Preferencias</button><button type="button" data-view="settings">Configuración</button></nav>
   <div class="intro"><p class="eyebrow">DEL PORTAFOLIO AL PAPEL</p><h1>Tu recorrido,<br>en papel.</h1><p>El mismo contenido. Una presentación lista para compartir.</p></div>
   <form id="options">
     <div class="field"><label for="locale">Idioma del documento</label><select id="locale" name="locale"><option value="es">Español</option><option value="en">English</option></select></div>
@@ -14,5 +15,6 @@
   </form>
   <footer class="source-note">Una sola fuente de contenido.<br>Los cambios de tu perfil, proyectos, formación y competencias se leen al actualizar o descargar.</footer>
 </aside>
-<main class="workspace"><div class="preview-bar"><div><span class="preview-dot"></span> VISTA PREVIA <span id="page-count"></span></div><p id="status" role="status" aria-live="polite">Preparando documento…</p></div><div id="error" role="alert" hidden></div><iframe id="preview" title="Vista previa del currículum" src="about:blank"></iframe></main>
+<main class="workspace" id="general-workspace"><div class="preview-bar"><div><span class="preview-dot"></span> VISTA PREVIA <span id="page-count"></span></div><p id="status" role="status" aria-live="polite">Preparando documento…</p></div><div id="error" role="alert" hidden></div><iframe id="preview" title="Vista previa del currículum" src="about:blank"></iframe></main>
+<main class="studio-workspace" id="feature-workspace" hidden tabindex="-1"><div id="feature-content"></div></main>
 </body></html>
