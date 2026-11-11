@@ -485,7 +485,7 @@ export default async function Home({ params }) {
           <div className="links-list">
             <a href={perfil.linkedin} target="_blank" rel="noopener noreferrer"><span>LinkedIn</span><span className="lh">in/mauro-armas</span></a>
             <a href={perfil.github} target="_blank" rel="noopener noreferrer"><span>GitHub</span><span className="lh">mauroarmas</span></a>
-            <a href={getCvPath()} download={getCvFileName()}><span>{dict.nav.cv}</span><span className="lh">PDF</span></a>
+            <a href={getCvPath(lang)} download={getCvFileName(lang)}><span>{dict.nav.cv}</span><span className="lh">PDF</span></a>
           </div>
         </div>
       </section>

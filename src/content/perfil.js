@@ -3,8 +3,14 @@
 // Un único CV cubre los tres ejes del perfil (desarrollo, redes y cloud), así que el
 // mismo archivo se sirve desde la nav y desde la sección de contacto. `CV_FILE_NAME`
 // es el nombre con el que se descarga, independiente del nombre del archivo en /public.
-const CV_PATH = '/cv/CV-Armas_Maurov2.pdf';
-const CV_FILE_NAME = 'CV-Mauro-Armas.pdf';
+const CV_PATHS = {
+  es: '/cv/CV-Mauro-Armas-es.pdf',
+  en: '/cv/CV-Mauro-Armas-en.pdf',
+};
+const CV_FILE_NAMES = {
+  es: 'CV-Mauro-Armas-es.pdf',
+  en: 'CV-Mauro-Armas-en.pdf',
+};
 
 // Identidad compartida por la web y el CV; la foto siempre usa el mismo original.
 const identidad = {
@@ -52,10 +58,10 @@ export function getPerfil(locale) {
   return { ...identidad, ...(perfil[locale] || perfil.es) };
 }
 
-export function getCvPath() {
-  return CV_PATH;
+export function getCvPath(locale = 'es') {
+  return CV_PATHS[locale] || CV_PATHS.es;
 }
 
-export function getCvFileName() {
-  return CV_FILE_NAME;
+export function getCvFileName(locale = 'es') {
+  return CV_FILE_NAMES[locale] || CV_FILE_NAMES.es;
 }
