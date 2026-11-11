@@ -16,14 +16,14 @@ const identidad = {
 const perfil = {
   es: {
     name: 'Mauro Armas',
-    role: 'Desarrollo Full-Stack · Infraestructura · Automatizaciones e IA',
+    role: 'Desarrollo Full-Stack | Infraestructura | Automatizaciones e IA',
     location: 'Tucumán, Argentina',
     mode: '',
     languages: ['Español · nativo', 'Inglés · intermedio'],
     thesis: 'Diseño, desarrollo e infraestructura de sistemas de información.',
     lead: 'Enfoque en desarrollo y arquitectura de software, infraestructura y automatización de procesos de negocio.',
     about:
-      'Estudiante de 5.º año de Ingeniería en Sistemas de Información con experiencia práctica en desarrollo full-stack, infraestructura cloud y redes (virtualización, contenedores, servidores Linux y despliegue seguro), así como en sistemas multiagente con IA generativa que automatizan procesos de negocio. Aplico gestión de proyectos (PMBok, Scrum y Jira) y aseguramiento de calidad mediante pruebas automatizadas (Cypress, Postman) orientadas a entregar software robusto y mantenible. Me destaco por mi liderazgo técnico, capacidad de aprendizaje autodidacta, resiliencia en contextos exigentes y rápida adaptación en equipos colaborativos.',
+      'Estudiante de 5.º año de Ingeniería en Sistemas de Información e Ingeniero Full-Stack & Cloud especializado en arquitecturas backend distribuidas, infraestructura de nube privada y sistemas multiagente de IA generativa. Trayectoria comprobada entregando plataformas de nivel productivo respaldadas por más de 900 pruebas automatizadas, pipelines RAG y microservicios contenedorizados. Aplica prácticas de PMBOK, Scrum y Spec-Driven Development (SDD) para alinear arquitecturas técnicas complejas con la automatización de procesos de negocio.',
     email: 'mauro.armas14@gmail.com',
     github: 'https://github.com/mauroarmas',
     linkedin: 'https://www.linkedin.com/in/mauro-armas/',
@@ -32,14 +32,14 @@ const perfil = {
   },
   en: {
     name: 'Mauro Armas',
-    role: 'Full-Stack Development · Infrastructure · Automations & AI',
+    role: 'Full-Stack Development | Infrastructure | Automations & AI',
     location: 'Tucumán, Argentina',
     mode: '',
     languages: ['Spanish · native', 'English · intermediate'],
     thesis: 'Design, development, and infrastructure of information systems.',
     lead: 'Focus on software development and architecture, infrastructure, and business process automation.',
     about:
-      'Fifth-year Information Systems Engineering student with hands-on experience in full-stack development, cloud infrastructure, and networking (virtualization, containers, Linux servers, and secure deployment), as well as multi-agent generative AI systems that automate business processes. I apply project management practices (PMBok, Scrum, and Jira) and quality assurance through automated testing (Cypress, Postman) to deliver robust, maintainable software. Known for technical leadership, self-directed learning, resilience in demanding environments, and fast adaptation within collaborative teams.',
+      'Fifth-year Information Systems Engineering student and Full-Stack & Cloud Engineer specializing in distributed backend architectures, private cloud infrastructure, and multi-agent generative AI systems. Proven track record of delivering production-grade platforms backed by 900+ automated tests, RAG pipelines, and containerized microservices. Applies PMBOK, Scrum, and Spec-Driven Development (SDD) practices to align complex technical architectures with business process automation.',
     email: 'mauro.armas14@gmail.com',
     github: 'https://github.com/mauroarmas',
     linkedin: 'https://www.linkedin.com/in/mauro-armas/',

@@ -7,17 +7,9 @@
     const sheet = document.createElement('article');
     sheet.className = 'sheet';
     sheet.setAttribute('aria-label', `${metadata.page} ${sheets.length + 1}`);
-    sheet.innerHTML = '<aside class="cv-side"><div class="cv-side-content"></div><div class="side-footer"></div></aside><main class="cv-main"><div class="cv-main-content"></div><footer class="cv-footer"><span></span><span class="page-number"></span></footer></main>';
+    sheet.innerHTML = '<aside class="cv-side"><div class="cv-side-content"></div></aside><main class="cv-main"><div class="cv-main-content"></div></main>';
     const main = sheet.querySelector('.cv-main');
     if (!sheets.length) main.prepend(document.getElementById('first-header').content.cloneNode(true));
-    else {
-      const header = document.createElement('header');
-      header.className = 'continuation';
-      const note = document.createElement('span'); note.textContent = metadata.continued;
-      header.append(note); main.prepend(header);
-    }
-    sheet.querySelector('.side-footer').textContent = metadata.name;
-    sheet.querySelector('.cv-footer > span').textContent = metadata.role;
     pages.append(sheet);
     sheets.push(sheet);
     return sheet;
@@ -91,10 +83,16 @@
     await Promise.all([...document.images].map(img => img.decode()));
     const overflow = [];
     for (const [index, sheet] of sheets.entries()) {
-      sheet.querySelector('.page-number').textContent = `${metadata.page} ${index + 1} / ${sheets.length}`;
       for (const selector of ['.cv-main-content', '.cv-side-content']) {
         const container = sheet.querySelector(selector);
         if (!fits(container) || container.scrollWidth > container.clientWidth + 2 || container.getBoundingClientRect().bottom > sheet.getBoundingClientRect().bottom + 1) overflow.push(index + 1);
+      }
+      if (sheet.querySelector('.cv-side-content').children.length) {
+        const sep = document.createElement('span');
+        sep.className = 'ats-col-sep';
+        sep.setAttribute('aria-hidden', 'true');
+        sep.textContent = '|';
+        sheet.append(sep);
       }
     }
     if (overflow.length) throw new Error(`Contenido desbordado en páginas: ${[...new Set(overflow)].join(', ')}.`);

@@ -234,5 +234,6 @@ export async function startServer({ port = 4317, dataDirectory = process.env.CV_
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const app = await startServer({ port: Number(process.env.CV_PORT || 4317) });
+  for (const sig of ['SIGINT', 'SIGTERM']) process.once(sig, () => app.close().finally(() => process.exit(0)));
   console.log(`\nCV Studio · privado y local\n${app.url}\n\nLee los datos del portafolio en cada vista previa y exportación.\nCtrl+C para cerrar.\n`);
 }

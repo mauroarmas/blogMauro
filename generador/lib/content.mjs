@@ -23,7 +23,7 @@ export function normalizeOptions(input = {}) {
     if (!['https:', 'http:'].includes(url.protocol) || url.username || url.password || url.search || url.hash) {
       throw new InputError('La URL del portafolio debe ser HTTP(S), sin credenciales, parámetros ni fragmentos.');
     }
-    portfolioUrl = url.href.replace(/\/$/, '');
+    portfolioUrl = url.href.replace(/\/+(?:(?:es|en)(?:\/+)?)?$/, '');
   }
   return { locale, projects: input.projects, photo: input.photo ?? true, portfolioUrl };
 }
@@ -58,7 +58,7 @@ export async function loadContent(input = {}, { root = PROJECT_ROOT } = {}) {
   const skills = skillsModule.STACK_LAYERS.map(layer => ({
     key: layer.key,
     label: layer[options.locale] || layer.es,
-    items: skillsModule.stack.filter(skill => skill.layer === layer.key).map(skill => skill.name),
+    items: skillsModule.stack.filter(skill => skill.layer === layer.key).map(skill => skill[options.locale] || skill.name),
   })).filter(group => group.items.length);
   const tokens = await readFile(resolve(root, 'src/styles/tokens.css'), 'utf8');
   sources.push(tokens);

@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { PROJECT_ROOT } from './content.mjs';
-import { icon } from './icons.mjs';
+import { icon, numberIcon } from './icons.mjs';
 
 export const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
 const text = escapeHtml;
@@ -15,13 +15,22 @@ function href(value) {
 const link = (url, label) => href(url) ? `<a href="${href(url)}">${text(label)}</a>` : text(label);
 
 const COPY = {
-  es: { about: 'Perfil', projects: 'Proyectos de ingeniería', contact: 'Contacto', education: 'Formación', courses: 'Certificaciones', skills: 'Competencias técnicas', languages: 'Idiomas', now: 'Actualidad', role: 'Rol', solo: 'Desarrollo individual', team: 'Equipo de {n}', report: 'Informe', demo: 'Demo', case: 'Caso de estudio', page: 'Página', continued: 'Trayectoria y competencias', stack: 'Tecnologías' },
-  en: { about: 'Profile', projects: 'Engineering projects', contact: 'Contact', education: 'Education', courses: 'Certifications', skills: 'Technical skills', languages: 'Languages', now: 'Present', role: 'Role', solo: 'Individual development', team: 'Team of {n}', report: 'Report', demo: 'Demo', case: 'Case study', page: 'Page', continued: 'Experience and skills', stack: 'Technologies' },
+  es: { about: 'PERFIL PROFESIONAL', projects: 'EXPERIENCIA Y PROYECTOS DE INGENIERÍA', contact: 'CONTACTO', education: 'FORMACIÓN', courses: 'CERTIFICACIONES', skills: 'COMPETENCIAS TÉCNICAS', languages: 'IDIOMAS', now: 'Actualidad', role: 'Rol', solo: 'Desarrollo individual', team: 'Equipo de {n}', report: 'Informe', demo: 'Demo', case: 'Caso de estudio', page: 'Página', continued: 'Trayectoria y competencias', stack: 'Tecnologías' },
+  en: { about: 'PROFESSIONAL SUMMARY', projects: 'EXPERIENCE & ENGINEERING PROJECTS', contact: 'CONTACT', education: 'EDUCATION', courses: 'CERTIFICATIONS', skills: 'TECHNICAL SKILLS', languages: 'LANGUAGES', now: 'Present', role: 'Role', solo: 'Individual Development', team: 'Team of {n}', report: 'Report', demo: 'Demo', case: 'Case study', page: 'Page', continued: 'Experience and skills', stack: 'Technologies' },
+};
+
+const MONTHS = {
+  es: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+  en: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 };
 
 function period(value, locale, copy) {
   if (!value?.start) return '';
-  const format = date => new Intl.DateTimeFormat(locale, { month: 'short', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${date}-01T12:00:00Z`));
+  const months = MONTHS[locale] || MONTHS.es;
+  const format = date => {
+    const [year, month] = String(date).split('-');
+    return `${months[Number(month) - 1]} ${year}`;
+  };
   return `${format(value.start)} - ${value.end ? format(value.end) : copy.now}`;
 }
 
@@ -39,25 +48,26 @@ async function fonts() {
   return fontCss;
 }
 
+function projectBullets(p) {
+  if (Array.isArray(p.bullets) && p.bullets.length && (!p.problem || p.problem === p.bullets.join(' ') || p.problem === p.bullets.join('\n'))) {
+    return p.bullets;
+  }
+  return String(p.problem ?? '').split(/\n+/).map(s => s.trim()).filter(Boolean);
+}
+
 function projectBlock(project, model, copy, index) {
   const { options } = model;
   const p = project.text;
   const team = project.role.mode === 'individual' ? copy.solo : copy.team.replace('{n}', project.role.teamSize || '');
-  const links = project.verification.filter(item => item.available && ['demo', 'informe'].includes(item.type)).flatMap(item => {
-    const url = item.url?.startsWith('/') ? (options.portfolioUrl ? options.portfolioUrl + item.url : '') : item.url;
-    return url ? [link(url, item.type === 'demo' ? copy.demo : copy.report)] : [];
-  });
-  if (options.portfolioUrl && project.hasCaseStudy) links.push(link(`${options.portfolioUrl}/${options.locale}/proyectos/${project.slug}`, copy.case));
+  const bullets = projectBullets(p);
+  const stackItems = project.stack.flatMap(item => String(item).split(/\s*·\s*/)).filter(Boolean);
+  const meta = [p.context, period(project.period, options.locale, copy), team, p.recognition].filter(Boolean).map(printText).join(' | ');
   return `<article class="cv-block project" data-label="${text(p.name)}">
     ${index === 0 ? `<h2 class="section-label">${copy.projects}</h2>` : ''}
-    <div class="project-heading"><span class="project-number">${String(index + 1).padStart(2, '0')}</span><h3>${printText(p.name)}</h3></div>
-    ${p.recognition ? `<p class="recognition">${text(p.recognition)}</p>` : ''}
-    <p class="project-context">${printText(p.context)}</p>
-    <p class="project-meta">${printText(period(project.period, options.locale, copy))} <span>· ${text(team)}</span></p>
-    <p class="project-description">${text(p.problem)}</p>
-    <p class="project-stack"><strong>${copy.stack}</strong> ${printText(project.stack.join(' · '))}</p>
-    ${p.deliveryStatus ? `<p class="project-status">${text(p.deliveryStatus)}</p>` : ''}
-    ${links.length ? `<p class="project-links">${links.join('<span aria-hidden="true"> · </span>')}</p>` : ''}
+    <div class="project-heading">${numberIcon(index + 1)}<h3>${printText(p.name)}</h3></div>
+    <p class="project-meta">${meta}</p>
+    <ul class="project-description">${bullets.map(item => `<li>${text(item)}</li>`).join(' ')}</ul>
+    <p class="project-stack"><strong>${copy.stack}:</strong> ${printText(stackItems.join(', '))}</p>
   </article>`;
 }
 
@@ -72,17 +82,18 @@ export async function renderCv(model) {
   const courses = model.education.filter(item => item.type === 'curso');
   const educationBlock = (item, index, label, symbol) => `<section class="cv-block side-entry" data-label="${text(item.text.title)}">
     ${index === 0 ? `<h2 class="side-label with-icon">${icon(symbol)}<span>${label}</span></h2>` : ''}
-    <h3>${text(item.text.title)}</h3><p>${printText(item.text.institution)}</p>
-    ${item.text.statusLabel ? `<p class="side-detail">${text(item.text.statusLabel)}</p>` : ''}
-    ${item.period?.start ? `<p class="side-detail">${printText(period(item.period, options.locale, copy))}</p>` : ''}
+    <h3>${text(item.text.title)}</h3>
+    <p class="side-detail">${[item.text.institution, item.text.statusLabel, period(item.period, options.locale, copy)].filter(Boolean).map(printText).join(' | ')}</p>
   </section>`;
+  const portfolioBase = options.portfolioUrl || 'https://mauroarmas.netlify.app';
+  const portfolioHref = `${portfolioBase}/${options.locale}`;
   const contacts = [
     ['mail', link(`mailto:${profile.email}`, profile.email)],
     ...(profile.phone ? [['phone', link(`tel:${profile.phone.replace(/[^+\d]/g, '')}`, profile.phone)]] : []),
     ['pin', text(profile.location)],
     ['linkedin', link(profile.linkedin, profile.linkedin.replace(/^https?:\/\//, '').replace(/\/$/, ''))],
     ['github', link(profile.github, profile.github.replace(/^https?:\/\//, ''))],
-    ...(options.portfolioUrl ? [['link', link(options.portfolioUrl, options.portfolioUrl.replace(/^https?:\/\//, ''))]] : []),
+    ['link', link(portfolioHref, portfolioHref.replace(/^https?:\/\//, ''))],
   ];
   const metadata = JSON.stringify({ name: profile.name, role: profile.role, page: copy.page, continued: copy.continued, revision: model.revision }).replace(/</g, '\\u003c');
   return `<!doctype html><html lang="${options.locale}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>${text(profile.name)} - CV</title>
@@ -95,11 +106,11 @@ export async function renderCv(model) {
     ${model.photo ? `<div class="cv-block portrait-block" data-label="Foto"><img class="portrait" src="${model.photo}" alt="${text(profile.name)}" width="300" height="300"></div>` : ''}
     <section class="cv-block contact-block" data-label="${copy.contact}"><h2 class="side-label">${copy.contact}</h2>${contacts.map(([symbol, content]) => `<p class="contact-row${symbol === 'link' ? ' portfolio-link' : ''}">${icon(symbol)}<span>${content}</span></p>`).join('')}</section>
     ${education.map((item, i) => educationBlock(item, i, copy.education, 'cap')).join('')}
-    ${model.skills.map((group, i) => `<section class="cv-block skill-group" data-label="${text(group.label)}">${i === 0 ? `<h2 class="side-label">${copy.skills}</h2>` : ''}<h3 class="with-icon">${icon(group.key)}<span>${text(group.label)}</span></h3><p>${printText(group.items.join(' · '))}</p></section>`).join('')}
+    ${model.skills.map((group, i) => `<section class="cv-block skill-group" data-label="${text(group.label)}">${i === 0 ? `<h2 class="side-label">${copy.skills}</h2>` : ''}<h3 class="with-icon">${icon(group.key)}<span>${text(group.label)}:</span></h3><p>${printText(group.items.map(item => String(item).replace(/\s*·\s*/g, ', ')).join(', '))}</p></section>`).join('')}
     ${courses.map((item, i) => educationBlock(item, i, copy.courses, 'book')).join('')}
-    ${profile.languages?.length ? `<section class="cv-block" data-label="${copy.languages}"><h2 class="side-label with-icon">${icon('globe')}<span>${copy.languages}</span></h2>${profile.languages.map(item => `<p>${text(item)}</p>`).join('')}</section>` : ''}
+    ${profile.languages?.length ? `<section class="cv-block" data-label="${copy.languages}"><h2 class="side-label with-icon">${icon('globe')}<span>${copy.languages}</span></h2><p>${profile.languages.map(item => text(String(item).replace(/\s*·\s*/g, ': '))).join(' | ')}</p></section>` : ''}
   </template>
-  <template id="first-header"><header class="cv-header"><p class="eyebrow">${text(profile.location)}</p><h1>${text(profile.fullName || profile.name)}</h1><p class="cv-role">${text(profile.role)}</p><p class="cv-lead">${text(profile.lead)}</p></header></template>
+  <template id="first-header"><header class="cv-header"><p class="eyebrow">${text(profile.location)}</p><h1>${text(profile.fullName || profile.name)}</h1><p class="cv-role">${printText(String(profile.role ?? '').replace(/\s*·\s*/g, ' | '))}</p><p class="cv-lead">${text(profile.lead)}</p></header></template>
   <div id="pages" class="pages"></div><p id="layout-error" role="alert" hidden></p>
   <script id="cv-metadata" type="application/json">${metadata}</script><script>${pagination}</script></body></html>`;
 }

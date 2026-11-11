@@ -153,7 +153,7 @@ export function updateDraft(db,id,expectedRevision,patch,presentationPatch={}){
       model.projects=model.projects.map(project=>({...project,text:{...(project.i18n[desired.locale]||project.i18n.es)}}));
       model.education=model.education.map(item=>({...item,text:item.i18n[desired.locale]||item.i18n.es}));
       const skillSource=db.prepare(`SELECT r.extracted_artifact_sha256 FROM professional_sources s JOIN source_revisions r ON r.source_id=s.id JOIN snapshot_sources ss ON ss.source_revision_id=r.id WHERE ss.snapshot_id=? AND s.kind='skill' LIMIT 1`).get(row.knowledge_snapshot_id);
-      if(skillSource?.extracted_artifact_sha256){const layers=JSON.parse(getArtifact(db,skillSource.extracted_artifact_sha256).bytes.toString()).layers;for(const group of [...model.skills,...(model.allSkills||[])]){const layer=layers.find(item=>item.key===group.key);if(layer)group.label=layer[desired.locale]||layer.es;}}
+      if(skillSource?.extracted_artifact_sha256){const parsedSkills=JSON.parse(getArtifact(db,skillSource.extracted_artifact_sha256).bytes.toString()),layers=parsedSkills.layers;for(const group of [...model.skills,...(model.allSkills||[])]){const layer=layers.find(item=>item.key===group.key);if(layer)group.label=layer[desired.locale]||layer.es;if(Array.isArray(parsedSkills.items))group.items=parsedSkills.items.filter(skill=>skill.layer===group.key).map(skill=>skill[desired.locale]||skill.name);}}
       model.options=JSON.parse(JSON.stringify(desired));claims.splice(0,claims.length,...sourceClaims(db,row.knowledge_snapshot_id,model));
     } else model.options=JSON.parse(JSON.stringify(desired));
     model.photo=desired.photo?(model.availablePhoto||model.photo):'';

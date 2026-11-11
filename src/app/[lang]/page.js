@@ -227,39 +227,60 @@ const FORMACION_ICON = {
 // Un ícono por tecnología (se reusa en los chips del Hero y en la sección Stack).
 const TECH_ICON = {
   'Node.js · NestJS · Express': IconServer,
+  'Node.js, NestJS, Express': IconServer,
   'Python · FastAPI': IconBolt,
+  'Python, FastAPI': IconBolt,
   'TypeScript': IconCode,
   'Java · Spring': IconHex,
+  'Java, Spring Boot': IconHex,
   'React': IconOrbit,
   'Next.js': IconWindow,
   'Vite': IconBolt,
   'HTML5 · CSS3': IconCode,
+  'HTML5, CSS3, Thymeleaf, HTMX': IconCode,
   'PostgreSQL': IconDb,
+  'PostgreSQL, MySQL': IconDb,
   'MySQL': IconDb,
   'MongoDB': IconDb,
+  'MongoDB, Redis': IconDb,
   'Bases de datos relacionales (MySQL, PostgreSQL)': IconDb,
   'Bases de datos relacionales (Mysql, PostgreSQL)': IconDb,
   'Bases de datos no relacionales (MongoDB)': IconDb,
   'Redis': IconBolt,
   'ChromaDB (vectorial)': IconBraces,
+  'ChromaDB (Vector DB)': IconBraces,
+  'Prisma, Hibernate/JPA, Flyway': IconLayers,
   'Redes TCP/IP': IconNetwork,
+  'Redes TCP/IP, SDN': IconNetwork,
   'Cisco Packet Tracer': IconNodes,
   'Linux (admin)': IconTerminal,
+  'Administración de Sistemas Linux': IconTerminal,
   'nginx · systemd': IconServer,
+  'Nginx, systemd, Tailscale, SSH/TLS': IconServer,
   'Proxmox VE · LXC': IconLayers,
+  'Proxmox VE, LXC': IconLayers,
   'Docker': IconCube,
+  'Docker, OCI': IconCube,
   'AWS': IconCloud,
   'CI/CD · GitHub Actions': IconLoop,
+  'CI/CD, GitHub Actions, TrueNAS': IconLoop,
   'n8n': IconNodes,
+  'n8n, BullMQ': IconNodes,
   'LangGraph · LangChain': IconLink,
+  'LangGraph, LangChain, Sistemas Multiagente': IconLink,
   'RAG · LLM': IconBook,
+  'RAG, LLMs': IconBook,
   'Spec-Driven Development (SDD)': IconCode,
   'Gestión de proyectos (PMBok)': IconCheckSquare,
+  'Gestión de Proyectos (PMBOK)': IconCheckSquare,
   'Scrum': IconLoop,
+  'Scrum, Jira': IconLoop,
   'Jira': IconLayers,
   'Postman': IconPlug,
   'Cypress': IconTerminal,
   'Cypress y Postman': IconTerminal,
+  'Pruebas Automatizadas, Cypress, Postman': IconTerminal,
+  'Cucumber (BDD), JUnit 5, Testcontainers': IconCheckSquare,
 };
 
 export function generateStaticParams() {
@@ -344,7 +365,7 @@ export default async function Home({ params }) {
               return (
                 <li key={s.name}>
                   {ChipIcon && <ChipIcon />}
-                  {s.name}
+                  {s[lang] || s.name}
                 </li>
               );
             })}
@@ -412,7 +433,7 @@ export default async function Home({ params }) {
                     return (
                       <li key={s.name}>
                         {LayerIcon && <LayerIcon />}
-                        {s.name}
+                        {s[lang] || s.name}
                       </li>
                     );
                   })}

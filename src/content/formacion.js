@@ -13,8 +13,8 @@ export const formacion = [
     verification: null,
     certificate: null,
     i18n: {
-      es: { title: 'Ingeniería en Sistemas de Información', institution: 'UTN — Facultad Regional Tucumán', statusLabel: '5.º año' },
-      en: { title: 'Information Systems Engineering', institution: 'UTN — Tucumán Regional Faculty', statusLabel: '5th year' },
+      es: { title: 'Ingeniería en Sistemas de Información', institution: 'UTN - Facultad Regional Tucumán', statusLabel: '5.º año' },
+      en: { title: 'Information Systems Engineering', institution: 'UTN - Tucumán Regional Faculty', statusLabel: '5th year' },
     },
   },
   {

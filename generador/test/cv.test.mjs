@@ -7,6 +7,7 @@ import http from 'node:http';
 import { chromium } from 'playwright';
 import { loadContent, normalizeOptions, PROJECT_ROOT } from '../lib/content.mjs';
 import { renderCv } from '../lib/template.mjs';
+import { extractDocument } from '../lib/documents.mjs';
 import { startServer } from '../server.mjs';
 
 const compact = value => value.replace(/[–—‑]/g, '-').replace(/\s+/g, ' ').trim();
@@ -41,7 +42,8 @@ test('Opciones, selección vacía y protocolos inseguros', async () => {
   const selected = await loadContent({ locale: 'en', projects: ['trimia'], photo: false, portfolioUrl: 'https://example.com/' });
   assert.equal(selected.projects.length, 1);
   assert.equal(selected.options.portfolioUrl, 'https://example.com');
-  assert.match(await renderCv(selected), /https:\/\/example.com\/en\/proyectos\/trimia/);
+  assert.equal(normalizeOptions({ locale: 'en', portfolioUrl: 'https://mauroarmas.netlify.app/es' }).portfolioUrl, 'https://mauroarmas.netlify.app');
+  assert.match(await renderCv(selected), /https:\/\/example\.com\/en/);
 });
 
 test('El contenido se escapa como texto, no se ejecuta como HTML', async () => {
@@ -86,6 +88,46 @@ test('A4 conserva todo el contenido en español, inglés y con textos largos', a
       assert.equal(result.pages, 2);
       const pdf = await page.pdf({ format: 'A4', preferCSSPageSize: true, printBackground: true });
       assert.equal(pdf.subarray(0, 4).toString(), '%PDF');
+      const extracted = (await extractDocument(pdf, { type: 'application/pdf' })).text;
+      assert.match(extracted, /www\.linkedin\.com\/in\/mauro-armas/);
+      assert.doesNotMatch(extracted, /\bin www\.linkedin\.com/);
+      assert.match(extracted, new RegExp(`mauroarmas\\.netlify\\.app/${locale}`));
+      if (locale === 'en') {
+        const p1 = extracted.split('\f')[0];
+        const p2 = extracted.split('\f')[1] || '';
+        assert.ok(p1.indexOf('CONTACT') < p1.indexOf('PROFESSIONAL SUMMARY'));
+        assert.ok(p1.indexOf('PROFESSIONAL SUMMARY') < p1.indexOf('EXPERIENCE & ENGINEERING PROJECTS'));
+        assert.ok(extracted.indexOf('TECHNICAL SKILLS') !== -1);
+        assert.ok(extracted.indexOf('EDUCATION') !== -1);
+        const projects = ['NAP - Academic Private Cloud Platform', 'TrimIA - Multi-Agent AI Platform', 'Guardia Médica - ER Clinical Triage System', 'Portal de Oficios Concepción', 'Multi-Tenant Gym Management SaaS Platform'];
+        let cursor = -1;
+        for (const project of projects) {
+          const idx = extracted.indexOf(project);
+          assert.ok(idx > cursor, `Orden de proyecto inválido para ${project}`);
+          cursor = idx;
+        }
+        assert.match(extracted, /Full-Stack Development \| Infrastructure \| Automations & AI/);
+        assert.match(extracted, /5th year \| Apr 2021 - Present/);
+        assert.match(extracted, /UTN-FRT \(Supervised Practicum\) \| Sep 2026 - Nov 2026 \| Team of 3 \| Paper Accepted at CONAIISI 2026/);
+        assert.match(extracted, /Credimisión S\.R\.L\. \(Degree Thesis, UTN-FRT\) \| Apr 2026 - Present \| Individual Development/);
+        assert.match(extracted, /UTN-FRT \(Software Engineering\) \| Oct 2025 - Dec 2025 \| Team of 3/);
+        assert.match(extracted, /Municipality of Concepción & Rolling Code School \| Nov 2023 - Mar 2024 \| Team of 4/);
+        assert.match(extracted, /Personal Project \(Commercial Client Spec\) \| Nov 2026 - Present \| Individual Development/);
+        assert.match(extracted, /Flyway, Thymeleaf, HTMX,[\s\S]*JUnit 5/);
+        assert.match(extracted, /RAG, LLMs, Spec-Driven/);
+        assert.match(extracted, /Technologies: Python, FastAPI, React, Vite, PostgreSQL, Proxmox VE, LXC, Docker, OCI, TrueNAS,\s+SDN, HTTPS,\s+SSH, TLS/);
+        assert.match(extracted, /Data & Databases:\s+PostgreSQL, MySQL, MongoDB, Redis,\s+ChromaDB \(Vector DB\), Prisma,\s+Hibernate\/JPA, Flyway/);
+        assert.doesNotMatch(extracted, /Case study|Experience and skills|Lab validated|Bases de datos relacionales|Gestión de proyectos|\b01\b|\b02\b/);
+      } else {
+        assert.match(extracted, /Desarrollo Full-Stack \| Infraestructura \| Automatizaciones e IA/);
+        assert.match(extracted, /5\.º año \| Abr 2021 - Actualidad/);
+        assert.match(extracted, /UTN-FRT \(Práctica Supervisada\) \| Sep 2026 - Nov 2026 \| Equipo de 3 \| Aprobado en CONAIISI 2026/);
+        assert.match(extracted, /Credimisión S\.R\.L\. \(Tesis de Grado, UTN-FRT\) \| Abr 2026 - Actualidad \| Desarrollo individual/);
+        assert.match(extracted, /UTN-FRT \(Ingeniería de Software\) \| Oct 2025 - Dic 2025 \| Equipo de 3/);
+        assert.match(extracted, /Municipalidad de Concepción y Rolling Code School \| Nov 2023 - Mar 2024 \| Equipo de 4/);
+        assert.match(extracted, /Proyecto Personal \(Especificación Comercial Real\) \| Nov 2026 - Actualidad \| Desarrollo individual/);
+        assert.match(extracted, /Flyway, Thymeleaf, HTMX,[\s\S]*JUnit 5/);
+      }
     }
     const long = await loadContent({ photo: false });
     long.profile.about = Array.from({ length: 70 }, (_, i) => `Párrafo ${i}: arquitectura, infraestructura y desarrollo de aplicaciones con texto que debe conservarse completo.`).join(' ');
