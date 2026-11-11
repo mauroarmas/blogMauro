@@ -3,9 +3,7 @@
 // certificado (null mientras no se haya cargado uno).
 //
 // Las certificaciones del CV no traen fecha de emisión, así que `period` queda en null
-// en vez de inventarse una (Principio II de la constitución). La formación en redes y
-// sistemas de control (PLC/SCADA) todavía no tiene institución declarada: se menciona
-// en "Sobre mí" y en el stack como nociones, no como una fila de formación.
+// en vez de inventarse una (Principio II de la constitución).
 
 export const formacion = [
   {
@@ -15,8 +13,8 @@ export const formacion = [
     verification: null,
     certificate: null,
     i18n: {
-      es: { title: 'Ingeniería en Sistemas de Información', institution: 'UTN — Facultad Regional Tucumán', statusLabel: '5.º año' },
-      en: { title: 'Information Systems Engineering', institution: 'UTN — Tucumán Regional Faculty', statusLabel: '5th year' },
+      es: { title: 'Ingeniería en Sistemas de Información', institution: 'UTN - Facultad Regional Tucumán', statusLabel: '5.º año' },
+      en: { title: 'Information Systems Engineering', institution: 'UTN - Tucumán Regional Faculty', statusLabel: '5th year' },
     },
   },
   {

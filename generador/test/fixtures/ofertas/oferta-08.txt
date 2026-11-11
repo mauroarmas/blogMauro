@@ -1,0 +1,5 @@
+Oferta de prueba 8
+Puesto: Backend junior
+Empresa: Ejemplo 8
+Modalidad: remoto
+Requisitos: NestJS y PostgreSQL.

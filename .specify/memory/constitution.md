@@ -1,26 +1,21 @@
 <!--
 Sync Impact Report
-- Cambio de versión: 1.0.0 → 1.1.0
-- Cambio de idioma: inglés → español (documento completo)
-- Principios modificados:
-  - "I. Professional Signal First" → "I. Señal Profesional Dual (Desarrollo + Infraestructura)"
-    (ampliado: ahora exige explícitamente representar ambos perfiles del dueño del
-    proyecto, no solo "empleabilidad" en abstracto)
-  - II–V: traducidos, sin cambios de fondo
-- Secciones añadidas:
-  - "Fuente de Verdad del Perfil" dentro de Restricciones de Contenido y Tecnología,
-    referenciando los dos CVs (Desarrollo e Infraestructura/Redes) como insumo para
-    el contenido del portafolio
-- Secciones eliminadas: ninguna
-- Plantillas que requieren actualización:
-  - .specify/templates/plan-template.md ✅ sin cambios necesarios (el gate de
-    Constitution Check es genérico y lee este archivo al momento de planificar)
-  - .specify/templates/spec-template.md ✅ sin cambios necesarios
-  - .specify/templates/tasks-template.md ✅ sin cambios necesarios
-  - README.md ⚠ pendiente — sigue describiendo el boilerplate genérico de
-    create-next-app; se recomienda actualizarlo cuando se implemente la primera
-    feature del portafolio profesional
-- TODOs de seguimiento: ninguno bloqueante
+- Versión: 1.1.0 → 2.0.0 (MAJOR: cambia el alcance normativo de la restricción de stack).
+- Autorización: el propietario solicitó resolver los hallazgos y repetir analyze,
+  2026-11-08; enmienda realizada antes de la auditoría de solo lectura.
+- Principio III: conserva simplicidad y explicita el ámbito local de CV Studio.
+- Sección añadida: excepción acotada de stack para CV Studio local y monousuario.
+- Secciones eliminadas: ninguna. Stack del portafolio público sin cambios.
+- Justificación: reutilizar el generador local y persistencia transaccional sin
+  obligar a operar un servicio PostgreSQL para un único propietario.
+- .specify/templates/plan-template.md: revisada, compatible, sin cambios necesarios.
+- .specify/templates/spec-template.md: revisada, compatible, sin cambios necesarios.
+- .specify/templates/tasks-template.md: revisada, compatible, sin cambios necesarios.
+- .agents/skills/speckit-*/SKILL.md: revisadas; siguen leyendo la constitución vigente.
+- README.md y generador/README.md: revisados y enlazados a la enmienda/diseño futuro.
+- specs/002-cv-job-studio/: plan, investigación, especificación, contratos,
+  modelo, tareas y quickstart sincronizados.
+- Pendientes de sincronización: ninguno.
 -->
 
 # Constitución del Portafolio
@@ -71,7 +66,9 @@ correspondiente en `node_modules/next/dist/docs/` DEBE consultarse antes de
 implementar cualquier patrón específico de Next.js (ruteo, obtención de datos,
 server actions, caché). No se debe arrastrar complejidad que existía solo para
 cumplir los requisitos académicos previos (p. ej. mecanismos de auto-hospedaje)
-salvo que siga sirviendo al objetivo de portafolio profesional.
+salvo que siga sirviendo al objetivo de portafolio profesional. Para CV Studio
+local se aplica la excepción explícita de stack definida más abajo; no obliga
+a convertir la web pública estática en un servicio dinámico.
 
 **Justificación**: Es un sitio personal mantenido por una sola persona y de bajo
 tráfico. Cada abstracción agregada es deuda de mantenimiento sin un equipo que la
@@ -111,6 +108,17 @@ persuadir.
 - **Stack**: Next.js 16 (App Router) con React 19; PostgreSQL (vía `pg`) como
   almacén de datos principal, con SQLite/`better-sqlite3` permitido solo para
   desarrollo local o herramientas de migración. Tailwind CSS para estilos.
+- **Excepción de stack: CV Studio local**. El módulo privado `generador/`, para
+  uso cotidiano de un único propietario, PUEDE usar Node.js HTTP, HTML/CSS/JS y
+  SQLite como almacén principal, reutilizando la composición PDF existente.
+  Esta excepción solo se aplica si escucha en loopback, mantiene datos y secretos
+  fuera de Git y de la exportación pública, y conserva integridad transaccional,
+  versiones históricas y copias recuperables. Siguen siendo obligatorios los
+  principios de integridad profesional, accesibilidad y propiedad del contenido.
+  Acceso remoto, multiusuario o publicación del dashboard quedan fuera de esta
+  excepción y requieren un nuevo diseño y revisión constitucional antes de habilitarse.
+  La excepción no cambia el stack exigido al portafolio público ni autoriza
+  conexiones a portales o envíos de candidaturas por sí misma.
 - **El destino de despliegue ya no está fijado por un requisito académico**: el
   auto-hospedaje previo en Proxmox era una restricción de la materia, no un
   requisito del producto. Las decisiones de hosting DEBEN estar guiadas ahora
@@ -172,4 +180,4 @@ DEBE pasar el gate de Constitution Check contra los principios anteriores antes
 de que avance la implementación; cualquier violación debe justificarse en la
 tabla de Complexity Tracking de ese plan, o el plan debe revisarse para cumplir.
 
-**Versión**: 1.1.0 | **Ratificada**: 2026-08-07 | **Última Enmienda**: 2026-08-07
+**Versión**: 2.0.0 | **Ratificada**: 2026-08-07 | **Última Enmienda**: 2026-11-08

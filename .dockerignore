@@ -1,0 +1,10 @@
+node_modules
+.next
+out
+output/pdf
+.git
+.agents
+.specify
+*.log
+npm-debug.log*
+.DS_Store

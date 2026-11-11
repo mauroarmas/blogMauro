@@ -9,7 +9,8 @@
     "cambiarTema": "Switch theme"
   },
   "hero": {
-    "verProyectos": "View projects"
+    "verProyectos": "View projects",
+    "verMasStack": "more..."
   },
   "ledger": {
     "ubicacion": "Location",
@@ -46,6 +47,10 @@
     "casoDeEstudio": "Case study"
   },
   "caseStudy": {
+    "documents": "Project documentation",
+    "documentsNote": "Paper, presentation and technical report. PDFs open in a new tab.",
+    "openPdf": "View document",
+    "pages": "{n} pages",
     "volver": "Back to projects",
     "fallbackNoticeEs": "This content is available in Spanish.",
     "fallbackNoticeEn": "This content is available in English.",

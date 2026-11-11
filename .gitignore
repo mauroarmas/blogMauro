@@ -20,6 +20,10 @@
 # production
 /build
 
+# Resultados privados del generador local (nunca forman parte del sitio público)
+/output/
+/tmp/
+
 # misc
 .DS_Store
 *.pem
@@ -40,3 +44,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+
+# Estado privado y copias de CV Studio
+/.cv-studio/

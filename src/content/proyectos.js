@@ -1,11 +1,11 @@
 // Datos estructurados de Proyecto (data-model.md §2). Editar este archivo y desplegar
 // es la vía prevista para sumar o actualizar un proyecto (research.md §4).
 //
-// El contenido sigue al CV (public/cv): mismos proyectos, mismas cifras, mismo stack —
-// un reclutador que compare los dos documentos no debería encontrar diferencias.
+// El CV (public/cv) fue la referencia inicial. Las fichas web se actualizan con las
+// fuentes de cada proyecto; el PDF descargable conserva su propia edición.
 //
-// NOTA: las URLs de "repositorio" apuntan al perfil público de GitHub del dueño porque
-// no se dispone todavía del slug exacto del repo de cada proyecto. Reemplazar por la URL
+// NOTA: algunas URLs de "repositorio" apuntan al perfil público de GitHub del dueño porque
+// no se dispone todavía del slug exacto de esos repositorios. Reemplazar por la URL
 // directa de cada repositorio (https://github.com/mauroarmas/<repo>) en cuanto se confirme
 // — no se fabrica una ruta específica sin verificarla (Principio II de la constitución).
 
@@ -13,60 +13,80 @@ export const proyectos = [
   {
     slug: 'trimia',
     areas: ['ia', 'desarrollo'],
-    priority: 1,
+    priority: 2,
     status: 'en_curso',
     period: { start: '2026-04', end: null },
     role: { mode: 'individual', teamSize: null },
     hasCaseStudy: true,
-    thumbnail: '/assets/trimIA/trimia-1.png',
+    thumbnail: '/assets/trimIA/trimia-supervision.webp',
     verification: [
       { type: 'repositorio', url: 'https://github.com/mauroarmas', available: true },
       { type: 'informe', url: null, available: false },
-      { type: 'demo', url: null, available: false },
+      { type: 'demo', url: 'https://trimia-demo.tail9126e1.ts.net/', available: true },
     ],
-    stack: ['NestJS · TypeScript', 'LangGraph', 'ChromaDB · RAG', 'Gemini', 'PostgreSQL · Prisma', 'BullMQ · Redis'],
+    stack: ['NestJS', 'TypeScript', 'React', 'LangGraph', 'LLMs', 'ChromaDB', 'RAG', 'PostgreSQL', 'Prisma', 'BullMQ', 'Redis', 'n8n', 'WhatsApp API', 'Docker', 'Tailscale'],
     i18n: {
       es: {
-        name: 'TrimIA — Sistema multiagente de IA para atención al cliente y capacitación interna',
-        context: 'Credimisión S.R.L. · Tesis de grado, UTN-FRT',
+        name: 'TrimIA - Plataforma Multiagente de IA para Procesos de Negocio | Ingeniero de IA y Full-Stack',
+        context: 'Credimisión S.R.L. (Tesis de Grado, UTN-FRT)',
+        bullets: [
+          'Diseñé y orquesté un ecosistema multiagente con IA generativa y RAG utilizando LangGraph, NestJS y ChromaDB para centralizar la atención por WhatsApp, el asesoramiento de venta financiada y la capacitación interna.',
+          'Construí un panel de supervisión en React en tiempo real con escalamiento humano (human-in-the-loop), validación comercial automatizada y colas de tareas asíncronas con BullMQ, Redis y n8n.',
+        ],
         problem:
-          'Casi toda la operación pasa por WhatsApp y casi todo el conocimiento para contestar vive en la cabeza de alguien: cada consulta de un cliente dispara dos o tres consultas internas.',
+          'Diseñé y orquesté un ecosistema multiagente con IA generativa y RAG utilizando LangGraph, NestJS y ChromaDB para centralizar la atención por WhatsApp, el asesoramiento de venta financiada y la capacitación interna. Construí un panel de supervisión en React en tiempo real con escalamiento humano (human-in-the-loop), validación comercial automatizada y colas de tareas asíncronas con BullMQ, Redis y n8n.',
       },
       en: {
-        name: 'TrimIA — Multi-agent AI system for customer service and internal training',
-        context: 'Credimisión S.R.L. · Degree thesis, UTN-FRT',
+        name: 'TrimIA - Multi-Agent AI Platform for Business Processes | AI & Full-Stack Engineer',
+        context: 'Credimisión S.R.L. (Degree Thesis, UTN-FRT)',
+        bullets: [
+          'Designed and orchestrated a generative AI and RAG multi-agent ecosystem using LangGraph, NestJS, and ChromaDB to centralize WhatsApp customer support, financed sales advising, and internal training.',
+          'Built a real-time React supervision dashboard featuring human-in-the-loop escalation, automated commercial validation, and asynchronous task queues with BullMQ, Redis, and n8n.',
+        ],
         problem:
-          'Almost the whole operation runs on WhatsApp and almost all the knowledge needed to answer lives in someone\'s head: every customer question triggers two or three internal ones.',
+          'Designed and orchestrated a generative AI and RAG multi-agent ecosystem using LangGraph, NestJS, and ChromaDB to centralize WhatsApp customer support, financed sales advising, and internal training. Built a real-time React supervision dashboard featuring human-in-the-loop escalation, automated commercial validation, and asynchronous task queues with BullMQ, Redis, and n8n.',
       },
     },
   },
   {
     slug: 'nube-privada',
     areas: ['infraestructura', 'desarrollo'],
-    priority: 2,
-    status: 'en_curso',
-    period: { start: '2026-05', end: null },
+    priority: 1,
+    status: 'finalizado',
+    period: { start: '2026-09', end: '2026-11' },
     role: { mode: 'equipo', teamSize: 3 },
     hasCaseStudy: true,
     thumbnail: '/assets/NAP/NAP-1.png',
     verification: [
       { type: 'repositorio', url: 'https://github.com/mauroarmas', available: true },
-      { type: 'informe', url: null, available: false },
+      { type: 'informe', url: encodeURI('/assets/NAP/PPS NAP — Informe Final _ Versión equilibrada — Mauro Armas.pdf'), available: true },
       { type: 'demo', url: null, available: false },
     ],
-    stack: ['Python · FastAPI', 'React · Vite', 'PostgreSQL', 'API de Proxmox VE', 'Docker', 'Linux'],
+    stack: ['Python', 'FastAPI', 'React', 'Vite', 'PostgreSQL', 'Proxmox VE', 'LXC', 'Docker', 'OCI', 'TrueNAS', 'SDN', 'HTTPS', 'SSH', 'TLS'],
     i18n: {
       es: {
-        name: 'NAP — Orquestación de nube privada sobre Proxmox VE',
-        context: 'UTN-FRT · Práctica supervisada',
+        name: 'NAP - Plataforma de Nube Privada Académica | Ingeniero de Infraestructura Cloud y Backend',
+        context: 'UTN-FRT (Práctica Supervisada)',
+        recognition: 'Aprobado en CONAIISI 2026',
+        deliveryStatus: 'Validado en laboratorio · despliegue institucional pendiente',
+        bullets: [
+          'Diseñé la arquitectura de una plataforma de nube privada bajo demanda que transforma un clúster Proxmox VE y TrueNAS en servicios IaaS, PaaS y SaaS automatizados para cátedras universitarias.',
+          'Desarrollé el ciclo completo de aprobación de solicitudes, reserva de recursos y aprovisionamiento aislado de contenedores (LXC/Docker/OCI) con Python, FastAPI y React, asegurado mediante SDN/TLS y validado por más de 900 pruebas automatizadas.',
+        ],
         problem:
-          'Ocho cátedras necesitaban cómputo y almacenamiento propios sobre un clúster de cinco nodos, sin tocar el hipervisor ni depender de que alguien de TIC lo aprovisionara a mano.',
+          'Diseñé la arquitectura de una plataforma de nube privada bajo demanda que transforma un clúster Proxmox VE y TrueNAS en servicios IaaS, PaaS y SaaS automatizados para cátedras universitarias. Desarrollé el ciclo completo de aprobación de solicitudes, reserva de recursos y aprovisionamiento aislado de contenedores (LXC/Docker/OCI) con Python, FastAPI y React, asegurado mediante SDN/TLS y validado por más de 900 pruebas automatizadas.',
       },
       en: {
-        name: 'NAP — Private cloud orchestration on Proxmox VE',
-        context: 'UTN-FRT · Supervised practicum',
+        name: 'NAP - Academic Private Cloud Platform | Cloud Infrastructure & Backend Engineer',
+        context: 'UTN-FRT (Supervised Practicum)',
+        recognition: 'Paper Accepted at CONAIISI 2026',
+        deliveryStatus: 'Lab validated · institutional deployment pending',
+        bullets: [
+          'Architected an on-demand private cloud platform turning a Proxmox VE and TrueNAS cluster into automated IaaS, PaaS, and SaaS services for university courses.',
+          'Engineered the full lifecycle of request approval, resource reservation, and isolated container provisioning (LXC/Docker/OCI) using Python, FastAPI, and React, secured via SDN/TLS and validated by 900+ automated tests.',
+        ],
         problem:
-          'Eight academic departments needed their own compute and storage on a five-node cluster, without touching the hypervisor or waiting for IT to provision it by hand.',
+          'Architected an on-demand private cloud platform turning a Proxmox VE and TrueNAS cluster into automated IaaS, PaaS, and SaaS services for university courses. Engineered the full lifecycle of request approval, resource reservation, and isolated container provisioning (LXC/Docker/OCI) using Python, FastAPI, and React, secured via SDN/TLS and validated by 900+ automated tests.',
       },
     },
   },
@@ -82,19 +102,27 @@ export const proyectos = [
     verification: [
       { type: 'repositorio', url: 'https://github.com/mauroarmas', available: true },
     ],
-    stack: ['NestJS · TypeScript', 'React · Vite', 'MySQL 8', 'Docker', 'Cucumber BDD'],
+    stack: ['NestJS', 'TypeScript', 'React', 'Vite', 'MySQL 8', 'Docker', 'Cucumber BDD', 'JWT', 'Argon2'],
     i18n: {
       es: {
-        name: 'Guardia Médica — Sistema de triaje para urgencias',
-        context: 'UTN-FRT · Ingeniería de Software',
+        name: 'Guardia Médica - Sistema de Triaje Clínico de Urgencias | Desarrollador Backend y QA Automation',
+        context: 'UTN-FRT (Ingeniería de Software)',
+        bullets: [
+          'Construí una plataforma de admisión y triaje hospitalario que prioriza dinámicamente a los pacientes según 5 niveles de criticidad clínica y tiempo de espera con desempate FIFO determinista.',
+          'Implementé una Arquitectura Limpia en 4 capas con NestJS, validación estricta de signos vitales en el dominio, autenticación JWT/Argon2 y suites de pruebas BDD automatizadas con Cucumber en CI.',
+        ],
         problem:
-          'En una guardia, el que llega primero no es el que se atiende primero: sostener ese orden a mano depende de que alguien lo recalcule mentalmente cada vez que entra un paciente.',
+          'Construí una plataforma de admisión y triaje hospitalario que prioriza dinámicamente a los pacientes según 5 niveles de criticidad clínica y tiempo de espera con desempate FIFO determinista. Implementé una Arquitectura Limpia en 4 capas con NestJS, validación estricta de signos vitales en el dominio, autenticación JWT/Argon2 y suites de pruebas BDD automatizadas con Cucumber en CI.',
       },
       en: {
-        name: 'Guardia Médica — ER triage system',
-        context: 'UTN-FRT · Software Engineering',
+        name: 'Guardia Médica - ER Clinical Triage System | Backend & QA Automation Developer',
+        context: 'UTN-FRT (Software Engineering)',
+        bullets: [
+          'Built a hospital admission and triage platform that dynamically prioritizes patients across 5 clinical severity levels and wait times with deterministic FIFO tie-breaking.',
+          'Implemented a 4-layer Clean Architecture in NestJS with strict vital-sign domain validation, JWT/Argon2 authentication, and automated Cucumber BDD test suites in CI.',
+        ],
         problem:
-          'In an ER, first in is not first seen: keeping that order by hand depends on someone recalculating it mentally every time a new patient walks in.',
+          'Built a hospital admission and triage platform that dynamically prioritizes patients across 5 clinical severity levels and wait times with deterministic FIFO tie-breaking. Implemented a 4-layer Clean Architecture in NestJS with strict vital-sign domain validation, JWT/Argon2 authentication, and automated Cucumber BDD test suites in CI.',
       },
     },
   },
@@ -110,48 +138,63 @@ export const proyectos = [
     verification: [
       { type: 'repositorio', url: 'https://github.com/mauroarmas', available: true },
     ],
-    stack: ['React · Vite', 'Express', 'MongoDB · Mongoose', 'Cloudinary', 'JWT'],
+    stack: ['React', 'Vite', 'Express', 'Node.js', 'MongoDB', 'Mongoose', 'Cloudinary', 'JWT'],
     i18n: {
       es: {
-        name: 'Portal de Oficios Concepción',
-        context: 'Municipalidad de Concepción · Rolling Code School',
+        name: 'Portal de Oficios Concepción | Desarrollador Full-Stack',
+        context: 'Municipalidad de Concepción y Rolling Code School',
+        bullets: [
+          'Desarrollé un portal web municipal para conectar vecinos con trabajadores de oficios verificados mediante un flujo administrativo de moderación y alta.',
+          'Implementé APIs RESTful en Express y MongoDB junto a un frontend en React, con autenticación JWT sin estado, almacenamiento de legajos en Cloudinary y sistema de reseñas comunitarias.',
+        ],
         problem:
-          'Conseguir un gasista matriculado o un electricista de confianza en Concepción pasaba por el boca en boca, sin forma de distinguir a un trabajador verificado de un número de teléfono suelto.',
+          'Desarrollé un portal web municipal para conectar vecinos con trabajadores de oficios verificados mediante un flujo administrativo de moderación y alta. Implementé APIs RESTful en Express y MongoDB junto a un frontend en React, con autenticación JWT sin estado, almacenamiento de legajos en Cloudinary y sistema de reseñas comunitarias.',
       },
       en: {
-        name: 'Portal de Oficios Concepción',
-        context: 'Municipality of Concepción · Rolling Code School',
+        name: 'Portal de Oficios Concepción | Full-Stack Developer',
+        context: 'Municipality of Concepción & Rolling Code School',
+        bullets: [
+          'Developed a municipal web marketplace connecting local residents with verified skilled tradespeople through an administrative moderation and onboarding workflow.',
+          'Implemented RESTful APIs in Express and MongoDB paired with a React frontend, featuring stateless JWT authentication, Cloudinary document storage, and a community review system.',
+        ],
         problem:
-          'Finding a licensed gas fitter or a trustworthy electrician in Concepción went by word of mouth, with no way to tell a vetted worker from a loose phone number.',
+          'Developed a municipal web marketplace connecting local residents with verified skilled tradespeople through an administrative moderation and onboarding workflow. Implemented RESTful APIs in Express and MongoDB paired with a React frontend, featuring stateless JWT authentication, Cloudinary document storage, and a community review system.',
       },
     },
   },
   {
-    slug: 'clasificacion-aves-cnn',
-    areas: ['ia', 'desarrollo'],
+    slug: 'gestion-multi-gimnasio',
+    areas: ['desarrollo'],
     priority: 5,
-    status: 'finalizado',
-    period: { start: '2026-05', end: '2026-06' },
+    status: 'en_curso',
+    period: { start: '2026-11', end: null },
     role: { mode: 'individual', teamSize: null },
-    hasCaseStudy: true,
-    thumbnail: '/assets/IA-project/curvas-aprendizaje.png',
+    hasCaseStudy: false,
+    thumbnail: null,
     verification: [
-      { type: 'repositorio', url: 'https://github.com/mauroarmas', available: true },
-      { type: 'informe', url: '/assets/IA-project/tp3.pdf', available: true },
+      { type: 'repositorio', url: 'https://github.com/mauroarmas/polyGim', available: true },
     ],
-    stack: ['Python', 'TensorFlow · Keras', 'CNN', 'Transfer Learning'],
+    stack: ['Java 21', 'Spring Boot 3', 'Spring Security', 'JPA', 'Hibernate', 'PostgreSQL', 'Flyway', 'Thymeleaf', 'HTMX', 'JUnit 5', 'Testcontainers', 'Docker', 'GitHub Actions'],
     i18n: {
       es: {
-        name: 'Clasificación de especies de aves con CNN',
-        context: 'Cátedra de Inteligencia Artificial, UTN-FRT · Trabajo práctico',
+        name: 'Plataforma SaaS Multi-Gimnasio | Ingeniero de Software (Java / Spring Boot)',
+        context: 'Proyecto Personal (Especificación Comercial Real)',
+        bullets: [
+          'Transformé una aplicación de escritorio heredada en una plataforma web multi-tenant con aislamiento de datos por cliente, control de acceso basado en roles (RBAC), reglas de negocio configurables e identidad visual propia por gimnasio.',
+          'Desarrollé el backend con Java 21, Spring Boot 3 y PostgreSQL (Flyway) para gestionar membresías, pagos parciales y reservas de clases con cupo, respaldado por JUnit 5 y Testcontainers en GitHub Actions CI.',
+        ],
         problem:
-          'Medir cuánto aporta realmente el Transfer Learning: tres arquitecturas (Custom, VGG16, ResNet50) sobre el mismo dataset de 7.500 imágenes, auditadas con curvas ROC y matriz de confusión.',
+          'Transformé una aplicación de escritorio heredada en una plataforma web multi-tenant con aislamiento de datos por cliente, control de acceso basado en roles (RBAC), reglas de negocio configurables e identidad visual propia por gimnasio. Desarrollé el backend con Java 21, Spring Boot 3 y PostgreSQL (Flyway) para gestionar membresías, pagos parciales y reservas de clases con cupo, respaldado por JUnit 5 y Testcontainers en GitHub Actions CI.',
       },
       en: {
-        name: 'Bird species classification with CNNs',
-        context: 'Artificial Intelligence course, UTN-FRT · Coursework',
+        name: 'Multi-Tenant Gym Management SaaS Platform | Software Engineer (Java / Spring Boot)',
+        context: 'Personal Project (Commercial Client Spec)',
+        bullets: [
+          'Transformed a legacy desktop application into a multi-tenant web platform supporting isolated client data, role-based access control (RBAC), configurable business rules, and custom branding per gym.',
+          'Engineered the backend with Java 21, Spring Boot 3, and PostgreSQL (Flyway) to manage memberships, partial payments, and capacity-limited class bookings, backed by JUnit 5 and Testcontainers in GitHub Actions CI.',
+        ],
         problem:
-          'Measuring what transfer learning actually buys you: three architectures (Custom, VGG16, ResNet50) over the same 7,500-image dataset, audited with ROC curves and a confusion matrix.',
+          'Transformed a legacy desktop application into a multi-tenant web platform supporting isolated client data, role-based access control (RBAC), configurable business rules, and custom branding per gym. Engineered the backend with Java 21, Spring Boot 3, and PostgreSQL (Flyway) to manage memberships, partial payments, and capacity-limited class bookings, backed by JUnit 5 and Testcontainers in GitHub Actions CI.',
       },
     },
   },

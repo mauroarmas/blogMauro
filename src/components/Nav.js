@@ -55,7 +55,7 @@ export default function Nav({ lang, dict, basePath = '', search = '' }) {
         <Link href={`/en${basePath}${search}`} aria-current={lang === 'en' ? 'page' : undefined}>EN</Link>
       </div>
       <ThemeSwitch label={dict.nav.cambiarTema} />
-      <a className="btn-cv" href={getCvPath()} download={getCvFileName()}>
+      <a className="btn-cv" href={getCvPath(lang)} download={getCvFileName(lang)}>
         <svg className="ico" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M12 3v12m0 0 4-4m-4 4-4-4M4 19h16" />
         </svg>

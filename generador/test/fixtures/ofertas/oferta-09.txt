@@ -1,0 +1,5 @@
+Oferta de prueba 9
+Puesto: QA trainee
+Empresa: Ejemplo 9
+Modalidad: remoto
+Requisitos: pruebas automatizadas.

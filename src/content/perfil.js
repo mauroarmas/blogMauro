@@ -3,19 +3,33 @@
 // Un único CV cubre los tres ejes del perfil (desarrollo, redes y cloud), así que el
 // mismo archivo se sirve desde la nav y desde la sección de contacto. `CV_FILE_NAME`
 // es el nombre con el que se descarga, independiente del nombre del archivo en /public.
-const CV_PATH = '/cv/CV-Armas_Maurov2.pdf';
-const CV_FILE_NAME = 'CV-Mauro-Armas.pdf';
+const CV_PATHS = {
+  es: '/cv/CV-Mauro-Armas-es.pdf',
+  en: '/cv/CV-Mauro-Armas-en.pdf',
+};
+const CV_FILE_NAMES = {
+  es: 'CV-Mauro-Armas-es.pdf',
+  en: 'CV-Mauro-Armas-en.pdf',
+};
+
+// Identidad compartida por la web y el CV; la foto siempre usa el mismo original.
+const identidad = {
+  fullName: 'Mauro Nahuel Armas',
+  photo: '/mauro.png',
+  phone: '+54 3865 505362',
+};
 
 const perfil = {
   es: {
     name: 'Mauro Armas',
-    role: 'Desarrollador Full-Stack · Redes, Cloud e IA',
+    role: 'Desarrollo Full-Stack | Infraestructura | Automatizaciones e IA',
     location: 'Tucumán, Argentina',
-    mode: 'Remoto o híbrido',
+    mode: '',
+    languages: ['Español · nativo', 'Inglés · intermedio'],
     thesis: 'Diseño, desarrollo e infraestructura de sistemas de información.',
-    lead: 'Enfoque en arquitectura de software, metodologías ágiles y automatización de procesos de negocio con IA generativa.',
+    lead: 'Enfoque en desarrollo y arquitectura de software, infraestructura y automatización de procesos de negocio.',
     about:
-      'Estudiante de 5.º año de Ingeniería en Sistemas con experiencia práctica en infraestructura (virtualización, servidores, redes y despliegue) y desarrollo full-stack, incluyendo sistemas con IA generativa que automatizan procesos de negocio. Actualmente formandome en redes, desarrollo de software y sistemas de control (PLC, SCADA). Trabajo con metodologías ágiles como Scrum, con enfoque en la entrega de software de calidad y la mejora continua del equipo y sistema. Me destaco por mi alta capacidad de aprendizaje autodidacta, resiliencia en contextos exigentes, liderazgo y adaptabilidad en entornos colaborativos y nuevas tecnologías.',
+      'Estudiante de 5.º año de Ingeniería en Sistemas de Información e Ingeniero Full-Stack & Cloud especializado en arquitecturas backend distribuidas, infraestructura de nube privada y sistemas multiagente de IA generativa. Trayectoria comprobada entregando plataformas de nivel productivo respaldadas por más de 900 pruebas automatizadas, pipelines RAG y microservicios contenedorizados. Aplica prácticas de PMBOK, Scrum y Spec-Driven Development (SDD) para alinear arquitecturas técnicas complejas con la automatización de procesos de negocio.',
     email: 'mauro.armas14@gmail.com',
     github: 'https://github.com/mauroarmas',
     linkedin: 'https://www.linkedin.com/in/mauro-armas/',
@@ -24,13 +38,14 @@ const perfil = {
   },
   en: {
     name: 'Mauro Armas',
-    role: 'Full-Stack Developer · Networking, Cloud & AI',
+    role: 'Full-Stack Development | Infrastructure | Automations & AI',
     location: 'Tucumán, Argentina',
-    mode: 'Remote or hybrid',
+    mode: '',
+    languages: ['Spanish · native', 'English · intermediate'],
     thesis: 'Design, development, and infrastructure of information systems.',
-    lead: 'Focused on software architecture, agile methodologies, and business process automation with generative AI.',
+    lead: 'Focus on software development and architecture, infrastructure, and business process automation.',
     about:
-      "A fifth-year Systems Engineering student with hands-on experience in infrastructure (virtualization, servers, networks, and deployment) and full-stack development, including systems with generative AI that automate business processes. Currently training in networking, software development, and control systems (PLC, SCADA). I work with agile methodologies such as Scrum, with a focus on delivering high-quality software and continuously improving the team and the system. I excel in my ability to be a self-directed learner, my resilience in demanding situations, my leadership, and my adaptability in collaborative environments and with new technologies.",
+      'Fifth-year Information Systems Engineering student and Full-Stack & Cloud Engineer specializing in distributed backend architectures, private cloud infrastructure, and multi-agent generative AI systems. Proven track record of delivering production-grade platforms backed by 900+ automated tests, RAG pipelines, and containerized microservices. Applies PMBOK, Scrum, and Spec-Driven Development (SDD) practices to align complex technical architectures with business process automation.',
     email: 'mauro.armas14@gmail.com',
     github: 'https://github.com/mauroarmas',
     linkedin: 'https://www.linkedin.com/in/mauro-armas/',
@@ -40,13 +55,13 @@ const perfil = {
 };
 
 export function getPerfil(locale) {
-  return perfil[locale] || perfil.es;
+  return { ...identidad, ...(perfil[locale] || perfil.es) };
 }
 
-export function getCvPath() {
-  return CV_PATH;
+export function getCvPath(locale = 'es') {
+  return CV_PATHS[locale] || CV_PATHS.es;
 }
 
-export function getCvFileName() {
-  return CV_FILE_NAME;
+export function getCvFileName(locale = 'es') {
+  return CV_FILE_NAMES[locale] || CV_FILE_NAMES.es;
 }

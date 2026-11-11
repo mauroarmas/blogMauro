@@ -183,15 +183,6 @@ function IconLoop() {
   );
 }
 
-function IconChip() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round">
-      <rect x="6.5" y="6.5" width="11" height="11" rx="1.8" />
-      <path d="M10 2.8v3.7M14 2.8v3.7M10 17.5v3.7M14 17.5v3.7M2.8 10h3.7M2.8 14h3.7M17.5 10h3.7M17.5 14h3.7" />
-    </svg>
-  );
-}
-
 function IconPlug() {
   return (
     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
@@ -236,41 +227,60 @@ const FORMACION_ICON = {
 // Un ícono por tecnología (se reusa en los chips del Hero y en la sección Stack).
 const TECH_ICON = {
   'Node.js · NestJS · Express': IconServer,
+  'Node.js, NestJS, Express': IconServer,
   'Python · FastAPI': IconBolt,
+  'Python, FastAPI': IconBolt,
   'TypeScript': IconCode,
   'Java · Spring': IconHex,
+  'Java, Spring Boot': IconHex,
   'React': IconOrbit,
   'Next.js': IconWindow,
   'Vite': IconBolt,
   'HTML5 · CSS3': IconCode,
+  'HTML5, CSS3, Thymeleaf, HTMX': IconCode,
   'PostgreSQL': IconDb,
+  'PostgreSQL, MySQL': IconDb,
   'MySQL': IconDb,
   'MongoDB': IconDb,
+  'MongoDB, Redis': IconDb,
+  'Bases de datos relacionales (MySQL, PostgreSQL)': IconDb,
+  'Bases de datos relacionales (Mysql, PostgreSQL)': IconDb,
+  'Bases de datos no relacionales (MongoDB)': IconDb,
   'Redis': IconBolt,
   'ChromaDB (vectorial)': IconBraces,
+  'ChromaDB (Vector DB)': IconBraces,
+  'Prisma, Hibernate/JPA, Flyway': IconLayers,
   'Redes TCP/IP': IconNetwork,
+  'Redes TCP/IP, SDN': IconNetwork,
   'Cisco Packet Tracer': IconNodes,
   'Linux (admin)': IconTerminal,
+  'Administración de Sistemas Linux': IconTerminal,
   'nginx · systemd': IconServer,
-  'PLC · SCADA (nociones)': IconChip,
+  'Nginx, systemd, Tailscale, SSH/TLS': IconServer,
   'Proxmox VE · LXC': IconLayers,
+  'Proxmox VE, LXC': IconLayers,
   'Docker': IconCube,
+  'Docker, OCI': IconCube,
   'AWS': IconCloud,
   'CI/CD · GitHub Actions': IconLoop,
+  'CI/CD, GitHub Actions, TrueNAS': IconLoop,
   'n8n': IconNodes,
+  'n8n, BullMQ': IconNodes,
   'LangGraph · LangChain': IconLink,
+  'LangGraph, LangChain, Sistemas Multiagente': IconLink,
   'RAG · LLM': IconBook,
-  'Gemini API': IconPlug,
-  'TensorFlow · Keras': IconChip,
+  'RAG, LLMs': IconBook,
   'Spec-Driven Development (SDD)': IconCode,
-  'TOGAF ADM': IconLayers,
-  'Gestión del conocimiento (modelo SECI)': IconBook,
   'Gestión de proyectos (PMBok)': IconCheckSquare,
-  'Scrum · Jira': IconLoop,
-  'Mejora continua (Kaizen)': IconBolt,
-  'Testing automatizado': IconTerminal,
-  'Git · GitHub': IconGh,
-  'ERP / SAP (nociones)': IconCube,
+  'Gestión de Proyectos (PMBOK)': IconCheckSquare,
+  'Scrum': IconLoop,
+  'Scrum, Jira': IconLoop,
+  'Jira': IconLayers,
+  'Postman': IconPlug,
+  'Cypress': IconTerminal,
+  'Cypress y Postman': IconTerminal,
+  'Pruebas Automatizadas, Cypress, Postman': IconTerminal,
+  'Cucumber (BDD), JUnit 5, Testcontainers': IconCheckSquare,
 };
 
 export function generateStaticParams() {
@@ -322,14 +332,14 @@ export default async function Home({ params }) {
 
       <header className="p-hero">
         <aside className="ledger">
-          <Image className="avatar" src="/profilePhoto.jpg" alt={perfil.name} width={190} height={230} />
-          <div>
-            <span className="k"><IconPin />{dict.ledger.ubicacion}</span>
-            <span className="v">{perfil.location}</span>
-          </div>
-          <div>
+          <Image className="avatar" src={perfil.photo} alt={perfil.name} width={190} height={230} />
+          <div className="ledger-edu">
             <span className="k"><IconCap />{dict.ledger.formacion}</span>
-            <span className="v">{fpText.title}<br />{fpText.institution} · {fpText.statusLabel}</span>
+            <div className="ledger-edu-content">
+              <span className="ledger-edu-title">{fpText.title}</span>
+              <span className="ledger-edu-sub">{fpText.institution}</span>
+              {fpText.statusLabel && <span className="ledger-edu-status">{fpText.statusLabel}</span>}
+            </div>
           </div>
           <div>
             <span className="k"><IconLink />{dict.ledger.redes}</span>
@@ -344,7 +354,7 @@ export default async function Home({ params }) {
         <div>
           <h1 className="p-name">{perfil.name.split(' ')[0]} <span className="last">{perfil.name.split(' ').slice(1).join(' ')}</span></h1>
           <p className="p-role">{perfil.role}</p>
-          <p className="p-where">{perfil.location} · {perfil.mode}</p>
+          <p className="p-where">{perfil.location}{perfil.mode ? ` · ${perfil.mode}` : ''}</p>
 
           <p className="thesis">{perfil.thesis}</p>
           <p className="p-lead">{perfil.lead}</p>
@@ -355,10 +365,13 @@ export default async function Home({ params }) {
               return (
                 <li key={s.name}>
                   {ChipIcon && <ChipIcon />}
-                  {s.name}
+                  {s[lang] || s.name}
                 </li>
               );
             })}
+            <li className="chip-more">
+              <a href="#stack" className="btn-more">{dict.hero.verMasStack || 'más...'}</a>
+            </li>
           </ul>
 
           <div className="cta">
@@ -420,7 +433,7 @@ export default async function Home({ params }) {
                     return (
                       <li key={s.name}>
                         {LayerIcon && <LayerIcon />}
-                        {s.name}
+                        {s[lang] || s.name}
                       </li>
                     );
                   })}
@@ -472,7 +485,7 @@ export default async function Home({ params }) {
           <div className="links-list">
             <a href={perfil.linkedin} target="_blank" rel="noopener noreferrer"><span>LinkedIn</span><span className="lh">in/mauro-armas</span></a>
             <a href={perfil.github} target="_blank" rel="noopener noreferrer"><span>GitHub</span><span className="lh">mauroarmas</span></a>
-            <a href={getCvPath()} download={getCvFileName()}><span>{dict.nav.cv}</span><span className="lh">PDF</span></a>
+            <a href={getCvPath(lang)} download={getCvFileName(lang)}><span>{dict.nav.cv}</span><span className="lh">PDF</span></a>
           </div>
         </div>
       </section>

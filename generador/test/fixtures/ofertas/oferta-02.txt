@@ -1,0 +1,5 @@
+Oferta de prueba 2
+Puesto: Infraestructura junior
+Empresa: Ejemplo 2
+Modalidad: Tucumán presencial
+Requisitos: Linux y virtualización.

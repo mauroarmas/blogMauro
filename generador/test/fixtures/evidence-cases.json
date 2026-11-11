@@ -1,0 +1,52 @@
+[
+  {
+    "name": "tecnología ausente",
+    "requirement": "Rust profesional",
+    "expected": "unsupported"
+  },
+  {
+    "name": "años inventados",
+    "requirement": "10 años de experiencia",
+    "expected": "unsupported"
+  },
+  {
+    "name": "inglés avanzado",
+    "requirement": "Inglés avanzado",
+    "expected": "conflict"
+  },
+  {
+    "name": "producción NAP",
+    "requirement": "NAP desplegado en producción",
+    "expected": "conflict"
+  },
+  {
+    "name": "presentación CONAISI",
+    "requirement": "Presentó en CONAISI",
+    "expected": "conflict"
+  },
+  {
+    "name": "crédito real",
+    "requirement": "Integración bancaria productiva en TrimIA",
+    "expected": "conflict"
+  },
+  {
+    "name": "equipo individual",
+    "requirement": "Trabajo íntegramente individual en NAP",
+    "expected": "conflict"
+  },
+  {
+    "name": "nube desconocida",
+    "requirement": "Certificación profesional de AWS",
+    "expected": "unsupported"
+  },
+  {
+    "name": "ubicación",
+    "requirement": "Presencial en Córdoba",
+    "expected": "conflict"
+  },
+  {
+    "name": "rol gerencial",
+    "requirement": "Gerente de ingeniería",
+    "expected": "unsupported"
+  }
+]

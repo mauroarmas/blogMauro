@@ -34,7 +34,7 @@ export default function GalleryCarousel({ images }) {
         onDoubleClick={handleDoubleClick}
         title="Doble click para pantalla completa"
       >
-        <CaseStudyImage url={currentMedia.url} alt={currentMedia.alt} />
+        <CaseStudyImage url={currentMedia.url} alt={currentMedia.alt} width={currentMedia.width} height={currentMedia.height} />
         {images.length > 1 && (
           <div className="gal-count-floating">
             {currentIndex + 1} / {images.length}
